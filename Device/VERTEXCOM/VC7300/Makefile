@@ -1,0 +1,56 @@
+SRCS_DEVICE_SYSTEM += Source/system_vc7300.c
+#TODO: SRCS_DEVICE_DRIVER
+SRCS_DEVICE_MAIN   += main.c
+SRCS_DEVICE_TEST   += Test/main.c
+
+SRCS_DEVICE_STARTUP = Source/GCC/startup_vc7300.s
+
+OBJS_DEVICE_SYSTEM  += $(addprefix $(BUILD)/, $(SRCS_DEVICE_SYSTEM:.c=.o))
+OBJS_DEVICE_MAIN    += $(addprefix $(BUILD)/, $(SRCS_DEVICE_MAIN:.c=.o))
+OBJS_DEVICE_TEST    += $(addprefix $(BUILD)/, $(SRCS_DEVICE_TEST:.c=.o))
+OBJS_DEVICE_STARTUP += $(addprefix $(BUILD)/, $(SRCS_DEVICE_STARTUP:.s=.o))
+
+OBJS_DIR += $(sort $(dir $(OBJS_DEVICE_SYSTEM)))
+OBJS_DIR += $(sort $(dir $(OBJS_DEVICE_TEST)))
+OBJS_DIR += $(sort $(dir $(OBJS_DEVICE_STARTUP)))
+
+LIB_DEVICE_SYSTEM_A     = $(BUILD)/$(LIB_DEVICE_SYSTEM)
+LIB_DEVICE_SYSTEM_OBJS += $(OBJS_DEVICE_SYSTEM)
+LIB_DEVICE_SYSTEM_OBJS += $(OBJS_DEVICE_STARTUP)
+
+LIB_DEVICE_MAIN_A       = $(BUILD)/$(LIB_DEVICE_MAIN)
+LIB_DEVICE_MAIN_OBJS   += $(OBJS_DEVICE_MAIN)
+
+LIB_DEVICE_TEST_A       = $(BUILD)/$(LIB_DEVICE_TEST)
+LIB_DEVICE_TEST_OBJS   += $(OBJS_DEVICE_TEST)
+
+A_FILES += $(LIB_DEVICE_SYSTEM_A)
+A_FILES += $(LIB_DEVICE_MAIN_A)
+A_FILES += $(LIB_DEVICE_TEST_A)
+
+all: | $(OBJS_DIR) $(A_FILES)
+
+$(OBJS_DIR):
+	$(MKDIR) -p $@
+
+$(BUILD)/%.o: %.c
+	$(ECHO) "CC $<"
+	$(CC) $(CFLAGS) -c -o $@ $<
+
+$(BUILD)/%.o: %.s
+	$(ECHO) "AS $<"
+	$(CC) $(CFLAGS) -c -o $@ $<
+
+$(BUILD)/%.a:
+	$(ECHO) "AR $@"
+	$(AR) -cr $@ $^
+
+$(LIB_DEVICE_SYSTEM_A): $(LIB_DEVICE_SYSTEM_OBJS)
+
+$(LIB_DEVICE_MAIN_A): $(LIB_DEVICE_MAIN_OBJS)
+
+$(LIB_DEVICE_TEST_A): $(LIB_DEVICE_TEST_OBJS)
+
+-include $(OBJS_DEVICE_SYSTEM:%.o=%.d)
+-include $(OBJS_DEVICE_MAIN:%.o=%.d)
+-include $(OBJS_DEVICE_TEST:%.o=%.d)

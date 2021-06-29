@@ -89,7 +89,7 @@ typedef enum IRQn
 
   I2C2_IRQn              = 36,
   GPIO_IRQn              = 37
-} IRQn_TYpe;
+} IRQn_Type;
 
 /* ========================================================================= */
 /* ============      Processor and Core Peripheral Section      ============ */
