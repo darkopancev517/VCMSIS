@@ -59,10 +59,10 @@ endif
 export VENDOR ?= VERTEXCOM
 export DEVICE ?= VC7300
 
-export TOP_DIR        = $(shell pwd)
-export BUILD_DIR      = Build
-export DEVICE_DIR     = Device/$(VENDOR)/$(DEVICE)
-export CMSIS_DIR      = CMSIS_5/CMSIS
+export TOP_DIR    = $(shell pwd)
+export BUILD_DIR  = Build
+export DEVICE_DIR = Device/$(VENDOR)/$(DEVICE)
+export CMSIS_DIR  = CMSIS_5/CMSIS
 
 BUILD = $(TOP_DIR)/$(BUILD_DIR)
 
@@ -70,6 +70,7 @@ DEVICE_LC = $(shell echo $(DEVICE) | tr A-Z a-z)
 
 CFLAGS += -I$(TOP_DIR)
 CFLAGS += -I$(TOP_DIR)/$(CMSIS_DIR)/Core/Include
+CFLAGS += -I$(TOP_DIR)/$(CMSIS_DIR)/Driver/Include
 CFLAGS += -I$(TOP_DIR)/$(DEVICE_DIR)/Include
 
 CFLAGS += -Wall -Werror
