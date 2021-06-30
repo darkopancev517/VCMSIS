@@ -147,6 +147,7 @@ typedef enum IRQn
 /* ========================================================================= */
 /* ============          PMU (Power Management Unit)            ============ */
 /* ========================================================================= */
+
 typedef struct
 {
   __IOM uint32_t DSLEEPEN;              /* (0x0000) PMU deep sleep enable register */
@@ -254,8 +255,8 @@ typedef struct
 #define VC_PMU_STS_WKUANA_Pos                   18
 #define VC_PMU_STS_WKUANA_Msk                   (1UL << VC_PMU_STS_WKUANA_Pos)
 
-#define VC_PMU_STS_WKUUART32K_Pos                  19
-#define VC_PMU_STS_WKUUART32K_Msk                  (1UL << VC_PMU_STS_WKUUART32K_Pos)
+#define VC_PMU_STS_WKUUART32K_Pos               19
+#define VC_PMU_STS_WKUUART32K_Msk               (1UL << VC_PMU_STS_WKUUART32K_Pos)
 
 #define VC_PMU_STS_WKUXTAL_Pos                  20
 #define VC_PMU_STS_WKUXTAL_Msk                  (1UL << VC_PMU_STS_WKUXTAL_Pos)
@@ -317,37 +318,37 @@ typedef struct
 
 typedef struct
 {
-    __IOM uint32_t BGPCTRL;             /* (0x0000) Bandgap control register */
-    __IOM uint32_t LDOCTRL;             /* (0x0004) LDO control register */
-    __IOM uint32_t LVDCTRL;             /* (0x0008) LVD control register */
-    __IM uint32_t  RESERVED;
-    __IOM uint32_t CLKCTRL1;            /* (0x0010) Clock control register 1 */
-    __IOM uint32_t CLKCTRL2;            /* (0x0014) Clock control register 2 */
-    __IOM uint32_t CLKCTRL3;            /* (0x0018) Clock control register 3 */
-    __IM uint32_t  CLKCTRL4;            /* (0x001C) Clock control register 4 */
-    __IOM uint32_t CMP1CTRL;            /* (0x0020) Comparator 1 control register */
-    __IOM uint32_t CMP2CTRL;            /* (0x0024) Comparator 2 control register */
-    __IOM uint32_t CMP1CNT;             /* (0x0028) Comparator 1 counter */
-    __IOM uint32_t CMP2CNT;             /* (0x002C) Comparator 2 counter */
-    __IOM uint32_t TRNGCTRL;            /* (0x0030) True random number generator control register */
-    __IM uint32_t  TNRGDATA;            /* (0x0034) True random number generator data register */
-    __IOM uint32_t PRNGDATA;            /* (0x0038) Pseudo random number generator data register */
-    __IM uint32_t  RESERVED1;
-    __IOM uint32_t RSV1;                /* (0x0040) Analog reserved register 1 */
-    __IOM uint32_t RSV2;                /* (0x0044) Analog reserved register 2 */
-    __IM uint32_t  RESERVED2[2];
-    __IM uint32_t  STS;                 /* (0x0050) Analog status register */
-    __IOM uint32_t INTSTS;              /* (0x0054) Analog interrupt status register */
-    __IOM uint32_t INTEN;               /* (0x0058) Analog interrupt enable register */
-    __IM uint32_t  RESERVED3[5];
-    __IOM uint32_t ADCCTRL1;            /* (0x0070) ADC control register 1 */
-    __IOM uint32_t ADCCTRL2;            /* (0x0074) ADC control register 2 */
-    __IOM uint32_t ADCCTRL3;            /* (0x0078) ADC control register 3 */
-    __IOM uint32_t ADCCTRL4;            /* (0x007C) ADC control register 4 */
-    __IM uint32_t  ADCDATAx[16];        /* (0x0080 - 0x00BC) ADC channel x data register */
-    __IM uint32_t  ADCDATA;             /* (0x00C0) ADC all channel data register */
-    __IM uint32_t  RESERVED4[15];
-    __IM uint32_t  REGx[12];            /* (0x0100 - 0x012C) Analog control register x */
+  __IOM uint32_t BGPCTRL;             /* (0x0000) Bandgap control register */
+  __IOM uint32_t LDOCTRL;             /* (0x0004) LDO control register */
+  __IOM uint32_t LVDCTRL;             /* (0x0008) LVD control register */
+  __IM uint32_t  RESERVED;
+  __IOM uint32_t CLKCTRL1;            /* (0x0010) Clock control register 1 */
+  __IOM uint32_t CLKCTRL2;            /* (0x0014) Clock control register 2 */
+  __IOM uint32_t CLKCTRL3;            /* (0x0018) Clock control register 3 */
+  __IM uint32_t  CLKCTRL4;            /* (0x001C) Clock control register 4 */
+  __IOM uint32_t CMP1CTRL;            /* (0x0020) Comparator 1 control register */
+  __IOM uint32_t CMP2CTRL;            /* (0x0024) Comparator 2 control register */
+  __IOM uint32_t CMP1CNT;             /* (0x0028) Comparator 1 counter */
+  __IOM uint32_t CMP2CNT;             /* (0x002C) Comparator 2 counter */
+  __IOM uint32_t TRNGCTRL;            /* (0x0030) True random number generator control register */
+  __IM uint32_t  TNRGDATA;            /* (0x0034) True random number generator data register */
+  __IOM uint32_t PRNGDATA;            /* (0x0038) Pseudo random number generator data register */
+  __IM uint32_t  RESERVED1;
+  __IOM uint32_t RSV1;                /* (0x0040) Analog reserved register 1 */
+  __IOM uint32_t RSV2;                /* (0x0044) Analog reserved register 2 */
+  __IM uint32_t  RESERVED2[2];
+  __IM uint32_t  STS;                 /* (0x0050) Analog status register */
+  __IOM uint32_t INTSTS;              /* (0x0054) Analog interrupt status register */
+  __IOM uint32_t INTEN;               /* (0x0058) Analog interrupt enable register */
+  __IM uint32_t  RESERVED3[5];
+  __IOM uint32_t ADCCTRL1;            /* (0x0070) ADC control register 1 */
+  __IOM uint32_t ADCCTRL2;            /* (0x0074) ADC control register 2 */
+  __IOM uint32_t ADCCTRL3;            /* (0x0078) ADC control register 3 */
+  __IOM uint32_t ADCCTRL4;            /* (0x007C) ADC control register 4 */
+  __IM uint32_t  ADCDATAx[16];        /* (0x0080 - 0x00BC) ADC channel x data register */
+  __IM uint32_t  ADCDATA;             /* (0x00C0) ADC all channel data register */
+  __IM uint32_t  RESERVED4[15];
+  __IM uint32_t  REGx[12];            /* (0x0100 - 0x012C) Analog control register x */
 } VC_ANA_TypeDef;
 
 /* ANA_BGPCTRL register */
@@ -709,45 +710,45 @@ typedef struct
 
 typedef struct
 {
-    __IOM uint32_t SEC;                 /* (0x0000) RTC second register */
-    __IOM uint32_t MIN;                 /* (0x0004) RTC minute register */
-    __IOM uint32_t HOUR;                /* (0x0008) RTC hour register */
-    __IOM uint32_t DAY;                 /* (0x000C) RTC day register */
-    __IOM uint32_t WEEK;                /* (0x0010) RTC week register */
-    __IOM uint32_t MON;                 /* (0x0014) RTC month register */
-    __IOM uint32_t YEAR;                /* (0x0018) RTC year register */
-    __IM uint32_t  RESERVED;
-    __IOM uint32_t WKUSEC;              /* (0x0020) RTC wake-up second register */
-    __IOM uint32_t WKUMIN;              /* (0x0024) RTC wake-up minute register */
-    __IOM uint32_t WKUHOUR;             /* (0x0028) RTC wake-up hour register */
-    __IOM uint32_t WKUCNT;              /* (0x002C) RTC wake-up counter register */
-    __IOM uint32_t CAL;                 /* (0x0030) RTC calibration register */
-    __IOM uint32_t DIV;                 /* (0x0034) RTC PLL divider register */
-    __IOM uint32_t CTL;                 /* (0x0038) RTC PLL divider control register */
-    __IOM uint32_t ITV;                 /* (0x003C) RTC wake-up interval control */
-    __IOM uint32_t SITV;                /* (0x0040) RTC wake-up second interval control */
-    __IOM uint32_t PWD;                 /* (0x0044) RTC password control register */
-    __IOM uint32_t CE;                  /* (0x0048) RTC write enable control register */
-    __IOM uint32_t LOAD;                /* (0x004C) RTC read enable control register */
-    __IOM uint32_t INTSTS;              /* (0x0050) RTC interrupt status control register */
-    __IOM uint32_t INTEN;               /* (0x0054) RTC interrupt enable control register */
-    __IOM uint32_t PSCA;                /* (0x0058) RTC clock pre-scaler control register */
-    __IM uint32_t  RESERVED1[9];
-    __IOM uint32_t ACCTRL;              /* (0x0080) RTC auto-calibration control register */
-    __IOM uint32_t ACTI;                /* (0x0084) RTC auto-calibration center temperature control register */
-    __IOM uint32_t ACF200;              /* (0x0088) RTC auto-calibration 200*frequency control register */
-    __IOM uint32_t ACADCW;              /* (0x008C) RTC auto-calibration manual ADC value control register */
-    __IOM uint32_t ACPx[8];             /* (0x0090 - 0x00AC) RTC auto-calibration parameter x control register */
-    __IOM uint32_t ACK1;                /* (0x00B0) RTC auto-calibration parameter k1 control register */
-    __IOM uint32_t ACK2;                /* (0x00B4) RTC auto-calibration parameter k2 control register */
-    __IOM uint32_t ACK3;                /* (0x00B8) RTC auto-calibration parameter k3 control register */
-    __IOM uint32_t ACK4;                /* (0x00BC) RTC auto-calibration parameter k4 control register */
-    __IOM uint32_t ACK5;                /* (0x00C0) RTC auto-calibration parameter k5 control register */
-    __IM uint32_t  ACTEMP;              /* (0x00C4) RTC auto-calibration calculated temperature register */
-    __IM uint32_t  ACPPM;               /* (0x00C8) RTC auto-calibration calculated ppm register */
-    __IM uint32_t  ACADCR;              /* (0x00CC) RTC auto-calibration read ADC data PPM register */
-    __IOM uint32_t ACKTEMP;             /* (0x00D0) RTC auto-calibration k temperature section control register */
-    __IM uint32_t  WKUCNTR;             /* (0x00D4) RTC wake-up counter current value register */
+  __IOM uint32_t SEC;                 /* (0x0000) RTC second register */
+  __IOM uint32_t MIN;                 /* (0x0004) RTC minute register */
+  __IOM uint32_t HOUR;                /* (0x0008) RTC hour register */
+  __IOM uint32_t DAY;                 /* (0x000C) RTC day register */
+  __IOM uint32_t WEEK;                /* (0x0010) RTC week register */
+  __IOM uint32_t MON;                 /* (0x0014) RTC month register */
+  __IOM uint32_t YEAR;                /* (0x0018) RTC year register */
+  __IM uint32_t  RESERVED;
+  __IOM uint32_t WKUSEC;              /* (0x0020) RTC wake-up second register */
+  __IOM uint32_t WKUMIN;              /* (0x0024) RTC wake-up minute register */
+  __IOM uint32_t WKUHOUR;             /* (0x0028) RTC wake-up hour register */
+  __IOM uint32_t WKUCNT;              /* (0x002C) RTC wake-up counter register */
+  __IOM uint32_t CAL;                 /* (0x0030) RTC calibration register */
+  __IOM uint32_t DIV;                 /* (0x0034) RTC PLL divider register */
+  __IOM uint32_t CTL;                 /* (0x0038) RTC PLL divider control register */
+  __IOM uint32_t ITV;                 /* (0x003C) RTC wake-up interval control */
+  __IOM uint32_t SITV;                /* (0x0040) RTC wake-up second interval control */
+  __IOM uint32_t PWD;                 /* (0x0044) RTC password control register */
+  __IOM uint32_t CE;                  /* (0x0048) RTC write enable control register */
+  __IOM uint32_t LOAD;                /* (0x004C) RTC read enable control register */
+  __IOM uint32_t INTSTS;              /* (0x0050) RTC interrupt status control register */
+  __IOM uint32_t INTEN;               /* (0x0054) RTC interrupt enable control register */
+  __IOM uint32_t PSCA;                /* (0x0058) RTC clock pre-scaler control register */
+  __IM uint32_t  RESERVED1[9];
+  __IOM uint32_t ACCTRL;              /* (0x0080) RTC auto-calibration control register */
+  __IOM uint32_t ACTI;                /* (0x0084) RTC auto-calibration center temperature control register */
+  __IOM uint32_t ACF200;              /* (0x0088) RTC auto-calibration 200*frequency control register */
+  __IOM uint32_t ACADCW;              /* (0x008C) RTC auto-calibration manual ADC value control register */
+  __IOM uint32_t ACPx[8];             /* (0x0090 - 0x00AC) RTC auto-calibration parameter x control register */
+  __IOM uint32_t ACK1;                /* (0x00B0) RTC auto-calibration parameter k1 control register */
+  __IOM uint32_t ACK2;                /* (0x00B4) RTC auto-calibration parameter k2 control register */
+  __IOM uint32_t ACK3;                /* (0x00B8) RTC auto-calibration parameter k3 control register */
+  __IOM uint32_t ACK4;                /* (0x00BC) RTC auto-calibration parameter k4 control register */
+  __IOM uint32_t ACK5;                /* (0x00C0) RTC auto-calibration parameter k5 control register */
+  __IM uint32_t  ACTEMP;              /* (0x00C4) RTC auto-calibration calculated temperature register */
+  __IM uint32_t  ACPPM;               /* (0x00C8) RTC auto-calibration calculated ppm register */
+  __IM uint32_t  ACADCR;              /* (0x00CC) RTC auto-calibration read ADC data PPM register */
+  __IOM uint32_t ACKTEMP;             /* (0x00D0) RTC auto-calibration k temperature section control register */
+  __IM uint32_t  WKUCNTR;             /* (0x00D4) RTC wake-up counter current value register */
 } VC_RTC_TypeDef;
 
 /* RTC_WKUSEC register */
@@ -957,47 +958,47 @@ typedef struct
 
 typedef struct
 {
-    __IOM uint32_t SPIFLASH_CMD;        /* (0x0000) SPI flash controller command register */
-    __IOM uint32_t SPIFLASH_ADDR;       /* (0x0004) SPI flash controller address register */
-    __IOM uint32_t SPIFLASH_CFG;        /* (0x0008) SPI flash controller configuration register */
-    __IOM uint32_t CACCFG;              /* (0x000C) Cache configuration register */
-    __IM uint32_t  SPIFLASH_SR;         /* (0x0010) SPI flash status register */
-    __IM uint32_t  SPIFLASH_ID;         /* (0x0014) SPI flash ID register */
-    __IOM uint32_t SPISRAM_CFG;         /* (0x001C) SPI SRAM controller configuration register */
-    __IOM uint32_t CACINVS;             /* (0x0020) Cache invalid start address */
-    __IOM uint32_t CACINVE;             /* (0x0024) Cache invalid end address */
-    __OM uint32_t  CACINV;              /* (0x0028) Cache invalid active register */
-    __IM uint32_t  RESERVED;
-    __IM uint32_t  CACHIT;              /* (0x0030) Cache hit rate counting register */
-    __IOM uint32_t CACHITL;             /* (0x0034) Cache hit rate lowest value register */
-    __IM uint32_t  RESERVED1[2];
-    __IOM uint32_t FLASH_CTRL;          /* (0x0040) Embedded flash control register */
-    __IOM uint32_t FLASH_PASS;          /* (0x0044) Embedded flash password register */
-    __IOM uint32_t FLASH_PGADDR;        /* (0x0048) Embedded flash program address register */
-    __IOM uint32_t FLASH_PGDATA;        /* (0x004C) Embedded flash program word data register */
-    __IOM uint32_t FLASH_SERASE;        /* (0x0050) Embedded flash sector erase control register */
-    __IM uint32_t  RESERVED2;
-    __IOM uint32_t FLASH_CERASE;        /* (0x0058) Embedded flash chip erase control register */
-    __IM uint32_t  RESERVED3;
-    __IOM uint32_t FLASH_CSSADDR;       /* (0x0060) Embedded flash checksum start address */
-    __IOM uint32_t FLASH_CSEADDR;       /* (0x0064) Embedded flash checksum end address */
-    __IM uint32_t  FLASH_CSVALUE;       /* (0x0068) Embedded flash checksum value register */
-    __IOM uint32_t FLASH_CSCVALUE;      /* (0x006C) Embedded flash checksum compare value register */
-    __IOM uint32_t FLASH_INTEN;         /* (0x0070) Embedded flash checksum interrupt enable register */
-    __IOM uint32_t FLASH_INT;           /* (0x0074) Embedded flash checksum interrupt status register */
-    __IM uint32_t  FLASH_RPROT;         /* (0x0078) Embedded flash read protect status register */
-    __IOM uint32_t FLASH_WPROT;         /* (0x007C) Embedded flash write protect control register */
-    __IM uint32_t  RESERVED4;
-    __IOM uint32_t FLASH_NVRPASS;       /* (0x0084) Embedded flash NVR sector password register */
-    __IM uint32_t  FLASH_STS;           /* (0x0088) Embedded flash programming status register */
-    __IM uint32_t  RESERVED5[4];
-    __IOM uint32_t FLASH_CONF;          /* (0x009C) Embedded flash configuration read/write register */
-    __IOM uint32_t FLASH_DSTB;          /* (0x00A0) Embedded flash deep standby control register */
-    __IM uint32_t  RESERVED6[3];
-    __IOM uint32_t FLASH_PTIME;         /* (0x00B0) Embedded flash program time control register */
-    __IOM uint32_t FLASH_ETIME;         /* (0x00B4) Embedded flash erase time control register */
-    __IM uint32_t  RESERVED7[18];
-    __IOM uint32_t SPIFLASH_BUF[64];
+  __IOM uint32_t SPIFLASH_CMD;        /* (0x0000) SPI flash controller command register */
+  __IOM uint32_t SPIFLASH_ADDR;       /* (0x0004) SPI flash controller address register */
+  __IOM uint32_t SPIFLASH_CFG;        /* (0x0008) SPI flash controller configuration register */
+  __IOM uint32_t CACCFG;              /* (0x000C) Cache configuration register */
+  __IM uint32_t  SPIFLASH_SR;         /* (0x0010) SPI flash status register */
+  __IM uint32_t  SPIFLASH_ID;         /* (0x0014) SPI flash ID register */
+  __IOM uint32_t SPISRAM_CFG;         /* (0x001C) SPI SRAM controller configuration register */
+  __IOM uint32_t CACINVS;             /* (0x0020) Cache invalid start address */
+  __IOM uint32_t CACINVE;             /* (0x0024) Cache invalid end address */
+  __OM uint32_t  CACINV;              /* (0x0028) Cache invalid active register */
+  __IM uint32_t  RESERVED;
+  __IM uint32_t  CACHIT;              /* (0x0030) Cache hit rate counting register */
+  __IOM uint32_t CACHITL;             /* (0x0034) Cache hit rate lowest value register */
+  __IM uint32_t  RESERVED1[2];
+  __IOM uint32_t FLASH_CTRL;          /* (0x0040) Embedded flash control register */
+  __IOM uint32_t FLASH_PASS;          /* (0x0044) Embedded flash password register */
+  __IOM uint32_t FLASH_PGADDR;        /* (0x0048) Embedded flash program address register */
+  __IOM uint32_t FLASH_PGDATA;        /* (0x004C) Embedded flash program word data register */
+  __IOM uint32_t FLASH_SERASE;        /* (0x0050) Embedded flash sector erase control register */
+  __IM uint32_t  RESERVED2;
+  __IOM uint32_t FLASH_CERASE;        /* (0x0058) Embedded flash chip erase control register */
+  __IM uint32_t  RESERVED3;
+  __IOM uint32_t FLASH_CSSADDR;       /* (0x0060) Embedded flash checksum start address */
+  __IOM uint32_t FLASH_CSEADDR;       /* (0x0064) Embedded flash checksum end address */
+  __IM uint32_t  FLASH_CSVALUE;       /* (0x0068) Embedded flash checksum value register */
+  __IOM uint32_t FLASH_CSCVALUE;      /* (0x006C) Embedded flash checksum compare value register */
+  __IOM uint32_t FLASH_INTEN;         /* (0x0070) Embedded flash checksum interrupt enable register */
+  __IOM uint32_t FLASH_INT;           /* (0x0074) Embedded flash checksum interrupt status register */
+  __IM uint32_t  FLASH_RPROT;         /* (0x0078) Embedded flash read protect status register */
+  __IOM uint32_t FLASH_WPROT;         /* (0x007C) Embedded flash write protect control register */
+  __IM uint32_t  RESERVED4;
+  __IOM uint32_t FLASH_NVRPASS;       /* (0x0084) Embedded flash NVR sector password register */
+  __IM uint32_t  FLASH_STS;           /* (0x0088) Embedded flash programming status register */
+  __IM uint32_t  RESERVED5[4];
+  __IOM uint32_t FLASH_CONF;          /* (0x009C) Embedded flash configuration read/write register */
+  __IOM uint32_t FLASH_DSTB;          /* (0x00A0) Embedded flash deep standby control register */
+  __IM uint32_t  RESERVED6[3];
+  __IOM uint32_t FLASH_PTIME;         /* (0x00B0) Embedded flash program time control register */
+  __IOM uint32_t FLASH_ETIME;         /* (0x00B4) Embedded flash erase time control register */
+  __IM uint32_t  RESERVED7[18];
+  __IOM uint32_t SPIFLASH_BUF[64];
 } VC_MEM_TypeDef;
 
 /* MEM_SPIFLASH_CMD register */
@@ -1232,95 +1233,95 @@ typedef struct
 
 typedef struct
 {
-    __IOM uint32_t OEN;
-    __IOM uint32_t IE;
-    __IOM uint32_t DAT;
-    __IOM uint32_t ATT;
+  __IOM uint32_t OEN;
+  __IOM uint32_t IE;
+  __IOM uint32_t DAT;
+  __IOM uint32_t ATT;
 } VC_GPIO_TypeDef;
 
 typedef struct
 {
-    __IOM uint32_t OEN;                 /* (0x0010) IOA output enable register */
-    __IOM uint32_t IE;                  /* (0x0014) IOA input enable register */
-    __IOM uint32_t DAT;                 /* (0x0018) IOA data register */
-    __IOM uint32_t ATT;                 /* (0x001C) IOA attribute register */
-    __IOM uint32_t WKUEN;               /* (0x0020) IOA wake-up enable register */
-    __IM uint32_t  STS;                 /* (0x0024) IOA status register */
-    __IOM uint32_t INT;                 /* (0x0028) IOA interrupt status register */
-    __IM uint32_t  RESERVED[9];
-    __IOM uint32_t NODEG;               /* (0x0050) IOA no-deglitch control register */
-    __IOM uint32_t SEL0;                /* (0x0054) IOA special function select register 0 */
-    __IOM uint32_t SEL1;                /* (0x0058) IOA special function select register 1 */
+  __IOM uint32_t OEN;                 /* (0x0010) IOA output enable register */
+  __IOM uint32_t IE;                  /* (0x0014) IOA input enable register */
+  __IOM uint32_t DAT;                 /* (0x0018) IOA data register */
+  __IOM uint32_t ATT;                 /* (0x001C) IOA attribute register */
+  __IOM uint32_t WKUEN;               /* (0x0020) IOA wake-up enable register */
+  __IM uint32_t  STS;                 /* (0x0024) IOA status register */
+  __IOM uint32_t INT;                 /* (0x0028) IOA interrupt status register */
+  __IM uint32_t  RESERVED[9];
+  __IOM uint32_t NODEG;               /* (0x0050) IOA no-deglitch control register */
+  __IOM uint32_t SEL0;                /* (0x0054) IOA special function select register 0 */
+  __IOM uint32_t SEL1;                /* (0x0058) IOA special function select register 1 */
 } VC_GPIOA_TypeDef;
 
 typedef struct
 {
-    __IOM uint32_t OEN;                 /* (0x0040) IOB output enable register */
-    __IOM uint32_t IE;                  /* (0x0044) IOB input enable register */
-    __IOM uint32_t DAT;                 /* (0x0048) IOB data register */
-    __IOM uint32_t ATT;                 /* (0x004C) IOB attribute register */
-    __IM uint32_t  STS;                 /* (0x0050) IOB input status register */
-    __IOM uint32_t SEL0;                /* (0x0054) IOB special function select register 0 */
-    __IOM uint32_t SEL1;                /* (0x0058) IOB special function select register 1 */
+  __IOM uint32_t OEN;                 /* (0x0040) IOB output enable register */
+  __IOM uint32_t IE;                  /* (0x0044) IOB input enable register */
+  __IOM uint32_t DAT;                 /* (0x0048) IOB data register */
+  __IOM uint32_t ATT;                 /* (0x004C) IOB attribute register */
+  __IM uint32_t  STS;                 /* (0x0050) IOB input status register */
+  __IOM uint32_t SEL0;                /* (0x0054) IOB special function select register 0 */
+  __IOM uint32_t SEL1;                /* (0x0058) IOB special function select register 1 */
 } VC_GPIOB_TypeDef;
 
 typedef struct
 {
-    __IOM uint32_t OEN;                 /* (0x0080) IOC output enable register */
-    __IOM uint32_t IE;                  /* (0x0084) IOC input enable register */
-    __IOM uint32_t DAT;                 /* (0x0088) IOC data register */
-    __IOM uint32_t ATT;                 /* (0x008C) IOC attribute register */
-    __IM uint32_t  STS;                 /* (0x0090) IOC input status register */
-    __IOM uint32_t SEL0;                /* (0x0094) IOC special function select register 0 */
-    __IOM uint32_t SEL1;                /* (0x0098) IOC special function select register 1 */
-    __IM uint32_t  RESERVED[4];
-    __IOM uint32_t WKUEN;               /* (0x00AC) IOC wake-up enable register */
-    __IOM uint32_t INT;                 /* (0x00B0) IOC interrupt status register */
+  __IOM uint32_t OEN;                 /* (0x0080) IOC output enable register */
+  __IOM uint32_t IE;                  /* (0x0084) IOC input enable register */
+  __IOM uint32_t DAT;                 /* (0x0088) IOC data register */
+  __IOM uint32_t ATT;                 /* (0x008C) IOC attribute register */
+  __IM uint32_t  STS;                 /* (0x0090) IOC input status register */
+  __IOM uint32_t SEL0;                /* (0x0094) IOC special function select register 0 */
+  __IOM uint32_t SEL1;                /* (0x0098) IOC special function select register 1 */
+  __IM uint32_t  RESERVED[4];
+  __IOM uint32_t WKUEN;               /* (0x00AC) IOC wake-up enable register */
+  __IOM uint32_t INT;                 /* (0x00B0) IOC interrupt status register */
 } VC_GPIOC_TypeDef;
 
 typedef struct
 {
-    __IOM uint32_t OEN;                 /* (0x00C0) IOD output enable register */
-    __IOM uint32_t IE;                  /* (0x00C4) IOD input enable register */
-    __IOM uint32_t DAT;                 /* (0x00C8) IOD data register */
-    __IOM uint32_t ATT;                 /* (0x00CC) IOD attribute register */
-    __IM uint32_t  STS;                 /* (0x00D0) IOD input status register */
-    __IOM uint32_t SEL;                 /* (0x00D4) IOD special function select register */
+  __IOM uint32_t OEN;                 /* (0x00C0) IOD output enable register */
+  __IOM uint32_t IE;                  /* (0x00C4) IOD input enable register */
+  __IOM uint32_t DAT;                 /* (0x00C8) IOD data register */
+  __IOM uint32_t ATT;                 /* (0x00CC) IOD attribute register */
+  __IM uint32_t  STS;                 /* (0x00D0) IOD input status register */
+  __IOM uint32_t SEL;                 /* (0x00D4) IOD special function select register */
 } VC_GPIOD_TypeDef;
 
 typedef struct
 {
-    __IOM uint32_t OEN;                 /* (0x0100) IOE output enable register */
-    __IOM uint32_t IE;                  /* (0x0104) IOE input enable register */
-    __IOM uint32_t DAT;                 /* (0x0108) IOE data register */
-    __IOM uint32_t ATT;                 /* (0x010C) IOE attribute register */
-    __IM uint32_t  STS;                 /* (0x0110) IOE input status register */
-    __IOM uint32_t SEL;                 /* (0x0114) IOE special function select register */
+  __IOM uint32_t OEN;                 /* (0x0100) IOE output enable register */
+  __IOM uint32_t IE;                  /* (0x0104) IOE input enable register */
+  __IOM uint32_t DAT;                 /* (0x0108) IOE data register */
+  __IOM uint32_t ATT;                 /* (0x010C) IOE attribute register */
+  __IM uint32_t  STS;                 /* (0x0110) IOE input status register */
+  __IOM uint32_t SEL;                 /* (0x0114) IOE special function select register */
 } VC_GPIOE_TypeDef;
 
 typedef struct
 {
-    __IOM uint32_t OEN;                 /* (0x0140) IOF output enable register */
-    __IOM uint32_t IE;                  /* (0x0144) IOF input enable register */
-    __IOM uint32_t DAT;                 /* (0x0148) IOF data register */
-    __IOM uint32_t ATT;                 /* (0x014C) IOF attribute register */
-    __IM uint32_t  STS;                 /* (0x0150) IOF input status register */
-    __IOM uint32_t SEL;                 /* (0x0154) IOF special function select register */
+  __IOM uint32_t OEN;                 /* (0x0140) IOF output enable register */
+  __IOM uint32_t IE;                  /* (0x0144) IOF input enable register */
+  __IOM uint32_t DAT;                 /* (0x0148) IOF data register */
+  __IOM uint32_t ATT;                 /* (0x014C) IOF attribute register */
+  __IM uint32_t  STS;                 /* (0x0150) IOF input status register */
+  __IOM uint32_t SEL;                 /* (0x0154) IOF special function select register */
 } VC_GPIOF_TypeDef;
 
 typedef struct
 {
-    __IOM uint32_t OEN;                 /* (0x0180) IOG output enable register */
-    __IOM uint32_t IE;                  /* (0x0184) IOG input enable register */
-    __IOM uint32_t DAT;                 /* (0x0188) IOG data register */
-    __IOM uint32_t ATT;                 /* (0x018C) IOG attribute register */
-    __IM uint32_t  STS;                 /* (0x0190) IOG input status register */
-    __IOM uint32_t SEL;                 /* (0x0194) IOG special function select register */
+  __IOM uint32_t OEN;                 /* (0x0180) IOG output enable register */
+  __IOM uint32_t IE;                  /* (0x0184) IOG input enable register */
+  __IOM uint32_t DAT;                 /* (0x0188) IOG data register */
+  __IOM uint32_t ATT;                 /* (0x018C) IOG attribute register */
+  __IM uint32_t  STS;                 /* (0x0190) IOG input status register */
+  __IOM uint32_t SEL;                 /* (0x0194) IOG special function select register */
 } VC_GPIOG_TypeDef;
 
 typedef struct
 {
-    __IOM uint32_t MISC;                /* (0x0200) IO misc. control register */
+  __IOM uint32_t MISC;                /* (0x0200) IO misc. control register */
 } VC_GPIOMISC_TypeDef;
 
 /* GPIO_IOX_OEN register */
@@ -1499,25 +1500,25 @@ typedef struct
 
 typedef struct
 {
-    __IOM uint32_t IE;                  /* (0x0000) DMA interrupt enable register */
-    __IOM uint32_t STS;                 /* (0x0004) DMA status register */
-    __IM uint32_t  RESERVED[2];
-    __IOM uint32_t C0CTL;               /* (0x0010) DMA channel control register */
-    __IOM uint32_t C0SRC;               /* (0x0014) DMA channel source register */
-    __IOM uint32_t C0DST;               /* (0x0018) DMA channel destination register */
-    __IOM uint32_t C0LEN;               /* (0x001C) DMA channel transfer length register */
-    __IOM uint32_t C1CTL;               /* (0x0020) DMA channel control register */
-    __IOM uint32_t C1SRC;               /* (0x0024) DMA channel source register */
-    __IOM uint32_t C1DST;               /* (0x0028) DMA channel destination register */
-    __IOM uint32_t C1LEN;               /* (0x002C) DMA channel transfer length register */
-    __IOM uint32_t C2CTL;               /* (0x0030) DMA channel control register */
-    __IOM uint32_t C2SRC;               /* (0x0034) DMA channel source register */
-    __IOM uint32_t C2DST;               /* (0x0038) DMA channel destination register */
-    __IOM uint32_t C2LEN;               /* (0x003C) DMA channel transfer length register */
-    __IOM uint32_t C3CTL;               /* (0x0040) DMA channel control register */
-    __IOM uint32_t C3SRC;               /* (0x0044) DMA channel source register */
-    __IOM uint32_t C3DST;               /* (0x0048) DMA channel destination register */
-    __IOM uint32_t C3LEN;               /* (0x004C) DMA channel transfer length register */
+  __IOM uint32_t IE;                  /* (0x0000) DMA interrupt enable register */
+  __IOM uint32_t STS;                 /* (0x0004) DMA status register */
+  __IM uint32_t  RESERVED[2];
+  __IOM uint32_t C0CTL;               /* (0x0010) DMA channel control register */
+  __IOM uint32_t C0SRC;               /* (0x0014) DMA channel source register */
+  __IOM uint32_t C0DST;               /* (0x0018) DMA channel destination register */
+  __IOM uint32_t C0LEN;               /* (0x001C) DMA channel transfer length register */
+  __IOM uint32_t C1CTL;               /* (0x0020) DMA channel control register */
+  __IOM uint32_t C1SRC;               /* (0x0024) DMA channel source register */
+  __IOM uint32_t C1DST;               /* (0x0028) DMA channel destination register */
+  __IOM uint32_t C1LEN;               /* (0x002C) DMA channel transfer length register */
+  __IOM uint32_t C2CTL;               /* (0x0030) DMA channel control register */
+  __IOM uint32_t C2SRC;               /* (0x0034) DMA channel source register */
+  __IOM uint32_t C2DST;               /* (0x0038) DMA channel destination register */
+  __IOM uint32_t C2LEN;               /* (0x003C) DMA channel transfer length register */
+  __IOM uint32_t C3CTL;               /* (0x0040) DMA channel control register */
+  __IOM uint32_t C3SRC;               /* (0x0044) DMA channel source register */
+  __IOM uint32_t C3DST;               /* (0x0048) DMA channel destination register */
+  __IOM uint32_t C3LEN;               /* (0x004C) DMA channel transfer length register */
 } VC_DMA_TypeDef;
 
 /* DMA_IE register */
@@ -1694,15 +1695,15 @@ typedef struct
 
 typedef struct
 {
-    __IOM uint32_t DATA;                /* (0x0000) UART data register */
-    __IOM uint32_t STATE;               /* (0x0004) UART status register */
-    __IOM uint32_t CTRL;                /* (0x0008) UART control register */
-    __IOM uint32_t INTSTS;              /* (0x000C) UART interrupt status register */
-    __IOM uint32_t BAUDDIV;             /* (0x0010) UART baudrate divide register */
-    __IOM uint32_t CTRL2;               /* (0x0014) UART control regiser 2 */
-    __IOM uint32_t DUTY;                /* (0x0018) UART IR carrier duty control register */
-    __IOM uint32_t FIFOCTRL;            /* (0x001C) UART FIFO control register */
-    __IM uint32_t  FIFOSTS;             /* (0x0020) UART FIFO status register */
+  __IOM uint32_t DATA;                /* (0x0000) UART data register */
+  __IOM uint32_t STATE;               /* (0x0004) UART status register */
+  __IOM uint32_t CTRL;                /* (0x0008) UART control register */
+  __IOM uint32_t INTSTS;              /* (0x000C) UART interrupt status register */
+  __IOM uint32_t BAUDDIV;             /* (0x0010) UART baudrate divide register */
+  __IOM uint32_t CTRL2;               /* (0x0014) UART control regiser 2 */
+  __IOM uint32_t DUTY;                /* (0x0018) UART IR carrier duty control register */
+  __IOM uint32_t FIFOCTRL;            /* (0x001C) UART FIFO control register */
+  __IM uint32_t  FIFOSTS;             /* (0x0020) UART FIFO status register */
 } VC_UART_TypeDef;
 
 /* UART_DATA register */
@@ -1861,11 +1862,11 @@ typedef struct
 
 typedef struct
 {
-    __IOM uint32_t CTRL0;               /* (0x0000) UART 32K control register 0 */
-    __IOM uint32_t CTRL1;               /* (0x0004) UART 32K control register 1 */
-    __IOM uint32_t PHASE;               /* (0x0008) UART 32K baudrate control register */
-    __IM uint32_t  DATA;                /* (0x000C) UART 32K receive data buffer */
-    __IOM uint32_t STS;                 /* (0x0010) UART 32K interrupt status register */
+  __IOM uint32_t CTRL0;               /* (0x0000) UART 32K control register 0 */
+  __IOM uint32_t CTRL1;               /* (0x0004) UART 32K control register 1 */
+  __IOM uint32_t PHASE;               /* (0x0008) UART 32K baudrate control register */
+  __IM uint32_t  DATA;                /* (0x000C) UART 32K receive data buffer */
+  __IOM uint32_t STS;                 /* (0x0010) UART 32K interrupt status register */
 } VC_UART32K_TypeDef;
 
 /* UART32K_CTRL0 register */
@@ -1930,12 +1931,12 @@ typedef struct
 
 typedef struct
 {
-    __IOM uint32_t BAUDDIVL;            /* (0x0004) ISO7816 baudrate low byte register */
-    __IOM uint32_t BAUDDIVH;            /* (0x0008) ISO7816 baudrate high byte register */
-    __IOM uint32_t DATA;                /* (0x000C) ISO7816 data register */
-    __IOM uint32_t INFO;                /* (0x0010) ISO7816 information register */
-    __IOM uint32_t CFG;                 /* (0x0014) ISO7816 control register */
-    __IOM uint32_t CLK;                 /* (0x0018) ISO7816 clock divider control register */
+  __IOM uint32_t BAUDDIVL;            /* (0x0004) ISO7816 baudrate low byte register */
+  __IOM uint32_t BAUDDIVH;            /* (0x0008) ISO7816 baudrate high byte register */
+  __IOM uint32_t DATA;                /* (0x000C) ISO7816 data register */
+  __IOM uint32_t INFO;                /* (0x0010) ISO7816 information register */
+  __IOM uint32_t CFG;                 /* (0x0014) ISO7816 control register */
+  __IOM uint32_t CLK;                 /* (0x0018) ISO7816 clock divider control register */
 } VC_ISO7816_TypeDef;
 
 /* ISO7816_BAUDDIVL register */
@@ -2025,10 +2026,10 @@ typedef struct
 
 typedef struct
 {
-    __IOM uint32_t CTRL;                /* (0x0000) Timer control register */
-    __IOM uint32_t VALUE;               /* (0x0004) Timer current count register */
-    __IOM uint32_t RELOAD;              /* (0x0008) Timer reload register */
-    __IOM uint32_t INT;                 /* (0x000C) Timer interrupt status register */
+  __IOM uint32_t CTRL;                /* (0x0000) Timer control register */
+  __IOM uint32_t VALUE;               /* (0x0004) Timer current count register */
+  __IOM uint32_t RELOAD;              /* (0x0008) Timer reload register */
+  __IOM uint32_t INT;                 /* (0x000C) Timer interrupt status register */
 } VC_TIM_TypeDef;
 
 /* TMR_CTRL register */
@@ -2062,17 +2063,17 @@ typedef struct
 
 typedef struct
 {
-    __IOM uint32_t CTL;                 /* (0x0000) PWM timer control register */
-    __IM uint32_t  TAR;                 /* (0x0004) PWM timer current count register */
-    __IOM uint32_t CCTL[3];             /* (0x0008 - 0x0010) PWM timer compare/capture control register 0 - 3 */
-    __IOM uint32_t CCR[3];              /* (0x0014 - 0x001C) PWM timer compare/capture data register 0 - 3 */
+  __IOM uint32_t CTL;                 /* (0x0000) PWM timer control register */
+  __IM uint32_t  TAR;                 /* (0x0004) PWM timer current count register */
+  __IOM uint32_t CCTL[3];             /* (0x0008 - 0x0010) PWM timer compare/capture control register 0 - 3 */
+  __IOM uint32_t CCR[3];              /* (0x0014 - 0x001C) PWM timer compare/capture data register 0 - 3 */
 } VC_PWM_TypeDef;
 
 typedef struct
 {
-    __IOM uint32_t O_SEL;               /* (0x0000) PWM output selection register */
-    __IOM uint32_t I_SEL01;             /* (0x0004) PWM0 and PWM1's input selection register */
-    __IOM uint32_t I_SEL23;             /* (0x0008) PWM2 and PWM3's input selection register */
+  __IOM uint32_t O_SEL;               /* (0x0000) PWM output selection register */
+  __IOM uint32_t I_SEL01;             /* (0x0004) PWM0 and PWM1's input selection register */
+  __IOM uint32_t I_SEL23;             /* (0x0008) PWM2 and PWM3's input selection register */
 } VC_PWMSEL_TypeDef;
 
 /* PWM_CTL register */
@@ -2189,12 +2190,12 @@ typedef struct
 
 typedef struct
 {
-    __IOM uint32_t CTRL;                /* (0x0000) SPI control register */
-    __IOM uint32_t TXSTS;               /* (0x0004) SPI transmit status register */
-    __IOM uint32_t TXDAT;               /* (0x0008) SPI transmit FIFO register */
-    __IOM uint32_t RXSTS;               /* (0x000C) SPI receive status register */
-    __IOM uint32_t RXDAT;               /* (0x0010) SPI receive FIFO register */
-    __IOM uint32_t MISC;                /* (0x0014) SPI misc control register */
+  __IOM uint32_t CTRL;                /* (0x0000) SPI control register */
+  __IOM uint32_t TXSTS;               /* (0x0004) SPI transmit status register */
+  __IOM uint32_t TXDAT;               /* (0x0008) SPI transmit FIFO register */
+  __IOM uint32_t RXSTS;               /* (0x000C) SPI receive status register */
+  __IOM uint32_t RXDAT;               /* (0x0010) SPI receive FIFO register */
+  __IOM uint32_t MISC;                /* (0x0014) SPI misc control register */
 } VC_SPI_TypeDef;
 
 /* SPI_CTRL register */
@@ -2314,12 +2315,12 @@ typedef struct
 
 typedef struct
 {
-    __IOM uint32_t DATA;                /* (0x0000) I2C data register */
-    __IOM uint32_t ADDR;                /* (0x0004) I2C address register */
-    __IOM uint32_t CTRL;                /* (0x0008) I2C control register */
-    __IOM uint32_t STS;                 /* (0x000C) I2C status register */
-    __IM uint32_t  RESERVED[2];
-    __IOM uint32_t CTRL2;               /* (0x0018) I2C interrupt enable register */
+  __IOM uint32_t DATA;                /* (0x0000) I2C data register */
+  __IOM uint32_t ADDR;                /* (0x0004) I2C address register */
+  __IOM uint32_t CTRL;                /* (0x0008) I2C control register */
+  __IOM uint32_t STS;                 /* (0x000C) I2C status register */
+  __IM uint32_t  RESERVED[2];
+  __IOM uint32_t CTRL2;               /* (0x0018) I2C interrupt enable register */
 } VC_I2C_TypeDef;
 
 /* I2C_DATA register */
@@ -2368,11 +2369,11 @@ typedef struct
 
 typedef struct
 {
-    __IOM uint32_t SRAMINT;             /* (0x0000) SRAM parity error interrupt */
-    __IOM uint32_t SRAMINIT;            /* (0x0004) SRAM initialize register */
-    __IM uint32_t  RESERVED[6];
-    __IM uint32_t  HIADDR;              /* (0x0020) AHB invalid access address */
-    __IM uint32_t  PIADDR;              /* (0x0024) APB invalid access address */
+  __IOM uint32_t SRAMINT;             /* (0x0000) SRAM parity error interrupt */
+  __IOM uint32_t SRAMINIT;            /* (0x0004) SRAM initialize register */
+  __IM uint32_t  RESERVED[6];
+  __IM uint32_t  HIADDR;              /* (0x0020) AHB invalid access address */
+  __IM uint32_t  PIADDR;              /* (0x0024) APB invalid access address */
 } VC_MISC_TypeDef;
 
 /* MISC_SRAMINT register */
@@ -2426,20 +2427,20 @@ typedef struct
 
 typedef struct
 {
-    __IOM uint32_t FLASHWC;             /* (0x0000) Flash wait cycle register */
-    __IOM uint32_t CLKSEL;              /* (0x0004) Clock selection register */
-    __IOM uint32_t CLKDIVH;             /* (0x0008) AHB clock divider control register */
-    __IOM uint32_t CLKDIVP;             /* (0x000C) APB clock divider control register */
-    __IOM uint32_t HCLKEN;              /* (0x0010) AHB clock enable control register */
-    __IOM uint32_t PCLKEN;              /* (0x0014) APB clock enable control register */
-    __IM uint32_t  RESERVED[4];
-    __IOM uint32_t CLKEN_UNLOCK;        /* (0x0028) HCLK, PCLK pass register */
-    __IM uint32_t  RESERVED1;
-    __OM uint32_t  HSOFTRST;            /* (0x0030) HCLK individual module software reset */
-    __OM uint32_t  PSOFTRST;            /* (0x0034) PCLK individual module software reset */
-    __IOM uint32_t SOFTRST_UNLOCK;      /* (0x0038) HCLK, PCLK pass register */
-    __IM uint32_t  RESERVED2;
-    __IOM uint32_t PWRUPDLY;            /* (0x0040) Power up delay control register */
+  __IOM uint32_t FLASHWC;             /* (0x0000) Flash wait cycle register */
+  __IOM uint32_t CLKSEL;              /* (0x0004) Clock selection register */
+  __IOM uint32_t CLKDIVH;             /* (0x0008) AHB clock divider control register */
+  __IOM uint32_t CLKDIVP;             /* (0x000C) APB clock divider control register */
+  __IOM uint32_t HCLKEN;              /* (0x0010) AHB clock enable control register */
+  __IOM uint32_t PCLKEN;              /* (0x0014) APB clock enable control register */
+  __IM uint32_t  RESERVED[4];
+  __IOM uint32_t CLKEN_UNLOCK;        /* (0x0028) HCLK, PCLK pass register */
+  __IM uint32_t  RESERVED1;
+  __OM uint32_t  HSOFTRST;            /* (0x0030) HCLK individual module software reset */
+  __OM uint32_t  PSOFTRST;            /* (0x0034) PCLK individual module software reset */
+  __IOM uint32_t SOFTRST_UNLOCK;      /* (0x0038) HCLK, PCLK pass register */
+  __IM uint32_t  RESERVED2;
+  __IOM uint32_t PWRUPDLY;            /* (0x0040) Power up delay control register */
 } VC_MISC2_TypeDef;
 
 /* MISC2_FLASHWC register */
@@ -2549,11 +2550,11 @@ typedef struct
 
 typedef struct
 {
-    __IOM uint32_t CTRL;                /* (0x0000) Key scan control register */
-    __IM uint32_t  KEYSTS;              /* (0x0004) Key scan key status register */
-    __IOM uint32_t SCANEN;              /* (0x0008) Key scan enable register */
-    __IOM uint32_t INTEN;               /* (0x000C) Key scan interrupt enable register */
-    __IOM uint32_t INTSTS;              /* (0x0010) Key scan interrupt status register */
+  __IOM uint32_t CTRL;                /* (0x0000) Key scan control register */
+  __IM uint32_t  KEYSTS;              /* (0x0004) Key scan key status register */
+  __IOM uint32_t SCANEN;              /* (0x0008) Key scan enable register */
+  __IOM uint32_t INTEN;               /* (0x000C) Key scan interrupt enable register */
+  __IOM uint32_t INTSTS;              /* (0x0010) Key scan interrupt status register */
 } VC_KEYSCAN_TypeDef;
 
 /* KEYSCAN_CTRL register */
@@ -2604,6 +2605,7 @@ typedef struct
 /* ========================================================================= */
 /* ============     Device Specific Peripheral Address Map      ============ */
 /* ========================================================================= */
+
 #define VC_PMU_BASE                     (0x40048000UL)
 #define VC_ANA_BASE                     (0x4004B000UL)
 #define VC_RTC_BASE                     (0x40049000UL)

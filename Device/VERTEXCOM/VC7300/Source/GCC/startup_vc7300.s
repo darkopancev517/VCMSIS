@@ -1,5 +1,5 @@
 /**************************************************************************//**
- * @file     startup_vc7300.S
+ * @file     startup_vc7300.s
  * @brief    CMSIS-Core(M) Device Startup File for VC7300 Cortex-M3 Device
  * @version  V1.0.0
  * @date     28. June 2021
@@ -88,7 +88,7 @@ __Vectors:
                 .long    I2C2_Handler                       /*  36 I2C2 Handler */
                 .long    GPIO_Handler                       /*  37 GPIO Handler */
 
-                .space   (10 * 4)                           /* Interrupts 38 .. 64 are left out */
+                .space   (10 * 4)                           /* Interrupts 38 .. 48 are left out */
 __Vectors_End:
                 .equ     __Vectors_Size, __Vectors_End - __Vectors
                 .size    __Vectors, . - __Vectors
