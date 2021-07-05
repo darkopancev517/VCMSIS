@@ -3385,6 +3385,538 @@ typedef struct
 #define VC_KEYSCAN_INTSTS_INTSTS_Pos            0
 #define VC_KEYSCAN_INTSTS_INTSTS_Msk            (0xFFFFUL << VC_KEYSCAN_INTSTS_INTSTS_Pos)
 
+/* ========================================================================= */
+/* ============                      EPWM                       ============ */
+/* ========================================================================= */
+
+typedef struct
+{
+  __IOM uint32_t TBCTL;               /* (0x0000) EPWM time base control register */
+  __IOM uint32_t TBSTS;               /* (0x0004) EPWM time base status register */
+  __IM uint32_t  RESERVED;
+  __IOM uint32_t TBPHS;               /* (0x000C) EPWM time base phase register */
+  __IOM uint32_t TBCTR;               /* (0x0010) EPWM time base counter register */
+  __IOM uint32_t TBPRD;               /* (0x0014) EPWM time base period register */
+  __IM  uint32_t RESERVED1;
+  __IOM uint32_t CMPCTL;              /* (0x001C) EPWM comparator control register */
+  __IM uint32_t  RESERVED2;
+  __IOM uint32_t CMPA;                /* (0x0024) EPWM comparator A register */
+  __IOM uint32_t CMPB;                /* (0x0028) EPWM comparator B register */
+  __IOM uint32_t AQCTLA;              /* (0x002C) EPWM action qualifier A control register */
+  __IOM uint32_t AQCTLB;              /* (0x0030) EPWM action qualifier B control register */
+  __IOM uint32_t AQSFRC;              /* (0x0034) EPWM action qualifier software control register */
+  __IOM uint32_t AQCSFRC;             /* (0x0038) EPWM action qualifier continous software control register */
+  __IOM uint32_t DBCTL;               /* (0x003C) EPWM dead band control register */
+  __IOM uint32_t DBRED;               /* (0x0040) EPWM dead band rising edge delay register */
+  __IOM uint32_t DBFED;               /* (0x0044) EPWM dead band falling edge delay register */
+  __IOM uint32_t TZSEL;               /* (0x0048) EPWM trip zone select register */
+  __IM uint32_t  RESERVED3;
+  __IOM uint32_t TZCTL;               /* (0x0050) EPWM trip zone control register */
+  __IOM uint32_t TZEINT;              /* (0x0054) EPWM trip zone interrupt enable register */
+  __IOM uint32_t TZINT;               /* (0x0058) EPWM trip zone interrupt status register */
+  __IM uint32_t  RESERVED4;
+  __IOM uint32_t TZFRC;               /* (0x0060) EPWM trip zone software force register */
+  __IOM uint32_t ETSEL;               /* (0x0064) EPWM event trigger select register */
+  __IOM uint32_t ETPS;                /* (0x0068) EPWM event trigger pre-scale register */
+  __IOM uint32_t ETINT;               /* (0x006C) EPWM event trigger interrupt status register */
+  __IM uint32_t  RESERVED5;
+  __IOM uint32_t ETFRC;               /* (0x0074) EPWM event trigger software force register */
+  __IOM uint32_t PCCTL;               /* (0x0078) EPWM PWM-chopper control register */
+} VC_EPWM_TypeDef;
+
+/* EPWM_TBCTL register */
+#define VC_EPWM_TBCTL_MODE_Pos                  0
+#define VC_EPWM_TBCTL_MODE_Msk                  (0x3UL << VC_EPWM_TBCTL_MODE_Pos)
+
+#define VC_EPWM_TBCTL_PHSEN_Pos                 2
+#define VC_EPWM_TBCTL_PHSEN_Msk                 (1UL << VC_EPWM_TBCTL_PHSEN_Pos)
+
+#define VC_EPWM_TBCTL_PRDSHA_Pos                3
+#define VC_EPWM_TBCTL_PRDSHA_Msk                (1UL << VC_EPWM_TBCTL_PRDSHA_Pos)
+
+#define VC_EPWM_TBCTL_SYNCOSEL_Pos              4
+#define VC_EPWM_TBCTL_SYNCOSEL_Msk              (0x3UL << VC_EPWM_TBCTL_SYNCOSEL_Pos)
+
+#define VC_EPWM_TBCTL_SWFSYNC_Pos               6
+#define VC_EPWM_TBCTL_SWFSYNC_Msk               (1UL << VC_EPWM_TBCTL_SWFSYNC_Pos)
+
+#define VC_EPWM_TBCTL_CLKDIV2_Pos               7
+#define VC_EPWM_TBCTL_CLKDIV2_Msk               (0x7UL << VC_EPWM_TBCTL_CLKDIV2_Pos)
+
+#define VC_EPWM_TBCTL_CLKDIV1_Pos               10
+#define VC_EPWM_TBCTL_CLKDIV1_Msk               (0x7UL << VC_EPWM_TBCTL_CLKDIV1_Pos)
+
+#define VC_EPWM_TBCTL_PHSDIR_Pos                13
+#define VC_EPWM_TBCTL_PHSDIR_Msk                (1UL << VC_EPWM_TBCTL_PHSDIR_Pos)
+
+#define VC_EPWM_TBCTL_STOPMODE_Pos              14
+#define VC_EPWM_TBCTL_STOPMODE_Msk              (0x3UL << VC_EPWM_TBCTL_STOPMODE_Pos)
+
+/* EPWM_TBSTS register */
+#define VC_EPWM_TBSTS_DIR_Pos                   0
+#define VC_EPWM_TBSTS_DIR_Msk                   (1UL << VC_EPWM_TBSTS_DIR_Pos)
+
+#define VC_EPWM_TBSTS_SYNCI_Pos                 1
+#define VC_EPWM_TBSTS_SYNCI_Msk                 (1UL << VC_EPWM_TBSTS_SYNCI_Pos)
+
+#define VC_EPWM_TBSTS_CTRMAX_Pos                2
+#define VC_EPWM_TBSTS_CTRMAX_Msk                (1UL << VC_EPWM_TBSTS_CTRMAX_Pos)
+
+/* EPWM_TBPHS register */
+#define VC_EPWM_TBPHS_TBPHS_Pos                 0
+#define VC_EPWM_TBPHS_TBPHS_Msk                 (0xFFFFUL << VC_EPWM_TBPHS_TBPHS_Pos)
+
+/* EPWM_TBCTR register */
+#define VC_EPWM_TBCTR_TBCTR_Pos                 0
+#define VC_EPWM_TBCTR_TBCTR_Msk                 (0xFFFFUL << VC_EPWM_TBCTR_TBCTR_Pos)
+
+/* EPWM_TBPRD register */
+#define VC_EPWM_TBPRD_TBPRD_Pos                 0
+#define VC_EPWM_TBPRD_TBPRD_Msk                 (0xFFFFUL << VC_EPWM_TBPRD_TBPRD_Pos)
+
+/* EPWM_CMPCTL register */
+#define VC_EPWM_CMPCTL_LOADAMODE_Pos            0
+#define VC_EPWM_CMPCTL_LOADAMODE_Msk            (0x3UL << VC_EPWM_CMPCTL_LOADAMODE_Pos)
+
+#define VC_EPWM_CMPCTL_LOADBMODE_Pos            2
+#define VC_EPWM_CMPCTL_LOADBMODE_Msk            (0x3UL << VC_EPWM_CMPCTL_LOADBMODE_Pos)
+
+#define VC_EPWM_CMPCTL_SHAAMODE_Pos             4
+#define VC_EPWM_CMPCTL_SHAAMODE_Msk             (1UL << VC_EPWM_CMPCTL_SHAAMODE_Pos)
+
+#define VC_EPWM_CMPCTL_SHABMODE_Pos             6
+#define VC_EPWM_CMPCTL_SHABMODE_Msk             (1UL << VC_EPWM_CMPCTL_SHABMODE_Pos)
+
+#define VC_EPWM_CMPCTL_SHAAFULL_Pos             8
+#define VC_EPWM_CMPCTL_SHAAFULL_Msk             (1UL << VC_EPWM_CMPCTL_SHAAFULL_Pos)
+
+#define VC_EPWM_CMPCTL_SHABFULL_Pos             9
+#define VC_EPWM_CMPCTL_SHABFULL_Msk             (1UL << VC_EPWM_CMPCTL_SHABFULL_Pos)
+
+/* EPWM_CMPA register */
+#define VC_EPWM_CMPA_CMPA_Pos                   0
+#define VC_EPWM_CMPA_CMPA_Msk                   (0xFFFFUL << VC_EPWM_CMPA_CMPA_Pos)
+
+/* EPWM_CMPB register */
+#define VC_EPWM_CMPB_CMPB_Pos                   0
+#define VC_EPWM_CMPB_CMPB_Msk                   (0xFFFFUL << VC_EPWM_CMPB_CMPB_Pos)
+
+/* EPWM_AQCTLA register */
+#define VC_EPWM_AQCTLA_ZRO_Pos                  0
+#define VC_EPWM_AQCTLA_ZRO_Msk                  (0x3UL << VC_EPWM_AQCTLA_ZRO_Pos)
+
+#define VC_EPWM_AQCTLA_PRD_Pos                  2
+#define VC_EPWM_AQCTLA_PRD_Msk                  (0x3UL << VC_EPWM_AQCTLA_PRD_Pos)
+
+#define VC_EPWM_AQCTLA_CAU_Pos                  4
+#define VC_EPWM_AQCTLA_CAU_Msk                  (0x3UL << VC_EPWM_AQCTLA_CAU_Pos)
+
+#define VC_EPWM_AQCTLA_CAD_Pos                  6
+#define VC_EPWM_AQCTLA_CAD_Msk                  (0x3UL << VC_EPWM_AQCTLA_CAD_Pos)
+
+#define VC_EPWM_AQCTLA_CBU_Pos                  8
+#define VC_EPWM_AQCTLA_CBU_Msk                  (0x3UL << VC_EPWM_AQCTLA_CBU_Pos)
+
+#define VC_EPWM_AQCTLA_CBD_Pos                  10
+#define VC_EPWM_AQCTLA_CBD_Msk                  (0x3UL << VC_EPWM_AQCTLA_CBD_Pos)
+
+/* EPWM_AQCTLB register */
+#define VC_EPWM_AQCTLB_ZRO_Pos                  0
+#define VC_EPWM_AQCTLB_ZRO_Msk                  (0x3UL << VC_EPWM_AQCTLB_ZRO_Pos)
+
+#define VC_EPWM_AQCTLB_PRD_Pos                  2
+#define VC_EPWM_AQCTLB_PRD_Msk                  (0x3UL << VC_EPWM_AQCTLB_PRD_Pos)
+
+#define VC_EPWM_AQCTLB_CAU_Pos                  3
+#define VC_EPWM_AQCTLB_CAU_Msk                  (0x3UL << VC_EPWM_AQCTLB_CAU_Pos)
+
+#define VC_EPWM_AQCTLB_CAD_Pos                  6
+#define VC_EPWM_AQCTLB_CAD_Msk                  (0x3UL << VC_EPWM_AQCTLB_CAD_Pos)
+
+#define VC_EPWM_AQCTLB_CBU_Pos                  8
+#define VC_EPWM_AQCTLB_CBU_Msk                  (0x3UL << VC_EPWM_AQCTLB_CBU_Pos)
+
+#define VC_EPWM_AQCTLB_CBD_Pos                  10
+#define VC_EPWM_AQCTLB_CBD_Msk                  (0x3UL << VC_EPWM_AQCTLB_CBD_Pos)
+
+/* EPWM_AQSFRC register */
+#define VC_EPWM_AQSFRC_SFAACT_Pos               0
+#define VC_EPWM_AQSFRC_SFAACT_Msk               (0x3UL << VC_EPWM_AQSFRC_SFAACT_Pos)
+
+#define VC_EPWM_AQSFRC_SFAOT_Pos                2
+#define VC_EPWM_AQSFRC_SFAOT_Msk                (1UL << VC_EPWM_AQSFRC_SFAOT_Pos)
+
+#define VC_EPWM_AQSFRC_SFBACT_Pos               3
+#define VC_EPWM_AQSFRC_SFBACT_Msk               (0x3UL << VC_EPWM_AQSFRC_SFBACT_Pos)
+
+#define VC_EPWM_AQSFRC_SFBOT_Pos                5
+#define VC_EPWM_AQSFRC_SFBOT_Msk                (1UL << VC_EPWM_AQSFRC_SFBOT_Pos)
+
+#define VC_EPWM_AQSFRC_LDCSFRC_Pos              6
+#define VC_EPWM_AQSFRC_LDCSFRC_Msk              (0x3UL << VC_EPWM_AQSFRC_LDCSFRC_Pos)
+
+/* EPWM_AQCSFRC register */
+#define VC_EPWM_AQCSFRC_CSFA_Pos                0
+#define VC_EPWM_AQCSFRC_CSFA_Msk                (0x3UL << VC_EPWM_AQCSFRC_CSFA_Pos)
+
+#define VC_EPWM_AQCSFRC_CSFB_Pos                2
+#define VC_EPWM_AQCSFRC_CSFB_Msk                (0x3UL << VC_EPWM_AQCSFRC_CSFB_Pos)
+
+/* EPWM_DBCTL register */
+#define VC_EPWM_DBCTL_AOUTSEL_Pos               0
+#define VC_EPWM_DBCTL_AOUTSEL_Msk               (1UL << VC_EPWM_DBCTL_AOUTSEL_Pos)
+
+#define VC_EPWM_DBCTL_BOUTSEL_Pos               1
+#define VC_EPWM_DBCTL_BOUTSEL_Msk               (1UL << VC_EPWM_DBCTL_BOUTSEL_Pos)
+
+#define VC_EPWM_DBCTL_APOL_Pos                  2
+#define VC_EPWM_DBCTL_APOL_Msk                  (1UL << VC_EPWM_DBCTL_APOL_Pos)
+
+#define VC_EPWM_DBCTL_BPOL_Pos                  3
+#define VC_EPWM_DBCTL_BPOL_Msk                  (1UL << VC_EPWM_DBCTL_BPOL_Pos)
+
+#define VC_EPWM_DBCTL_RINSEL_Pos                4
+#define VC_EPWM_DBCTL_RINSEL_Msk                (1UL << VC_EPWM_DBCTL_RINSEL_Pos)
+
+#define VC_EPWM_DBCTL_FINSEL_Pos                5
+#define VC_EPWM_DBCTL_FINSEL_Msk                (1UL << VC_EPWM_DBCTL_FINSEL_Pos)
+
+/* EPWM_DBRED register */
+#define VC_EPWM_DBRED_DBRED_Pos                 0
+#define VC_EPWM_DBRED_DBRED_Msk                 (0x3FFUL << VC_EPWM_DBRED_DBRED_Pos)
+
+/* EPWM_DBFED register */
+#define VC_EPWM_DBFED_DBFED_Pos                 0
+#define VC_EPWM_DBFED_DBFED_Msk                 (0x3FFUL << VC_EPWM_DBFED_DBFED_Pos)
+
+/* EPWM_TZSEL register */
+#define VC_EPWM_TZSEL_TZ0CBC_Pos                0
+#define VC_EPWM_TZSEL_TZ0CBC_Msk                (1UL << VC_EPWM_TZSEL_TZ0CBC_Pos)
+
+#define VC_EPWM_TZSEL_TZ1CBC_Pos                1
+#define VC_EPWM_TZSEL_TZ1CBC_Msk                (1UL << VC_EPWM_TZSEL_TZ1CBC_Pos)
+
+#define VC_EPWM_TZSEL_TZ2CBC_Pos                2
+#define VC_EPWM_TZSEL_TZ2CBC_Msk                (1UL << VC_EPWM_TZSEL_TZ2CBC_Pos)
+
+#define VC_EPWM_TZSEL_TZ3CBC_Pos                3
+#define VC_EPWM_TZSEL_TZ3CBC_Msk                (1UL << VC_EPWM_TZSEL_TZ3CBC_Pos)
+
+#define VC_EPWM_TZSEL_TZ4CBC_Pos                4
+#define VC_EPWM_TZSEL_TZ4CBC_Msk                (1UL << VC_EPWM_TZSEL_TZ4CBC_Pos)
+
+#define VC_EPWM_TZSEL_TZ5CBC_Pos                5
+#define VC_EPWM_TZSEL_TZ5CBC_Msk                (1UL << VC_EPWM_TZSEL_TZ5CBC_Pos)
+
+#define VC_EPWM_TZSEL_TZ0OST_Pos                8
+#define VC_EPWM_TZSEL_TZ0OST_Msk                (1UL << VC_EPWM_TZSEL_TZ0OST_Pos)
+
+#define VC_EPWM_TZSEL_TZ1OST_Pos                9
+#define VC_EPWM_TZSEL_TZ1OST_Msk                (1UL << VC_EPWM_TZSEL_TZ1OST_Pos)
+
+#define VC_EPWM_TZSEL_TZ2OST_Pos                10
+#define VC_EPWM_TZSEL_TZ2OST_Msk                (1UL << VC_EPWM_TZSEL_TZ2OST_Pos)
+
+#define VC_EPWM_TZSEL_TZ3OST_Pos                11
+#define VC_EPWM_TZSEL_TZ3OST_Msk                (1UL << VC_EPWM_TZSEL_TZ3OST_Pos)
+
+#define VC_EPWM_TZSEL_TZ4OST_Pos                12
+#define VC_EPWM_TZSEL_TZ4OST_Msk                (1UL << VC_EPWM_TZSEL_TZ4OST_Pos)
+
+#define VC_EPWM_TZSEL_TZ5OST_Pos                13
+#define VC_EPWM_TZSEL_TZ5OST_Msk                (1UL << VC_EPWM_TZSEL_TZ5OST_Pos)
+
+/* EPWM_TZCTL register */
+#define VC_EPWM_TZCTL_TZACTL_Pos                0
+#define VC_EPWM_TZCTL_TZACTL_Msk                (0x3UL << VC_EPWM_TZCTL_TZACTL_Pos)
+
+#define VC_EPWM_TZCTL_TZBCTL_Pos                2
+#define VC_EPWM_TZCTL_TZBCTL_Msk                (0x3UL << VC_EPWM_TZCTL_TZBCTL_Pos)
+
+/* EPWM_TZEINT register */
+#define VC_EPWM_TZEINT_CBCEINT_Pos              1
+#define VC_EPWM_TZEINT_CBCEINT_Msk              (1UL << VC_EPWM_TZEINT_CBCEINT_Pos)
+
+#define VC_EPWM_TZEINT_OSTEINT_Pos              2
+#define VC_EPWM_TZEINT_OSTEINT_Msk              (1UL << VC_EPWM_TZEINT_OSTEINT_Pos)
+
+/* EPWM_TZINT register */
+#define VC_EPWM_TZINT_TZINT_Pos                 0
+#define VC_EPWM_TZINT_TZINT_Msk                 (1UL << VC_EPWM_TZINT_TZINT_Pos)
+
+#define VC_EPWM_TZINT_CBCEVT_Pos                1
+#define VC_EPWM_TZINT_CBCEVT_Msk                (1UL << VC_EPWM_TZINT_CBCEVT_Pos)
+
+#define VC_EPWM_TZINT_OSTEVT_Pos                2
+#define VC_EPWM_TZINT_OSTEVT_Msk                (1UL << VC_EPWM_TZINT_OSTEVT_Pos)
+
+/* EPWM_TZFRC register */
+#define VC_EPWM_TZFRC_SFCBC_Pos                 1
+#define VC_EPWM_TZFRC_SFCBC_Msk                 (1UL << VC_EPWM_TZFRC_SFCBC_Pos)
+
+#define VC_EPWM_TZFRC_SFOST_Pos                 2
+#define VC_EPWM_TZFRC_SFOST_Msk                 (1UL << VC_EPWM_TZFRC_SFOST_Pos)
+
+/* EPWM_ETSEL register */
+#define VC_EPWM_ETSEL_INTSEL_Pos                0
+#define VC_EPWM_ETSEL_INTSEL_Msk                (0x7UL << VC_EPWM_ETSEL_INTSEL_Pos)
+
+#define VC_EPWM_ETSEL_INTEN_Pos                 3
+#define VC_EPWM_ETSEL_INTEN_Msk                 (1UL << VC_EPWM_ETSEL_INTEN_Pos)
+
+#define VC_EPWM_ETSEL_ADCASEL_Pos               8
+#define VC_EPWM_ETSEL_ADCASEL_Msk               (0x7UL << VC_EPWM_ETSEL_ADCASEL_Pos)
+
+#define VC_EPWM_ETSEL_ADCAEN_Pos                11
+#define VC_EPWM_ETSEL_ADCAEN_Msk                (1UL << VC_EPWM_ETSEL_ADCAEN_Pos)
+
+#define VC_EPWM_ETSEL_ADCBSEL_Pos               12
+#define VC_EPWM_ETSEL_ADCBSEL_Msk               (0x7UL << VC_EPWM_ETSEL_ADCBSEL_Pos)
+
+#define VC_EPWM_ETSEL_ADCBEN_Pos                15
+#define VC_EPWM_ETSEL_ADCBEN_Msk                (1UL << VC_EPWM_ETSEL_ADCBEN_Pos)
+
+/* EPWM_ETPS register */
+#define VC_EPWM_ETPS_INTPRD_Pos                 0
+#define VC_EPWM_ETPS_INTPRD_Msk                 (0x3UL << VC_EPWM_ETPS_INTPRD_Pos)
+
+#define VC_EPWM_ETPS_INTSTS_Pos                 2
+#define VC_EPWM_ETPS_INTSTS_Msk                 (0x3UL << VC_EPWM_ETPS_INTSTS_Pos)
+
+#define VC_EPWM_ETPS_ADCAPRD_Pos                8
+#define VC_EPWM_ETPS_ADCAPRD_Msk                (0x3UL << VC_EPWM_ETPS_ADCAPRD_Pos)
+
+#define VC_EPWM_ETPS_ADCASTS_Pos                10
+#define VC_EPWM_ETPS_ADCASTS_Msk                (0x3UL << VC_EPWM_ETPS_ADCASTS_Pos)
+
+#define VC_EPWM_ETPS_ADCBPRD_Pos                12
+#define VC_EPWM_ETPS_ADCBPRD_Msk                (0x3UL << VC_EPWM_ETPS_ADCBPRD_Pos)
+
+#define VC_EPWM_ETPS_ADCBSTS_Pos                14
+#define VC_EPWM_ETPS_ADCBSTS_Msk                (0x3UL << VC_EPWM_ETPS_ADCBSTS_Pos)
+
+/* EPWM_ETINT register */
+#define VC_EPWM_ETINT_INTFLG_Pos                0
+#define VC_EPWM_ETINT_INTFLG_Msk                (1UL << VC_EPWM_ETINT_INTFLG_Pos)
+
+#define VC_EPWM_ETINT_ADCAEVT_Pos               2
+#define VC_EPWM_ETINT_ADCAEVT_Msk               (1UL << VC_EPWM_ETINT_ADCAEVT_Pos)
+
+#define VC_EPWM_ETINT_ADCBEVT_Pos               3
+#define VC_EPWM_ETINT_ADCBEVT_Msk               (1UL << VC_EPWM_ETINT_ADCBEVT_Pos)
+
+/* EPWM_ETFRC register */
+#define VC_EPWM_ETFRC_SFINT_Pos                 0
+#define VC_EPWM_ETFRC_SFINT_Msk                 (1UL << VC_EPWM_ETFRC_SFINT_Pos)
+
+#define VC_EPWM_ETFRC_SFADCA_Pos                2
+#define VC_EPWM_ETFRC_SFADCA_Msk                (1UL << VC_EPWM_ETFRC_SFADCA_Pos)
+
+#define VC_EPWM_ETFRC_SFADCB_Pos                3
+#define VC_EPWM_ETFRC_SFADCB_Msk                (1UL << VC_EPWM_ETFRC_SFADCB_Pos)
+
+/* EPWM_PCCTL register */
+#define VC_EPWM_PCCTL_CHPEN_Pos                 0
+#define VC_EPWM_PCCTL_CHPEN_Msk                 (1UL << VC_EPWM_PCCTL_CHPEN_Pos)
+
+#define VC_EPWM_PCCTL_FPWDT_Pos                 1
+#define VC_EPWM_PCCTL_FPWDT_Msk                 (0xFUL << VC_EPWM_PCCTL_FPWDT_Pos)
+
+#define VC_EPWM_PCCTL_FREQ_Pos                  5
+#define VC_EPWM_PCCTL_FREQ_Msk                  (0x7UL << VC_EPWM_PCCTL_FREQ_Pos)
+
+#define VC_EPWM_PCCTL_DUTY_Pos                  8
+#define VC_EPWM_PCCTL_DUTY_Msk                  (0x7UL << VC_EPWM_PCCTL_DUTY_Pos)
+
+typedef struct
+{
+  __IOM uint32_t INSYNC;              /* (0x0000) EPWM all module input sync signal control register */
+  __IOM uint32_t TBSYNC;              /* (0x0004) EPWM all module time base clock sync control register */
+} VC_EPWM_SYNC_TypeDef;
+
+/* EPWM_INSYNC register */
+#define VC_EPWM_SYNC_INSYNC_2_Pos               2
+#define VC_EPWM_SYNC_INSYNC_2_Msk               (1UL << VC_EPWM_SYNC_INSYNC_2_Pos)
+
+#define VC_EPWM_SYNC_INSYNC_3_Pos               3
+#define VC_EPWM_SYNC_INSYNC_3_Msk               (1UL << VC_EPWM_SYNC_INSYNC_3_Pos)
+
+#define VC_EPWM_SYNC_INSYNC_4_Pos               4
+#define VC_EPWM_SYNC_INSYNC_4_Msk               (1UL << VC_EPWM_SYNC_INSYNC_4_Pos)
+
+#define VC_EPWM_SYNC_INSYNC_5_Pos               5
+#define VC_EPWM_SYNC_INSYNC_5_Msk               (1UL << VC_EPWM_SYNC_INSYNC_5_Pos)
+
+#define VC_EPWM_SYNC_INSYNC_6_Pos               6
+#define VC_EPWM_SYNC_INSYNC_6_Msk               (1UL << VC_EPWM_SYNC_INSYNC_6_Pos)
+
+#define VC_EPWM_SYNC_INSYNC_7_Pos               7
+#define VC_EPWM_SYNC_INSYNC_7_Msk               (1UL << VC_EPWM_SYNC_INSYNC_7_Pos)
+
+/* EPWM_TBSYNC register */
+#define VC_EPWM_SYNC_TBSYNC_Pos                 0
+#define VC_EPWM_SYNC_TBSYNC_Msk                 (1UL << VC_EPWM_SYNC_TBSYNC_Pos)
+
+/* ========================================================================= */
+/* ============                     MSG_BOX                     ============ */
+/* ========================================================================= */
+
+typedef struct
+{
+  __IOM uint32_t M3MSG_0;             /* (0x0000) M3 to M0 message register */
+  __IOM uint32_t M3MSG_1;             /* (0x0004) M3 to M0 message register */
+  __IOM uint32_t M0M3MSG_INT0;        /* (0x0008) M0 to M3 message status register */
+  __IOM uint32_t M0M3MSG_INT1;        /* (0x000C) M0 to M3 message status register */
+  __IOM uint32_t M3MSGIE_0;           /* (0x0010) MSG interrupt enable [31:0] */
+  __IOM uint32_t M3MSGIE_1;           /* (0x0014) MSG interrupt enable [63:32] */
+  __IM uint32_t  M0MSGSTS_0;          /* (0x0018) M0 message status */
+  __IM uint32_t  M0MSGSTS_1;          /* (0x001C) M0 message status */
+  __IM uint32_t  M3STS;               /* (0x0020) M3 status */
+} VC_MSG_BOX_M3_TypeDef;
+
+/* M3MSG_0 register */
+#define VC_MSG_BOX_M3_M3MSG_0_Pos               0
+#define VC_MSG_BOX_M3_M3MSG_0_Msk               (0xFFFFFFFFUL << VC_MSG_BOX_M3_M3MSG_0_Pos)
+
+/* M3MSG_1 register */
+#define VC_MSG_BOX_M3_M3MSG_1_Pos               0
+#define VC_MSG_BOX_M3_M3MSG_1_Msk               (0x7FFFFFFFUL << VC_MSG_BOX_M3_M3MSG_1_Pos)
+
+/* M0M3MSG_INT0 register */
+#define VC_MSG_BOX_M3_M0M3MSG_INT0_Pos          0
+#define VC_MSG_BOX_M3_M0M3MSG_INT0_Msk          (0xFFFFFFFFUL << VC_MSG_BOX_M3_M0M3MSG_INT0_Pos)
+
+/* M0M3MSG_INT1 register */
+#define VC_MSG_BOX_M3_M0M3MSG_INT1_M0_Message_Pos             0
+#define VC_MSG_BOX_M3_M0M3MSG_INT1_M0_Message_Msk             (0x3FFFFFFFUL << VC_MSG_BOX_M3_M0M3MSG_INT1_M0_Message_Pos)
+
+#define VC_MSG_BOX_M3_M0M3MSG_INT1_M3_Error_Status_Pos        30
+#define VC_MSG_BOX_M3_M0M3MSG_INT1_M3_Error_Status_Msk        (1UL << VC_MSG_BOX_M3_M0M3MSG_INT1_M3_Error_Status_Pos)
+
+#define VC_MSG_BOX_M3_M0M3MSG_INT1_M0_WDT_Reset_Pos           31
+#define VC_MSG_BOX_M3_M0M3MSG_INT1_M0_WDT_Reset_Msk           (1UL << VC_MSG_BOX_M3_M0M3MSG_INT1_M0_WDT_Reset_Pos)
+
+/* M3MSGIE_0 register */
+#define VC_MSG_BOX_M3_M3MSGIE_0_INTEN_Pos       0
+#define VC_MSG_BOX_M3_M3MSGIE_0_INTEN_Msk       (0xFFFFFFFFUL << VC_MSG_BOX_M3_M3MSGIE_0_INTEN_Pos)
+
+/* M3MSGIE_1 register */
+#define VC_MSG_BOX_M3_M3MSGIE_1_INTEN_Pos       0
+#define VC_MSG_BOX_M3_M3MSGIE_1_INTEN_Msk       (0x7FFFFFFFUL << VC_MSG_BOX_M3_M3MSGIE_1_INTEN_Pos)
+
+/* M0MSGSTS_0 register */
+#define VC_MSG_BOX_M3_M0MSGSTS_0_Status_Pos     0
+#define VC_MSG_BOX_M3_M0MSGSTS_0_Status_Msk     (0xFFFFFFFFUL << VC_MSG_BOX_M3_M0MSGSTS_0_Status_Pos)
+
+/* M0MSGSTS_1 register */
+#define VC_MSG_BOX_M3_M0MSGSTS_1_Status_Pos     0
+#define VC_MSG_BOX_M3_M0MSGSTS_1_Status_Msk     (0xFFFFFFFFUL << VC_MSG_BOX_M3_M0MSGSTS_1_Status_Pos)
+
+/* M3STS register */
+#define VC_MSG_BOX_M3_M3STS_M3M0_Write_Status_Pos   0
+#define VC_MSG_BOX_M3_M3STS_M3M0_Write_Status_Msk   (1UL << VC_MSG_BOX_M3_M3STS_M3M0_Write_Status_Pos)
+
+typedef struct
+{
+  __IOM uint32_t M0MSG_0;             /* (0x0000) M0 to M3 message register */
+  __IOM uint32_t M0MSG_1;             /* (0x0004) M0 to M3 message register */
+  __IOM uint32_t M3M0MSG_INT0;        /* (0x0008) M3 to M0 message status register */
+  __IOM uint32_t M3M0MSG_INT1;        /* (0x000C) M3 to M0 message status register */
+  __IOM uint32_t M0MSGIE_0;           /* (0x0010) MSG interrupt enable [31:0] */
+  __IOM uint32_t M0MSGIE_1;           /* (0x0014) MSG interrupt enable [63:32] */
+  __IM uint32_t  M3MSGSTS_0;          /* (0x0018) M3 message status */
+  __IM uint32_t  M3MSGSTS_1;          /* (0x001C) M3 message status */
+  __IM uint32_t  M0STS;               /* (0x0020) M0 status */
+} VC_MSG_BOX_M0_TypeDef;
+
+/* M0MSG_0 register */
+#define VC_MSG_BOX_M0_M0MSG_0_Pos               0
+#define VC_MSG_BOX_M0_M0MSG_0_Msk               (0xFFFFFFFFUL << VC_MSG_BOX_M0_M0MSG_0_Pos)
+
+/* M0MSG_1 register */
+#define VC_MSG_BOX_M0_M0MSG_1_Pos               0
+#define VC_MSG_BOX_M0_M0MSG_1_Msk               (0x7FFFFFFFUL << VC_MSG_BOX_M0_M0MSG_1_Pos)
+
+/* M3M0MSG_INT0 register */
+#define VC_MSG_BOX_M0_M3M0MSG_INT0_Pos          0
+#define VC_MSG_BOX_M0_M3M0MSG_INT0_Msk          (0xFFFFFFFFUL << VC_MSG_BOX_M0_M3M0MSG_INT0_Pos)
+
+/* M3M0MSG_INT1 register */
+#define VC_MSG_BOX_M0_M3M0MSG_INT1_M0_Message_Pos             0
+#define VC_MSG_BOX_M0_M3M0MSG_INT1_M0_Message_Msk             (0x7FFFFFFFUL << VC_MSG_BOX_M0_M3M0MSG_INT1_M0_Message_Pos)
+
+#define VC_MSG_BOX_M0_M3M0MSG_INT1_M0_Error_Status_Pos        31
+#define VC_MSG_BOX_M0_M3M0MSG_INT1_M0_Error_Status_Msk        (1UL << VC_MSG_BOX_M0_M3M0MSG_INT1_M0_Error_Status_Pos)
+
+/* M0MSGIE_0 register */
+#define VC_MSG_BOX_M0_M0MSGIE_0_INTEN_Pos       0
+#define VC_MSG_BOX_M0_M0MSGIE_0_INTEN_Msk       (0xFFFFFFFFUL << VC_MSG_BOX_M0_M0MSGIE_0_INTEN_Pos)
+
+/* M0MSGIE_1 register */
+#define VC_MSG_BOX_M0_M0MSGIE_1_INTEN_Pos       0
+#define VC_MSG_BOX_M0_M0MSGIE_1_INTEN_Msk       (0xFFFFFFFFUL << VC_MSG_BOX_M0_M0MSGIE_1_INTEN_Pos)
+
+/* M3MSGSTS_0 register */
+#define VC_MSG_BOX_M0_M3MSGSTS_0_Status_Pos     0
+#define VC_MSG_BOX_M0_M3MSGSTS_0_Status_Msk     (0xFFFFFFFFUL << VC_MSG_BOX_M0_M3MSGSTS_0_Status_Pos)
+
+/* M3MSGSTS_1 register */
+#define VC_MSG_BOX_M0_M3MSGSTS_1_Status_Pos     0
+#define VC_MSG_BOX_M0_M3MSGSTS_1_Status_Msk     (0xFFFFFFFFUL << VC_MSG_BOX_M0_M3MSGSTS_1_Status_Pos)
+
+/* M0STS register */
+#define VC_MSG_BOX_M0_M0STS_M0M3_Write_Status_Pos   0
+#define VC_MSG_BOX_M0_M0STS_M0M3_Write_Status_Msk   (1UL << VC_MSG_BOX_M0_M0STS_M0M3_Write_Status_Pos)
+
+/* ========================================================================= */
+/* ============       BREAK POINT CONTROLLER/DETECTION          ============ */
+/* ========================================================================= */
+/* Note: The break point controller is used to detect M3 access M0 illegal
+ * memory regions or M0 access M3 illegal memory regions and issue interrupt to
+ * info M3 CPU. */
+
+typedef struct
+{
+  __IOM uint32_t BPM3M0ADDRB;         /* (0x0000) Detect M0 start address */
+  __IOM uint32_t BPM3M0ADDRE;         /* (0x0004) Detect M0 end address */
+  __IOM uint32_t BPM0M3ADDRB;         /* (0x0008) Detect M3 start address */
+  __IOM uint32_t BPM0M3ADDRE;         /* (0x000C) Detect M3 end address */
+  __IOM uint32_t BPINTEN;             /* (0x0010) Interrupt enable */
+  __IOM uint32_t BPINT;               /* (0x0014) Detect status */
+} VC_BPDET_TypeDef;
+
+/* BPM3M0ADDRB register */
+#define VC_BPDET_BPM3M0ADDRB_Pos                0
+#define VC_BPDET_BPM3M0ADDRB_Msk                (0xFFFFFFFFUL << VC_BPDET_BPM3M0ADDRB_Pos)
+
+/* BPM3M0ADDRE register */
+#define VC_BPDET_BPM3M0ADDRE_Pos                0
+#define VC_BPDET_BPM3M0ADDRE_Msk                (0x7FFFFFFFUL << VC_BPDET_BPM3M0ADDRE_Pos)
+
+/* BPM0M3ADDRB register */
+#define VC_BPDET_BPM0M3ADDRB_Pos                0
+#define VC_BPDET_BPM0M3ADDRB_Msk                (0xFFFFFFFFUL << VC_BPDET_BPM0M3ADDRB_Pos)
+
+/* BPM0M3ADDRE register */
+#define VC_BPDET_BPM0M3ADDRE_Pos                0
+#define VC_BPDET_BPM0M3ADDRE_Msk                (0x7FFFFFFFUL << VC_BPDET_BPM0M3ADDRE_Pos)
+
+/* BPINTEN register */
+#define VC_BPDET_BPINTEN_INTEN_Pos              0
+#define VC_BPDET_BPINTEN_INTEN_Msk              (0xFUL << VC_BPDET_BPINTEN_INTEN_Pos)
+
+/* BPINT register */
+#define VC_BPDET_BPINT_DET_M3M0_WRITE_Pos       0
+#define VC_BPDET_BPINT_DET_M3M0_WRITE_Msk       (1UL << VC_BPDET_BPINT_DET_M3M0_WRITE_Pos)
+
+#define VC_BPDET_BPINT_DET_M3M0_READ_Pos        1
+#define VC_BPDET_BPINT_DET_M3M0_READ_Msk        (1UL << VC_BPDET_BPINT_DET_M3M0_READ_Pos)
+
+#define VC_BPDET_BPINT_DET_M0M3_WRITE_Pos       2
+#define VC_BPDET_BPINT_DET_M0M3_WRITE_Msk       (1UL << VC_BPDET_BPINT_DET_M0M3_WRITE_Pos)
+
+#define VC_BPDET_BPINT_DET_M0M3_READ_Pos        3
+#define VC_BPDET_BPINT_DET_M0M3_READ_Msk        (1UL << VC_BPDET_BPINT_DET_M0M3_READ_Pos)
 
 /* ================  End of section using anonymous unions  ================ */
 #if   defined (__CC_ARM)
@@ -3459,6 +3991,8 @@ typedef struct
 #define VC_EPWM6_BASE                   (0x40024600UL)
 #define VC_EPWM7_BASE                   (0x40024700UL)
 #define VC_EPWM_SYNC_BASE               (0x40024FF8UL)
+#define VC_MSG_BOX_BASE                 (0x40050000UL)
+#define VC_BPDET_BASE                   (0x40004000UL)
 
 /* ========================================================================= */
 /* ============             Peripheral declaration              ============ */
@@ -3510,6 +4044,18 @@ typedef struct
 #define VC_MISC_M0                      ((VC_MISC_TypeDef *) VC_MISC_BASE)
 #define VC_MISC2_M0                     ((VC_MISC2_M0_TypeDef *) VC_MISC2_BASE)
 #define VC_KEYSCAN                      ((VC_KEYSCAN_TypeDef *) VC_KEYSCAN_BASE)
+#define VC_EPWM0                        ((VC_EPWM_TypeDef *) VC_EPWM0_BASE)
+#define VC_EPWM1                        ((VC_EPWM_TypeDef *) VC_EPWM1_BASE)
+#define VC_EPWM2                        ((VC_EPWM_TypeDef *) VC_EPWM2_BASE)
+#define VC_EPWM3                        ((VC_EPWM_TypeDef *) VC_EPWM3_BASE)
+#define VC_EPWM4                        ((VC_EPWM_TypeDef *) VC_EPWM4_BASE)
+#define VC_EPWM5                        ((VC_EPWM_TypeDef *) VC_EPWM5_BASE)
+#define VC_EPWM6                        ((VC_EPWM_TypeDef *) VC_EPWM6_BASE)
+#define VC_EPWM7                        ((VC_EPWM_TypeDef *) VC_EPWM7_BASE)
+#define VC_EPWM_SYNC                    ((VC_EPWM_SYNC_TypeDef *) VC_EPWM_SYNC_BASE)
+#define VC_MSG_BOX_M3                   ((VC_MSG_BOX_M3_TypeDef *) VC_MSG_BOX_BASE)
+#define VC_MSG_BOX_M0                   ((VC_MSG_BOX_M0_TypeDef *) VC_MSG_BOX_BASE)
+#define VC_BPDET                        ((VC_BPDET_TypeDef *) VC_BPDET_BASE)
 
 #ifdef __cplusplus
 }
