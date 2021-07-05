@@ -57,7 +57,7 @@ export MAKE     = $(Q)make -s
 endif
 
 export VENDOR ?= VERTEXCOM
-export DEVICE ?= VC7300
+export DEVICE ?= VC7351
 
 export TOP_DIR    = $(shell pwd)
 export BUILD_DIR  = Build
