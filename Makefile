@@ -72,6 +72,7 @@ CFLAGS += -I$(TOP_DIR)
 CFLAGS += -I$(TOP_DIR)/$(CMSIS_DIR)/Core/Include
 CFLAGS += -I$(TOP_DIR)/$(CMSIS_DIR)/Driver/Include
 CFLAGS += -I$(TOP_DIR)/$(DEVICE_DIR)/Include
+CFLAGS += -I$(TOP_DIR)/$(DEVICE_DIR)/Include/Driver
 
 CFLAGS += -Wall -Werror
 CFLAGS += -std=gnu99 -g -O0
