@@ -443,7 +443,7 @@ typedef struct
   __IOM uint32_t ADCDATA4_15[12];           /* (0x0150 - 0x017C) ADC CH4 - CH15 Data register */
   __IOM uint32_t ADCDATA0_3[4];             /* (0x0180 - 0x018C) ADC CH0 - CH3 Data register */
   __IM uint32_t  RESERVED7;
-  __IOM uint32_t RG_RFLDO_CTRL;             /* (0x0194) RF LDO control register */
+  __IOM uint32_t RG_LDO_CTRL;               /* (0x0194) LDO control register */
   __IOM uint32_t RG_LVD_CTRL;               /* (0x0198) LVD control register */
   __IOM uint32_t RG_ANABG_CTRL;             /* (0x019C) Bandgap control register */
   __IM uint32_t  RESERVED8[24];
@@ -533,6 +533,12 @@ typedef struct
 #define VC_ANA_RG_GPPLL_DDSM_IN_Pos             0
 #define VC_ANA_RG_GPPLL_DDSM_IN_Msk             (0x3FFFFFFUL << VC_ANA_RG_GPPLL_DDSM_IN_Pos)
 
+#define VC_ANA_RG_GPPLL_DDSM_IN_Fraction_Pos    0
+#define VC_ANA_RG_GPPLL_DDSM_IN_Fraction_Msk    (0xFFFFFUL << VC_ANA_RG_GPPLL_DDSM_IN_Fraction_Pos)
+
+#define VC_ANA_RG_GPPLL_DDSM_IN_Integer_Pos     20
+#define VC_ANA_RG_GPPLL_DDSM_IN_Integer_Msk     (0x3FUL << VC_ANA_RG_GPPLL_DDSM_IN_Integer_Pos)
+
 #define VC_ANA_RG_GPPLL_DDSM_EN_Pos             26
 #define VC_ANA_RG_GPPLL_DDSM_EN_Msk             (1UL << VC_ANA_RG_GPPLL_DDSM_EN_Pos)
 
@@ -621,6 +627,22 @@ typedef struct
 
 #define VC_ANA_RG_LFXO_CSEL_Pos                 10
 #define VC_ANA_RG_LFXO_CSEL_Msk                 (0xFFUL << VC_ANA_RG_LFXO_CSEL_Pos)
+
+/* RG_LFRCO_CTRL register */
+#define VC_ANA_RG_LFRCO_PWD_Pos                 0
+#define VC_ANA_RG_LFRCO_PWD_Msk                 (1UL << VC_ANA_RG_LFRCO_PWD_Pos)
+
+#define VC_ANA_RG_LFRCO_CKMON_EN_Pos            1
+#define VC_ANA_RG_LFRCO_CKMON_EN_Msk            (1UL << VC_ANA_RG_LFRCO_CKMON_EN_Pos)
+
+#define VC_ANA_RG_LFRCO_CKMON_DS_Pos            2
+#define VC_ANA_RG_LFRCO_CKMON_DS_Msk            (1UL << VC_ANA_RG_LFRCO_CKMON_DS_Pos)
+
+#define VC_ANA_RG_LFRCO_RSEL_Pos                4
+#define VC_ANA_RG_LFRCO_RSEL_Msk                (0xFUL << VC_ANA_RG_LFRCO_RSEL_Pos)
+
+#define VC_ANA_RG_LFRCO_CSEL_Pos                8
+#define VC_ANA_RG_LFRCO_CSEL_Msk                (0x7FUL << VC_ANA_RG_LFRCO_CSEL_Pos)
 
 /* ANA_CMPxCTRL register */
 #define VC_ANA_CMPx_EN_Pos                      0
@@ -801,6 +823,12 @@ typedef struct
 #define VC_ANA_RG_SOC_BBPLL_DDSMIN_Pos          0
 #define VC_ANA_RG_SOC_BBPLL_DDSMIN_Msk          (0x3FFFFFFUL << VC_ANA_RG_SOC_BBPLL_DDSMIN_Pos)
 
+#define VC_ANA_RG_SOC_BBPLL_DDSMIN_Fraction_Pos 0
+#define VC_ANA_RG_SOC_BBPLL_DDSMIN_Fraction_Msk (0xFFFFFUL << VC_ANA_RG_SOC_BBPLL_DDSMIN_Fraction_Pos)
+
+#define VC_ANA_RG_SOC_BBPLL_DDSMIN_Integer_Pos  20
+#define VC_ANA_RG_SOC_BBPLL_DDSMIN_Integer_Msk  (0x3FUL << VC_ANA_RG_SOC_BBPLL_DDSMIN_Integer_Pos)
+
 /* RG_SOC_BBPLL_OFFSETIN register */
 #define VC_ANA_RG_SOC_BBPLL_OFFSETIN_Pos        0
 #define VC_ANA_RG_SOC_BBPLL_OFFSETIN_Msk        (0x7FUL << VC_ANA_RG_SOC_BBPLL_OFFSETIN_Pos)
@@ -808,6 +836,12 @@ typedef struct
 /* RG_SOC_BBPLL_TESTIN register */
 #define VC_ANA_RG_SOC_BBPLL_TESTIN_Pos          0
 #define VC_ANA_RG_SOC_BBPLL_TESTIN_Msk          (0xFFFUL << VC_ANA_RG_SOC_BBPLL_TESTIN_Pos)
+
+#define VC_ANA_RG_SOC_BBPLL_TESTIN_Fraction_Pos 0
+#define VC_ANA_RG_SOC_BBPLL_TESTIN_Fraction_Msk (0x3FUL << VC_ANA_RG_SOC_BBPLL_TESTIN_Fraction_Pos)
+
+#define VC_ANA_RG_SOC_BBPLL_TESTIN_Integer_Pos  6
+#define VC_ANA_RG_SOC_BBPLL_TESTIN_Integer_Msk  (0x3FUL << VC_ANA_RG_SOC_BBPLL_TESTIN_Integer_Pos)
 
 /* RG_SOC_BBPLL_PROBE register */
 #define VC_ANA_RG_SOC_BBPLL_PROBE_Pos           0
@@ -836,7 +870,7 @@ typedef struct
 #define VC_ANA_RG_SOC_BBPLL_METER_FNPLL_IBAND_RST_Msk   (1UL << VC_ANA_RG_SOC_BBPLL_METER_FNPLL_IBAND_RST_Pos)
 
 #define VC_ANA_RG_SOC_BBPLL_METER_FM_DONE_Pos           19
-#define VC_ANA_RG_SOC_BBPLLMETER_FM_DONE_Msk           (1UL << VC_ANA_RG_SOC_BBPLL_METER_FM_DONE_Pos)
+#define VC_ANA_RG_SOC_BBPLL_METER_FM_DONE_Msk           (1UL << VC_ANA_RG_SOC_BBPLL_METER_FM_DONE_Pos)
 
 /* RG_AUXSAR_CTRL register */
 #define VC_ANA_RG_AUXSAR_RST_Pos                0
@@ -901,7 +935,7 @@ typedef struct
 #define VC_ANA_ADC_DATAx_Pos                    0
 #define VC_ANA_ADC_DATAx_Msk                    (0xFFFFUL << VC_ANA_ADC_DATAx_Pos)
 
-/* RG_RFLDO_CTRL register */
+/* RG_LDO_CTRL register */
 #define VC_ANA_RG_LDOA15_SZ_PWD_Pos             0
 #define VC_ANA_RG_LDOA15_SZ_PWD_Msk             (1UL << VC_ANA_RG_LDOA15_SZ_PWD_Pos)
 
@@ -1478,6 +1512,30 @@ typedef struct
 /* FLASH_SR register */
 #define VC_MEM_FLASH_SR_Pos                     0
 #define VC_MEM_FLASH_SR_Msk                     (0xFFUL << VC_MEM_FLASH_SR_Pos)
+
+#define VC_MEM_FLASH_SR_WIP_Pos                 0
+#define VC_MEM_FLASH_SR_WIP_Msk                 (1UL << VC_MEM_FLASH_SR_WIP_Pos)
+
+#define VC_MEM_FLASH_SR_WEL_Pos                 1
+#define VC_MEM_FLASH_SR_WEL_Msk                 (1UL << VC_MEM_FLASH_SR_WEL_Pos)
+
+#define VC_MEM_FLASH_SR_BP0_Pos                 2
+#define VC_MEM_FLASH_SR_BP0_Msk                 (1UL << VC_MEM_FLASH_SR_BP0_Pos)
+
+#define VC_MEM_FLASH_SR_BP1_Pos                 3
+#define VC_MEM_FLASH_SR_BP1_Msk                 (1UL << VC_MEM_FLASH_SR_BP1_Pos)
+
+#define VC_MEM_FLASH_SR_BP2_Pos                 4
+#define VC_MEM_FLASH_SR_BP2_Msk                 (1UL << VC_MEM_FLASH_SR_BP2_Pos)
+
+#define VC_MEM_FLASH_SR_BP3_Pos                 5
+#define VC_MEM_FLASH_SR_BP3_Msk                 (1UL << VC_MEM_FLASH_SR_BP3_Pos)
+
+#define VC_MEM_FLASH_SR_BP4_Pos                 6
+#define VC_MEM_FLASH_SR_BP4_Msk                 (1UL << VC_MEM_FLASH_SR_BP4_Pos)
+
+#define VC_MEM_FLASH_SR_SRP0_Pos                7
+#define VC_MEM_FLASH_SR_SRP0_Msk                (1UL << VC_MEM_FLASH_SR_SRP0_Pos)
 
 /* FLASH_CACHEHIT register */
 #define VC_MEM_FLASH_CACHEHIT_HITRATE_Pos       0
