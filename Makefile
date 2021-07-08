@@ -61,18 +61,17 @@ export DEVICE ?= VC7351
 
 export TOP_DIR    = $(shell pwd)
 export BUILD_DIR  = Build
-export DEVICE_DIR = Device/$(VENDOR)/$(DEVICE)
+export TARGET_DIR = targets/TARGET_$(VENDOR)/TARGET_$(DEVICE)
 export CMSIS_DIR  = CMSIS_5/CMSIS
 
 BUILD = $(TOP_DIR)/$(BUILD_DIR)
 
-DEVICE_LC = $(shell echo $(DEVICE) | tr A-Z a-z)
+export DEVICE_LC = $(shell echo $(DEVICE) | tr A-Z a-z)
 
 CFLAGS += -I$(TOP_DIR)
 CFLAGS += -I$(TOP_DIR)/$(CMSIS_DIR)/Core/Include
-CFLAGS += -I$(TOP_DIR)/$(CMSIS_DIR)/Driver/Include
-CFLAGS += -I$(TOP_DIR)/$(DEVICE_DIR)/Include
-CFLAGS += -I$(TOP_DIR)/$(DEVICE_DIR)/Include/Driver
+CFLAGS += -I$(TOP_DIR)/$(TARGET_DIR)/CMSIS/Include
+CFLAGS += -I$(TOP_DIR)/$(TARGET_DIR)/HAL/Include
 
 CFLAGS += -Wall -Werror
 CFLAGS += -std=gnu99 -g -O0
@@ -83,25 +82,19 @@ LDFLAGS += -g -O0 -Xlinker --gc-sections
 LDFLAGS += -mcpu=cortex-m3 -mthumb -mno-unaligned-access
 LDFLAGS += --specs=nosys.specs -static
 
-LDSCRIPT = $(TOP_DIR)/$(DEVICE_DIR)/Source/GCC/gcc_arm_$(DEVICE_LC).ld
+LDSCRIPT = $(TOP_DIR)/$(TARGET_DIR)/CMSIS/Source/GCC/gcc_arm_$(DEVICE_LC).ld
 
-BUILD_DEVICE_DIR = $(TOP_DIR)/$(BUILD_DIR)/$(DEVICE_DIR)
+BUILD_TARGET_DIR = $(TOP_DIR)/$(BUILD_DIR)
 
-export LIB_DEVICE_DRIVER = libdevice_driver_$(DEVICE_LC).a
-export LIB_DEVICE_SYSTEM = libdevice_system_$(DEVICE_LC).a
-export LIB_DEVICE_MAIN   = libdevice_main.a
-export LIB_DEVICE_TEST   = libdevice_test.a
+export LIB_TARGET_CMSIS = libtarget_cmsis_$(DEVICE_LC).a
+export LIB_TARGET_HAL   = libtarget_system_$(DEVICE_LC).a
+export LIB_TARGET_MAIN  = libtarget_main.a
 
-#MAIN_LIBS += $(BUILD_DEVICE_DIR)/$(LIB_DEVICE_DRIVER)
-MAIN_LIBS += $(BUILD_DEVICE_DIR)/$(LIB_DEVICE_SYSTEM)
-MAIN_LIBS += $(BUILD_DEVICE_DIR)/$(LIB_DEVICE_MAIN)
-
-#TEST_LIBS += $(BUILD_DEVICE_DIR)/$(LIB_DEVICE_DRIVER)
-TEST_LIBS += $(BUILD_DEVICE_DIR)/$(LIB_DEVICE_SYSTEM)
-TEST_LIBS += $(BUILD_DEVICE_DIR)/$(LIB_DEVICE_TEST)
+MAIN_LIBS += $(BUILD_TARGET_DIR)/$(LIB_TARGET_CMSIS)
+MAIN_LIBS += $(BUILD_TARGET_DIR)/$(LIB_TARGET_HAL)
+MAIN_LIBS += $(BUILD_TARGET_DIR)/$(LIB_TARGET_MAIN)
 
 MAIN_IMAGE = $(BUILD)/$(DEVICE_LC)_main
-TEST_IMAGE = $(BUILD)/$(DEVICE_LC)_test
 
 all: $(VENDOR) BUILD_FINISHED_INFO
 
@@ -109,7 +102,7 @@ $(BUILD):
 	$(MKDIR) -p $@
 
 objects:
-	$(MAKE) -C $(DEVICE_DIR) BUILD=$(BUILD_DEVICE_DIR) CFLAGS="$(CFLAGS) -MMD"
+	$(MAKE) -C targets BUILD=$(BUILD_TARGET_DIR) CFLAGS="$(CFLAGS) -MMD"
 
 $(MAIN_IMAGE).elf: $(MAIN_LIBS) $(LDSCRIPT)
 	$(CC) $(LDFLAGS) $(patsubst %,-L%,$(patsubst %/,%,$(sort $(dir $(MAIN_LIBS))))) \
@@ -117,39 +110,23 @@ $(MAIN_IMAGE).elf: $(MAIN_LIBS) $(LDSCRIPT)
 	-Wl,--no-whole-archive -T $(LDSCRIPT) \
 	-Wl,-Map,$(BUILD)/$(DEVICE_LC)_main.map -o $@
 
-$(TEST_IMAGE).elf: $(TEST_LIBS) $(LDSCRIPT)
-	$(CC) $(LDFLAGS) $(patsubst %,-L%,$(patsubst %/,%,$(sort $(dir $(TEST_LIBS))))) \
-	-Wl,--whole-archive $(patsubst %,-l%,$(patsubst lib%,%,$(sort $(basename $(notdir $(TEST_LIBS)))))) \
-	-Wl,--no-whole-archive -T $(LDSCRIPT) \
-	-Wl,-Map,$(BUILD)/$(DEVICE_LC)_test.map -o $@
-
 $(MAIN_IMAGE).bin: $(MAIN_IMAGE).elf
-	$(OBJCOPY) -O binary $< $@
-
-$(TEST_IMAGE).bin: $(TEST_IMAGE).elf
 	$(OBJCOPY) -O binary $< $@
 
 $(MAIN_IMAGE).lst: $(MAIN_IMAGE).elf
 	$(OBJDUMP) -h -S $< > $@
 
-$(TEST_IMAGE).lst: $(TEST_IMAGE).elf
-	$(OBJDUMP) -h -S $< > $@
-
 main: objects $(MAIN_IMAGE).bin $(MAIN_IMAGE).lst
 	$(SIZE) --format=berkeley $(MAIN_IMAGE).elf
 
-test: objects $(TEST_IMAGE).bin $(TEST_IMAGE).lst
-	$(SIZE) --format=berkeley $(TEST_IMAGE).elf
-
-$(VENDOR): main test | $(BUILD)
+$(VENDOR): main | $(BUILD)
 
 BUILD_FINISHED_INFO:
 	$(ECHO) ""
 	$(ECHO) "---------------------------------------------------------------------"
 	$(ECHO) "\033[32mFinished Building\033[0m : $(VENDOR) DEVICE [$(DEVICE)] in $(HOST_MACHINE)"
 	$(ECHO) "---------------------------------------------------------------------"
-	$(ECHO) "MAIN image        : Build/\033[32m$(DEVICE_LC)_main.bin\033[0m"
-	$(ECHO) "TEST image        : Build/\033[32m$(DEVICE_LC)_test.bin\033[0m"
+	$(ECHO) "Image             : Build/\033[32m$(DEVICE_LC).bin\033[0m"
 	$(ECHO) "---------------------------------------------------------------------"
 	$(ECHO) "Repository info   : $(GIT_REPO_COMMIT) @ [\033[33m$(GIT_REPO_BRANCH)\033[0m], dirty = $(GIT_REPO_DIRTY)"
 

@@ -4061,6 +4061,7 @@ typedef struct
 #define VC_RTC                          ((VC_RTC_TypeDef *) VC_RTC_BASE)
 #define VC_MEM                          ((VC_MEM_TypeDef *) VC_MEM_BASE)
 #define VC_GPIOA                        ((VC_GPIOA_TypeDef *) VC_GPIOA_BASE)
+#define VC_GPIO(port)                   ((VC_GPIO_TypeDef *)((port * 0x40UL) + VC_GPIOB_BASE))
 #define VC_GPIOB                        ((VC_GPIOB_TypeDef *) VC_GPIOB_BASE)
 #define VC_GPIOB_M0                     ((VC_GPIOB_M0_TypeDef *) VC_GPIOB_BASE)
 #define VC_GPIOC                        ((VC_GPIOC_TypeDef *) VC_GPIOC_BASE)
