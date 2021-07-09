@@ -18,7 +18,89 @@
 
 #include "vc73xx_gpio.h"
 
-void vcgpio_init(PinName pin)
+static void _gpio_select_gpio_sf(uint8_t portNum, uint8_t pinNum);
+static void _gpio_select_exti_sf(uint8_t portNum, uint8_t pinNum, vcgpio_cfg_t *cfg);
+
+void vcgpio_init(PinName pin, vcgpio_cfg_t *cfg)
+{
+    uint8_t portNum = VC_PORT(pin);
+    uint8_t pinNum = VC_PIN(pin);
+    uint32_t temp = 0;
+
+    VC_GPIO_TypeDef *gpio = NULL;
+
+    if (portNum == PortA) {
+        gpio = (VC_GPIO_TypeDef *)VC_GPIOA;
+    } else {
+        gpio = (VC_GPIO_TypeDef *)VC_GPIO(portNum);
+    }
+
+    if (cfg->direction == PIN_OUTPUT) {
+        /* OUTPUT */
+        temp = gpio->OEN;
+        temp &= ~VC_GPIO_IOX_OEN_IOXOEN_Msk(pinNum);
+        temp |= VC_GPIO_IOX_OEN_IOXOEN_Enabled(pinNum);
+        gpio->OEN = temp;
+
+        temp = gpio->IE;
+        temp &= ~VC_GPIO_IOX_IE_IOXIE_Msk(pinNum);
+        temp |= VC_GPIO_IOX_IE_IOXIE_Disabled(pinNum);
+        gpio->IE = temp;
+
+        temp = gpio->ATT;
+        temp &= ~VC_GPIO_IOX_ATT_IOXATT_Msk(pinNum);
+        temp |= VC_GPIO_IOX_ATT_IOXATT_OPEN_DRAIN(pinNum);
+        gpio->ATT = temp;
+    } else {
+        /* INPUT */
+        temp = gpio->OEN;
+        temp &= ~VC_GPIO_IOX_OEN_IOXOEN_Msk(pinNum);
+        temp |= VC_GPIO_IOX_OEN_IOXOEN_Disabled(pinNum);
+        gpio->OEN = temp;
+
+        temp = gpio->IE;
+        temp &= ~VC_GPIO_IOX_IE_IOXIE_Msk(pinNum);
+        temp |= VC_GPIO_IOX_IE_IOXIE_Enabled(pinNum);
+        gpio->IE = temp;
+
+        temp = gpio->ATT;
+        temp &= ~VC_GPIO_IOX_ATT_IOXATT_Msk(pinNum);
+        temp |= VC_GPIO_IOX_ATT_IOXATT_OPEN_DRAIN(pinNum);
+        gpio->ATT = temp;
+    }
+
+    switch (cfg->pull) {
+        case PullUp:
+            temp = gpio->DAT;
+            temp &= ~VC_GPIO_IOX_DAT_IOXDAT_Msk(pinNum);
+            temp |= VC_GPIO_IOX_DAT_IOXDAT_Enabled(pinNum);
+            gpio->DAT = temp;
+            break;
+
+        case PullDown:
+            temp = gpio->DAT;
+            temp &= ~VC_GPIO_IOX_DAT_IOXDAT_Msk(pinNum);
+            temp |= VC_GPIO_IOX_DAT_IOXDAT_Disabled(pinNum);
+            gpio->DAT = temp;
+            break;
+
+        default:
+            /* PullNone */
+            temp = gpio->ATT;
+            temp &= ~VC_GPIO_IOX_ATT_IOXATT_Msk(pinNum);
+            temp |= VC_GPIO_IOX_ATT_IOXATT_CMOS(pinNum);
+            gpio->ATT = temp;
+            break;
+    }
+
+    _gpio_select_gpio_sf(portNum, pinNum); /* default */
+
+    if (cfg->used_as_irq) {
+        _gpio_select_exti_sf(portNum, pinNum, cfg);
+    }
+}
+
+void vcgpio_free(PinName pin)
 {
     uint8_t portNum = VC_PORT(pin);
     uint8_t pinNum = VC_PIN(pin);
@@ -34,7 +116,7 @@ void vcgpio_init(PinName pin)
 
     temp = gpio->OEN;
     temp &= ~VC_GPIO_IOX_OEN_IOXOEN_Msk(pinNum);
-    temp |= VC_GPIO_IOX_OEN_IOXOEN_Enabled(pinNum);
+    temp |= VC_GPIO_IOX_OEN_IOXOEN_Disabled(pinNum);
     gpio->OEN = temp;
 
     temp = gpio->IE;
@@ -44,58 +126,13 @@ void vcgpio_init(PinName pin)
 
     temp = gpio->ATT;
     temp &= ~VC_GPIO_IOX_ATT_IOXATT_Msk(pinNum);
-    temp |= VC_GPIO_IOX_ATT_IOXATT_CMOS(pinNum);
     gpio->ATT = temp;
 
-    switch (portNum) {
-        case PortA:
-            if (pinNum < 8) {
-                temp = VC_GPIOA->SEL0;
-                temp &= ~VC_GPIO_IOA_SEL0_IOAx_SEL_Msk(pinNum);
-                temp |= VC_GPIO_SEL0_IOAx_GPIO(pinNum);
-                VC_GPIOA->SEL0 = temp;
-            } else {
-                temp = VC_GPIOA->SEL1;
-                temp &= ~VC_GPIO_IOA_SEL1_IOAx_SEL_Msk(pinNum);
-                temp |= VC_GPIO_SEL1_IOAx_GPIO(pinNum);
-                VC_GPIOA->SEL1 = temp;
-            }
-            break;
-        case PortB:
-            if (pinNum < 8) {
-                temp = VC_GPIOB->SEL0;
-                temp &= ~VC_GPIO_IOB_SEL0_IOBx_SEL_Msk(pinNum);
-                temp |= VC_GPIO_SEL0_IOBx_GPIO(pinNum);
-                VC_GPIOB->SEL0 = temp;
-            } else {
-                temp = VC_GPIOB->SEL1;
-                temp &= ~VC_GPIO_IOB_SEL1_IOBx_SEL_Msk(pinNum);
-                temp |= VC_GPIO_SEL1_IOBx_GPIO(pinNum);
-                VC_GPIOB->SEL1 = temp;
-            }
-            break;
-        case PortC:
-            if (pinNum < 8) {
-                temp = VC_GPIOC->SEL0;
-                temp &= ~VC_GPIO_IOC_SEL0_IOCx_SEL_Msk(pinNum);
-                temp |= VC_GPIO_SEL0_IOCx_GPIO(pinNum);
-                VC_GPIOC->SEL0 = temp;
-            } else {
-                temp = VC_GPIOC->SEL1;
-                temp &= ~VC_GPIO_IOC_SEL1_IOCx_SEL_Msk(pinNum);
-                temp |= VC_GPIO_SEL1_IOCx_GPIO(pinNum);
-                VC_GPIOC->SEL1 = temp;
-            }
-            break;
-        case PortD:
-            temp = VC_GPIOD->SEL;
-            temp &= ~VC_GPIO_IOD_SEL_IODx_SEL_Msk(pinNum);
-            temp |= VC_GPIO_SEL_IODx_GPIO(pinNum);
-            VC_GPIOD->SEL = temp;
-            break;
-        default:
-            return;
-    }
+    temp = gpio->DAT;
+    temp &= ~VC_GPIO_IOX_DAT_IOXDAT_Msk(pinNum);
+    gpio->DAT = temp;
+
+    _gpio_select_gpio_sf(portNum, pinNum);
 }
 
 int vcgpio_pin_out_read(PinName pin)
@@ -177,4 +214,247 @@ void vcgpio_pin_clear(PinName pin)
     temp &= ~VC_GPIO_IOX_DAT_IOXDAT_Msk(pinNum);
     temp |= VC_GPIO_IOX_DAT_IOXDAT_Disabled(pinNum);
     gpio->DAT = temp;
+}
+
+void vcgpio_out_uninit(PinName pin)
+{
+    uint8_t portNum = VC_PORT(pin);
+    uint8_t pinNum = VC_PIN(pin);
+    uint32_t temp = 0;
+
+    VC_GPIO_TypeDef *gpio = NULL;
+
+    if (portNum == PortA) {
+        gpio = (VC_GPIO_TypeDef *)VC_GPIOA;
+    } else {
+        gpio = (VC_GPIO_TypeDef *)VC_GPIO(portNum);
+    }
+
+    temp = gpio->OEN;
+    temp &= ~VC_GPIO_IOX_OEN_IOXOEN_Msk(pinNum);
+    temp |= VC_GPIO_IOX_OEN_IOXOEN_Disabled(pinNum);
+    gpio->OEN = temp;
+
+    temp = gpio->ATT;
+    temp &= ~VC_GPIO_IOX_ATT_IOXATT_Msk(pinNum);
+    gpio->ATT = temp;
+
+    temp = gpio->DAT;
+    temp &= ~VC_GPIO_IOX_DAT_IOXDAT_Msk(pinNum);
+    gpio->DAT = temp;
+
+    _gpio_select_gpio_sf(portNum, pinNum);
+}
+
+void vcgpio_in_uninit(PinName pin)
+{
+    uint8_t portNum = VC_PORT(pin);
+    uint8_t pinNum = VC_PIN(pin);
+    uint32_t temp = 0;
+
+    VC_GPIO_TypeDef *gpio = NULL;
+
+    if (portNum == PortA) {
+        gpio = (VC_GPIO_TypeDef *)VC_GPIOA;
+    } else {
+        gpio = (VC_GPIO_TypeDef *)VC_GPIO(portNum);
+    }
+
+    temp = gpio->IE;
+    temp &= ~VC_GPIO_IOX_IE_IOXIE_Msk(pinNum);
+    temp |= VC_GPIO_IOX_IE_IOXIE_Disabled(pinNum);
+    gpio->IE = temp;
+
+    temp = gpio->ATT;
+    temp &= ~VC_GPIO_IOX_ATT_IOXATT_Msk(pinNum);
+    gpio->ATT = temp;
+
+    temp = gpio->DAT;
+    temp &= ~VC_GPIO_IOX_DAT_IOXDAT_Msk(pinNum);
+    gpio->DAT = temp;
+
+    _gpio_select_gpio_sf(portNum, pinNum);
+}
+
+void vcgpio_irq_enable(PinName pin)
+{
+    uint8_t portNum = VC_PORT(pin);
+    uint8_t pinNum = VC_PIN(pin);
+    uint32_t temp = 0;
+    if (portNum == PortA) {
+        temp = VC_GPIOA->WKUEN;
+        temp |= (1UL << VC_GPIO_IOx_WKUEN_Pos(pinNum));
+        VC_GPIOA->WKUEN = temp;
+        NVIC_EnableIRQ(PMU_IRQn);
+    } else if (portNum == PortC) {
+        temp = VC_GPIOC->WKUEN;
+        temp |= (1UL << VC_GPIO_IOx_WKUEN_Pos(pinNum));
+        VC_GPIOC->WKUEN = temp;
+        NVIC_EnableIRQ(GPIO_IRQn);
+    }
+}
+
+void vcgpio_irq_disable(PinName pin)
+{
+    uint8_t portNum = VC_PORT(pin);
+    uint8_t pinNum = VC_PIN(pin);
+    uint32_t temp = 0;
+    if (portNum == PortA) {
+        temp = VC_GPIOA->WKUEN;
+        temp &= ~(1UL << VC_GPIO_IOx_WKUEN_Pos(pinNum));
+        VC_GPIOA->WKUEN = temp;
+    } else if (portNum == PortC) {
+        temp = VC_GPIOC->WKUEN;
+        temp &= ~(1UL << VC_GPIO_IOx_WKUEN_Pos(pinNum));
+        VC_GPIOC->WKUEN = temp;
+    }
+}
+
+// Helper functions
+
+static void _gpio_select_gpio_sf(uint8_t portNum, uint8_t pinNum)
+{
+    uint32_t temp = 0;
+
+    switch (portNum) {
+        case PortA:
+            if (pinNum < 8) {
+                temp = VC_GPIOA->SEL0;
+                temp &= ~VC_GPIO_IOA_SEL0_IOAx_SEL_Msk(pinNum);
+                temp |= VC_GPIO_SEL0_IOAx_GPIO(pinNum);
+                VC_GPIOA->SEL0 = temp;
+            } else {
+                temp = VC_GPIOA->SEL1;
+                temp &= ~VC_GPIO_IOA_SEL1_IOAx_SEL_Msk(pinNum);
+                temp |= VC_GPIO_SEL1_IOAx_GPIO(pinNum);
+                VC_GPIOA->SEL1 = temp;
+            }
+            break;
+        case PortB:
+            if (pinNum < 8) {
+                temp = VC_GPIOB->SEL0;
+                temp &= ~VC_GPIO_IOB_SEL0_IOBx_SEL_Msk(pinNum);
+                temp |= VC_GPIO_SEL0_IOBx_GPIO(pinNum);
+                VC_GPIOB->SEL0 = temp;
+            } else {
+                temp = VC_GPIOB->SEL1;
+                temp &= ~VC_GPIO_IOB_SEL1_IOBx_SEL_Msk(pinNum);
+                temp |= VC_GPIO_SEL1_IOBx_GPIO(pinNum);
+                VC_GPIOB->SEL1 = temp;
+            }
+            break;
+        case PortC:
+            if (pinNum < 8) {
+                temp = VC_GPIOC->SEL0;
+                temp &= ~VC_GPIO_IOC_SEL0_IOCx_SEL_Msk(pinNum);
+                temp |= VC_GPIO_SEL0_IOCx_GPIO(pinNum);
+                VC_GPIOC->SEL0 = temp;
+            } else {
+                temp = VC_GPIOC->SEL1;
+                temp &= ~VC_GPIO_IOC_SEL1_IOCx_SEL_Msk(pinNum);
+                temp |= VC_GPIO_SEL1_IOCx_GPIO(pinNum);
+                VC_GPIOC->SEL1 = temp;
+            }
+            break;
+        case PortD:
+            temp = VC_GPIOD->SEL;
+            temp &= ~VC_GPIO_IOD_SEL_IODx_SEL_Msk(pinNum);
+            temp |= VC_GPIO_SEL_IODx_GPIO(pinNum);
+            VC_GPIOD->SEL = temp;
+            break;
+        default:
+            return;
+    }
+}
+
+static void _gpio_select_exti_sf(uint8_t portNum, uint8_t pinNum, vcgpio_cfg_t *cfg)
+{
+    uint32_t temp = 0;
+    uint32_t temp1 = 0;
+
+    switch (portNum) {
+        case PortA:
+            temp = VC_PMU->IOANODEG;
+            temp |= (1 << pinNum);
+            VC_PMU->IOANODEG = temp;
+
+            temp = VC_PMU->CTRL;
+            temp &= ~VC_PMU_CTRL_INTEN_Msk;
+            temp |= (1UL << VC_PMU_CTRL_INTEN_Pos);
+            VC_PMU->CTRL = temp;
+
+            temp  = VC_GPIOA->WKUEN;
+            temp1 = VC_GPIOA->DAT;
+
+            temp  &= ~VC_GPIO_IOx_WKUEN_Msk(pinNum);
+            temp1 &= ~VC_GPIO_IOX_DAT_IOXDAT_Msk(pinNum);
+
+            if (cfg->irq_fall) {
+                temp  |= (1UL << VC_GPIO_IOx_WKUEN_Pos(pinNum));
+                temp1 |= (1UL << pinNum);
+            }
+
+            if (cfg->irq_rise) {
+                temp |= (1UL << VC_GPIO_IOx_WKUEN_Pos(pinNum));
+            }
+
+            if (cfg->irq_both) {
+                temp |= (3UL << VC_GPIO_IOx_WKUEN_Pos(pinNum));
+            }
+
+            VC_GPIOA->WKUEN = temp;
+            VC_GPIOA->DAT = temp1;
+
+            if (pinNum < 8) {
+                temp = VC_GPIOA->SEL0;
+                temp &= ~VC_GPIO_IOA_SEL0_IOAx_SEL_Msk(pinNum);
+                temp |= VC_GPIO_SEL0_IOAx_EINTx(pinNum);
+                VC_GPIOA->SEL0 = temp;
+            } else {
+                temp = VC_GPIOA->SEL1;
+                temp &= ~VC_GPIO_IOA_SEL1_IOAx_SEL_Msk(pinNum);
+                temp |= VC_GPIO_SEL1_IOAx_EINTx(pinNum);
+                VC_GPIOA->SEL1 = temp;
+            }
+            break;
+
+        case PortC:
+            temp  = VC_GPIOC->WKUEN;
+            temp1 = VC_GPIOC->DAT;
+
+            temp  &= ~VC_GPIO_IOx_WKUEN_Msk(pinNum);
+            temp1 &= ~VC_GPIO_IOX_DAT_IOXDAT_Msk(pinNum);
+
+            if (cfg->irq_fall) {
+                temp  |= (1UL << VC_GPIO_IOx_WKUEN_Pos(pinNum));
+                temp1 |= (1UL << pinNum);
+            }
+
+            if (cfg->irq_rise) {
+                temp |= (1UL << VC_GPIO_IOx_WKUEN_Pos(pinNum));
+            }
+
+            if (cfg->irq_both) {
+                temp |= (3UL << VC_GPIO_IOx_WKUEN_Pos(pinNum));
+            }
+
+            VC_GPIOC->WKUEN = temp;
+            VC_GPIOC->DAT = temp1;
+
+            if (pinNum < 8) {
+                temp = VC_GPIOC->SEL0;
+                temp &= ~VC_GPIO_IOC_SEL0_IOCx_SEL_Msk(pinNum);
+                temp |= VC_GPIO_SEL0_IOCx_EINTx(pinNum);
+                VC_GPIOC->SEL0 = temp;
+            } else {
+                temp = VC_GPIOC->SEL1;
+                temp &= ~VC_GPIO_IOC_SEL1_IOCx_SEL_Msk(pinNum);
+                temp |= VC_GPIO_SEL1_IOCx_EINTx(pinNum);
+                VC_GPIOC->SEL1 = temp;
+            }
+            break;
+
+        default:
+            return;
+    }
 }

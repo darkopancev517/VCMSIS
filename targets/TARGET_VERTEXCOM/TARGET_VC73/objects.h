@@ -33,10 +33,7 @@ typedef struct {
 } gpio_t;
 
 struct gpio_irq_s {
-    IRQn_Type irq_n;
-    uint32_t irq_index;
-    uint32_t event;
-    PinName pin;
+    uint32_t ch;
 };
 
 struct port_s {
