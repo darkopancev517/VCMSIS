@@ -25,6 +25,8 @@
 
 #include "vc73xx_gpio.h"
 
+extern PinMode g_pin_mode[GPIO_PIN_COUNT];
+
 vcgpio_mask_t m_gpio_initialized;
 vcgpio_cfg_t  m_gpio_cfg[GPIO_PIN_COUNT];
 
@@ -43,11 +45,16 @@ uint32_t gpio_set(PinName pin)
     //MBED_ASSERT(pin != (PinName)NC);
     m_gpio_cfg[pin].used_as_gpio = true;
     m_gpio_cfg[pin].direction = PIN_INPUT;
-    m_gpio_cfg[pin].pull = PullNone;
     m_gpio_cfg[pin].used_as_irq = false;
     m_gpio_cfg[pin].irq_fall = false;
     m_gpio_cfg[pin].irq_rise = false;
     m_gpio_cfg[pin].irq_both = false;
+
+    if (g_pin_mode[pin] == PullNone) {
+        m_gpio_cfg[pin].pull = PullNone; 
+    } else {
+        m_gpio_cfg[pin].pull = g_pin_mode[pin];
+    }
 
     return (uint32_t)(1 << pin);
 }
@@ -67,7 +74,12 @@ void gpio_init(gpio_t *obj, PinName pin)
 
     m_gpio_cfg[obj->pin].used_as_gpio = true;
     m_gpio_cfg[obj->pin].direction = PIN_OUTPUT;
-    m_gpio_cfg[obj->pin].pull = PullNone; 
+
+    if (g_pin_mode[obj->pin] == PullNone) {
+        m_gpio_cfg[obj->pin].pull = PullNone; 
+    } else {
+        m_gpio_cfg[obj->pin].pull = g_pin_mode[obj->pin];
+    }
 
     vcgpio_init(pin, &m_gpio_cfg[obj->pin]);
 }
@@ -84,6 +96,8 @@ void gpio_mode(gpio_t *obj, PinMode mode)
     gpio_pin_uninit(obj->pin);
 
     m_gpio_cfg[obj->pin].pull = mode;
+    pin_mode(obj->pin, mode);
+
     gpio_apply_config(obj->pin);
 }
 
@@ -131,8 +145,12 @@ int gpio_irq_init(gpio_irq_t *obj, PinName pin, gpio_irq_handler handler, uint32
         //MBED_ASSERT((uint32_t)pin < GPIO_PIN_COUNT);
         gpio_pin_uninit(pin); /* try to uninitialize gpio before a change. */
         m_gpio_cfg[pin].used_as_irq = true;
-        m_gpio_cfg[pin].pull = PullNone;
         m_gpio_cfg[pin].direction = PIN_INPUT;
+        if (g_pin_mode[pin] == PullNone) {
+            m_gpio_cfg[pin].pull = PullNone; 
+        } else {
+            m_gpio_cfg[pin].pull = g_pin_mode[pin];
+        }
         obj->ch = pin;
         m_irq_handler = handler;
         m_channel_ids[pin] = id;

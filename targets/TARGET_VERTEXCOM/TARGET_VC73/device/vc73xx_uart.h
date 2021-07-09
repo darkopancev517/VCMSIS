@@ -16,3 +16,20 @@
  * limitations under the License.
  */
 
+#ifndef VC73XX_UART_H
+#define VC73XX_UART_H
+
+#include <stdint.h>
+#include <stddef.h>
+#include "device.h"
+#include "pinmap.h"
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif /* VC73XX_UART_H */

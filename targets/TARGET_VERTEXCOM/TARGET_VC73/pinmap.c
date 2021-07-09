@@ -16,4 +16,23 @@
  * limitations under the License.
  */
 
+//#include "mbed_assert.h"
+//#include "mbed_error.h"
+#include "pinmap.h"
 
+#include "vc73xx_gpio.h"
+
+PinMode g_pin_mode[GPIO_PIN_COUNT];
+
+void pin_function(PinName pin, int function)
+{
+    (void) pin;
+    (void) function;
+}
+
+void pin_mode(PinName pin, PinMode mode)
+{
+    //MBED_ASSERT(pin != (PinName)NC);
+    uint32_t pin_number = (uint32_t)pin;
+    g_pin_mode[pin_number] = mode;
+}
