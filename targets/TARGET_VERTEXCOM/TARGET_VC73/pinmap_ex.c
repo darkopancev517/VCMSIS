@@ -16,33 +16,27 @@
  * limitations under the License.
  */
 
-#ifndef MBED_PERIPHERALNAMES_H
-#define MBED_PERIPHERALNAMES_H
+#include "pinmap_ex.h"
 
-#include "cmsis.h"
+const PinMapUART PinMap_UART[] = {
+    {PB_2, PA_12, 0},
+    {PB_3, PA_13, 1},
+    {PB_4, PA_14, 2},
+    {PB_5, PA_15, 3},
+    {PB_6, PB_0,  4},
+    {PB_7, PB_1,  5},
+    {PB_8, PB_15, 6},
+    {NC, NC, 0}
+};
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-typedef enum {
-    UART_0 = (int)VC_UART0_BASE,
-    UART_1 = (int)VC_UART1_BASE,
-    UART_2 = (int)VC_UART2_BASE,
-    UART_3 = (int)VC_UART3_BASE,
-    UART_4 = (int)VC_UART4_BASE,
-    UART_5 = (int)VC_UART5_BASE,
-    UART_6 = (int)VC_UART6_BASE
-} UARTName;
-
-#define DEVICE_SPI_COUNT 2
-typedef enum {
-    SPI_1 = (int)VC_SPI1_BASE,
-    SPI_2 = (int)VC_SPI2_BASE
-} SPIName;
-
-#ifdef __cplusplus
+int pin_instance_uart(PinName tx, PinName rx)
+{
+    int instance = NC;
+    for (int i = 0; ((PinMap_UART[i].tx != NC) && (PinMap_UART[i].rx != NC)); i++) {
+        if ((PinMap_UART[i].tx == tx) && (PinMap_UART[i].rx == rx)) {
+            instance = PinMap_UART[i].instance;
+            break;
+        }
+    }
+    return instance;
 }
-#endif
-
-#endif /* MBED_PERIPHERALNAMES_H */

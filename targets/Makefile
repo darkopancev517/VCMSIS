@@ -4,6 +4,7 @@ MCU_BOARD_DIR  = $(MCU_DEVICE_DIR)/TARGET_$(MCU_BOARD)
 
 SRCS_HAL += $(MCU_FAM_DIR)/gpio_api.c
 SRCS_HAL += $(MCU_FAM_DIR)/pinmap.c
+SRCS_HAL += $(MCU_FAM_DIR)/pinmap_ex.c
 SRCS_HAL += $(MCU_FAM_DIR)/serial_api.c
 
 SRCS_HAL += $(MCU_FAM_DIR)/device/vc73xx_gpio.c

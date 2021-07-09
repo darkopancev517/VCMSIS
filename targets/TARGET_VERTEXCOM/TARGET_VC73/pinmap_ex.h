@@ -16,33 +16,27 @@
  * limitations under the License.
  */
 
-#ifndef MBED_PERIPHERALNAMES_H
-#define MBED_PERIPHERALNAMES_H
+#ifndef PINMAP_EX_H
+#define PINMAP_EX_H
 
-#include "cmsis.h"
+#include "PinNames.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-typedef enum {
-    UART_0 = (int)VC_UART0_BASE,
-    UART_1 = (int)VC_UART1_BASE,
-    UART_2 = (int)VC_UART2_BASE,
-    UART_3 = (int)VC_UART3_BASE,
-    UART_4 = (int)VC_UART4_BASE,
-    UART_5 = (int)VC_UART5_BASE,
-    UART_6 = (int)VC_UART6_BASE
-} UARTName;
+typedef struct {
+    PinName tx;
+    PinName rx;
+    int instance;
+} PinMapUART;
 
-#define DEVICE_SPI_COUNT 2
-typedef enum {
-    SPI_1 = (int)VC_SPI1_BASE,
-    SPI_2 = (int)VC_SPI2_BASE
-} SPIName;
+extern const PinMapUART PinMap_UART[];
+
+int pin_instance_uart(PinName tx, PinName rx);
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif /* MBED_PERIPHERALNAMES_H */
+#endif /* PINMAP_EX_H */
