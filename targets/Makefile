@@ -1,35 +1,36 @@
-DEVICE_DIR = TARGET_$(VENDOR)/TARGET_$(DEVICE)
+MCU_FAM_DIR    = TARGET_$(VENDOR)/TARGET_$(MCU_FAM)
+MCU_DEVICE_DIR = $(MCU_FAM_DIR)/TARGET_$(MCU_DEVICE)
+MCU_BOARD_DIR  = $(MCU_DEVICE_DIR)/TARGET_$(MCU_BOARD)
 
-SRCS_CMSIS += $(DEVICE_DIR)/CMSIS/Source/system_$(DEVICE_LC).c
-SRCS_CMSIS_STARTUP = $(DEVICE_DIR)/CMSIS/Source/GCC/startup_$(DEVICE_LC).s
+SRCS_HAL += $(MCU_FAM_DIR)/gpio_api.c
+SRCS_HAL += $(MCU_FAM_DIR)/pinmap.c
+SRCS_HAL += $(MCU_FAM_DIR)/serial_api.c
 
-SRCS_HAL += $(DEVICE_DIR)/HAL/Source/pinmap.c
-SRCS_HAL += $(DEVICE_DIR)/HAL/Source/gpio_api.c
-SRCS_HAL += $(DEVICE_DIR)/HAL/Source/gpio_irq_api.c
+SRCS_HAL += $(MCU_FAM_DIR)/device/vc73xx_gpio.c
+SRCS_HAL += $(MCU_FAM_DIR)/device/vc73xx_flash.c
+SRCS_HAL += $(MCU_FAM_DIR)/device/vc73xx_uart.c
+
+SRCS_HAL += $(MCU_BOARD_DIR)/device/system_$(MCU_DEVICE_LC).c
+
+SRCS_HAL_STARTUP += $(MCU_BOARD_DIR)/device/TOOLCHAIN_GCC_ARM/startup_$(MCU_DEVICE_LC).s
 
 SRCS_MAIN += main.c
 
-OBJS_CMSIS += $(addprefix $(BUILD)/, $(SRCS_CMSIS:.c=.o))
-OBJS_CMSIS_STARTUP += $(addprefix $(BUILD)/, $(SRCS_CMSIS_STARTUP:.s=.o))
 OBJS_HAL += $(addprefix $(BUILD)/, $(SRCS_HAL:.c=.o))
+OBJS_HAL_STARTUP += $(addprefix $(BUILD)/, $(SRCS_HAL_STARTUP:.s=.o))
 OBJS_MAIN += $(addprefix $(BUILD)/, $(SRCS_MAIN:.c=.o))
 
-OBJS_DIR += $(sort $(dir $(OBJS_CMSIS)))
-OBJS_DIR += $(sort $(dir $(OBJS_CMSIS_STARTUP)))
 OBJS_DIR += $(sort $(dir $(OBJS_HAL)))
+OBJS_DIR += $(sort $(dir $(OBJS_HAL_STARTUP)))
 OBJS_DIR += $(sort $(dir $(OBJS_MAIN)))
-
-LIB_TARGET_CMSIS_A = $(BUILD)/$(LIB_TARGET_CMSIS)
-LIB_TARGET_CMSIS_OBJS += $(OBJS_CMSIS)
-LIB_TARGET_CMSIS_OBJS += $(OBJS_CMSIS_STARTUP)
 
 LIB_TARGET_HAL_A = $(BUILD)/$(LIB_TARGET_HAL)
 LIB_TARGET_HAL_OBJS += $(OBJS_HAL)
+LIB_TARGET_HAL_OBJS += $(OBJS_HAL_STARTUP)
 
 LIB_TARGET_MAIN_A = $(BUILD)/$(LIB_TARGET_MAIN)
 LIB_TARGET_MAIN_OBJS += $(OBJS_MAIN)
 
-A_FILES += $(LIB_TARGET_CMSIS_A)
 A_FILES += $(LIB_TARGET_HAL_A)
 A_FILES += $(LIB_TARGET_MAIN_A)
 
@@ -50,12 +51,9 @@ $(BUILD)/%.a:
 	$(ECHO) "AR $@"
 	$(AR) -cr $@ $^
 
-$(LIB_TARGET_CMSIS_A): $(LIB_TARGET_CMSIS_OBJS)
-
 $(LIB_TARGET_HAL_A): $(LIB_TARGET_HAL_OBJS)
 
 $(LIB_TARGET_MAIN_A): $(LIB_TARGET_MAIN_OBJS)
 
--include $(OBJS_CMSIS:%.o=%.d)
 -include $(OBJS_HAL:%.o=%.d)
 -include $(OBJS_MAIN:%.o=%.d)
