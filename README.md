@@ -1,1 +1,1 @@
-#VCMSIS (Vertexcom CMSIS)
+#VERTEXCOM CMSIS + MbedOS HAL
