@@ -19,6 +19,8 @@
 #ifndef MBED_OBJECTS_H
 #define MBED_OBJECTS_H
 
+#include <stdbool.h>
+
 #include "cmsis.h"
 #include "PortNames.h"
 #include "PeripheralNames.h"
@@ -43,12 +45,15 @@ struct port_s {
 };
 
 struct serial_s {
-    UARTName uart;
-    int index; // Used by irq
+    int instance;
     uint32_t baudrate;
     uint32_t databits;
     uint32_t stopbits;
     uint32_t parity;
+    uint32_t handler;
+    uint32_t context;
+    uint32_t irq_mask;
+    bool update;
     PinName pin_tx;
     PinName pin_rx;
 };

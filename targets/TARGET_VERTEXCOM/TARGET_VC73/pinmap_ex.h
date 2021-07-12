@@ -29,6 +29,7 @@ typedef struct {
     PinName tx;
     PinName rx;
     int instance;
+    int irqn;
 } PinMapUART;
 
 extern const PinMapUART PinMap_UART[];
