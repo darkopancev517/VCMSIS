@@ -16,8 +16,8 @@
  * limitations under the License.
  */
 
-#ifndef VC73XX_FLASH_H
-#define VC73XX_FLASH_H
+#ifndef VC73XX_ANA_H
+#define VC73XX_ANA_H
 
 #include <stdint.h>
 #include <stddef.h>
@@ -28,14 +28,12 @@
 extern "C" {
 #endif
 
-void vcflash_disable_cache(void);
-void vcflash_enable_cache(void);
-void vcflash_write_enable(void);
-uint32_t vcflash_get_manuid(void);
-void vcflash_quad_enable(void);
+void vcana_init(void);
+void vcana_set_gppll_120mhz(void);
+void vcana_set_bbpll_192mhz(void);
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif /* VC73XX_FLASH_H */
+#endif /* VC73XX_ANA_H */
