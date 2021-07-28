@@ -14,7 +14,8 @@ SRCS_HAL += $(MCU_FAM_DIR)/device/vc73xx_ana.c
 SRCS_HAL += $(MCU_FAM_DIR)/device/vc73xx_flash.c
 SRCS_HAL += $(MCU_FAM_DIR)/device/vc73xx_gpio.c
 SRCS_HAL += $(MCU_FAM_DIR)/device/vc73xx_uart.c
-SRCS_HAL += $(MCU_FAM_DIR)/device/vc73xx_pwm.c
+SRCS_HAL += $(MCU_FAM_DIR)/device/vc73xx_usticker.c
+SRCS_HAL += $(MCU_FAM_DIR)/device/xtimer.c
 
 SRCS_HAL += $(MCU_BOARD_DIR)/device/system_$(MCU_DEVICE_LC).c
 

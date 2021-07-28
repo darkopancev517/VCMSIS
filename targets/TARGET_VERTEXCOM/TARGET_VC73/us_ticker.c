@@ -20,26 +20,55 @@
 #include "us_ticker_api.h"
 #include "pinmap.h"
 
-#include "vc73xx_pwm.h"
+#include "vc73xx_usticker.h"
+#include "xtimer.h"
+
+static unsigned int us_ticker_irqmask;
+static bool us_ticker_inited = false;
+
+static void _us_ticker_timer_callback(void *arg);
+static xtimer_t _us_ticker_timer;
 
 void us_ticker_init(void)
 {
+    if (us_ticker_inited) {
+        return;
+    }
+    _us_ticker_timer.callback = _us_ticker_timer_callback;
+    _us_ticker_timer.arg = NULL;
+    xtimer_init(XTIMER_USEC);
+    us_ticker_inited = true;
 }
 
 uint32_t us_ticker_read(void)
 {
-    return 0;
+    if (!us_ticker_inited) {
+        us_ticker_init();
+    }
+    return xtimer_now(XTIMER_USEC);
 }
 
 void us_ticker_set_interrupt(timestamp_t timestamp)
 {
-    (void)timestamp;
+    if (!us_ticker_inited) {
+        us_ticker_init();
+    }
+    xtimer_set(XTIMER_USEC, &_us_ticker_timer, timestamp);
 }
 
 void us_ticker_disable_interrupt(void)
 {
+    us_ticker_irqmask = __get_PRIMASK();
+    __disable_irq();
 }
 
 void us_ticker_clear_interrupt(void)
 {
+    __set_PRIMASK(us_ticker_irqmask);
+}
+
+static void _us_ticker_timer_callback(void *arg)
+{
+    (void)arg;
+    us_ticker_irq_handler();
 }
