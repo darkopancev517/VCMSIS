@@ -1,0 +1,35 @@
+# Compiled source #
+###################
+*.o
+*.map
+*.hex
+*.elf
+
+# Packages #
+############
+
+# Logs and databases #
+######################
+*.log
+
+# VIM swap files #
+######################
+*.swp
+
+# Build dir #
+######################
+Build/
+
+# Cscope and ctags file
+######################
+cscope.out
+cscope.in.out
+cscope.po.out
+cscope.files
+tags
+
+# Darwin files
+######################
+.DS_Store
+
+
