@@ -94,11 +94,16 @@ CFLAGS += -I$(TOP_DIR)/$(TARGET_FAM_DIR)/device/crypto/osr_crypto/crypto_lib
 CFLAGS += -I$(TOP_DIR)/$(TARGET_FAM_DIR)/device/crypto/osr_crypto/crypto_lib/hash_hmac
 CFLAGS += -I$(TOP_DIR)/$(TARGET_FAM_DIR)/device/crypto/osr_crypto/crypto_lib/pke
 CFLAGS += -I$(TOP_DIR)/$(TARGET_FAM_DIR)/device/crypto/osr_crypto/crypto_lib/ske
-CFLAGS += -I$(TOP_DIR)/$(TARGET_FAM_DIR)/device/crypto/osr_crypto/crypto_test
-CFLAGS += -I$(TOP_DIR)/$(TARGET_FAM_DIR)/device/crypto/osr_crypto/crypto_test/hash_hmac_test
-CFLAGS += -I$(TOP_DIR)/$(TARGET_FAM_DIR)/device/crypto/osr_crypto/crypto_test/pke_test
-CFLAGS += -I$(TOP_DIR)/$(TARGET_FAM_DIR)/device/crypto/osr_crypto/crypto_test/ske_test
 endif
+
+ifeq ($(MCU_DEVICE),VC6330)
+CFLAGS += -I$(TOP_DIR)/tests/hplc_crypto
+CFLAGS += -I$(TOP_DIR)/tests/osr_crypto
+CFLAGS += -I$(TOP_DIR)/tests/osr_crypto/hash_hmac_test
+CFLAGS += -I$(TOP_DIR)/tests/osr_crypto/pke_test
+CFLAGS += -I$(TOP_DIR)/tests/osr_crypto/ske_test
+endif
+
 CFLAGS += -I$(TOP_DIR)/$(TARGET_DEVICE_DIR)
 CFLAGS += -I$(TOP_DIR)/$(TARGET_DEVICE_DIR)/CMSIS
 CFLAGS += -I$(TOP_DIR)/$(TARGET_BOARD_DIR)
@@ -140,11 +145,13 @@ BUILD_TARGET_DIR = $(TOP_DIR)/$(BUILD_DIR)
 
 export LIB_TARGET_HAL     = libtarget_hal_$(MCU_DEVICE_LC).a
 export LIB_TARGET_MAIN    = libtarget_main.a
+export LIB_TARGET_TESTS   = libtarget_tests.a
 export LIB_TOOLS_DBGSTORE = libtools_dbgstore.a
 export LIB_TOOLS_HEAP     = libtools_heap.a
 
 MAIN_LIBS += $(BUILD_TARGET_DIR)/$(LIB_TARGET_HAL)
 MAIN_LIBS += $(BUILD_TARGET_DIR)/$(LIB_TARGET_MAIN)
+MAIN_LIBS += $(BUILD_TARGET_DIR)/$(LIB_TARGET_TESTS)
 
 ifneq (,$(filter $(TOOLS_BUILD), dbgstore))
 MAIN_LIBS += $(BUILD_TARGET_DIR)/$(LIB_TOOLS_DBGSTORE)

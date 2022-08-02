@@ -81,41 +81,51 @@ SRCS_HAL += $(MCU_FAM_DIR)/device/crypto/osr_crypto/crypto_lib/ske/ske_ctr.c
 SRCS_HAL += $(MCU_FAM_DIR)/device/crypto/osr_crypto/crypto_lib/ske/ske_ecb.c
 SRCS_HAL += $(MCU_FAM_DIR)/device/crypto/osr_crypto/crypto_lib/ske/ske_gcm_gmac.c
 SRCS_HAL += $(MCU_FAM_DIR)/device/crypto/osr_crypto/crypto_lib/ske/ske_ofb.c
-
-SRCS_HAL += $(MCU_FAM_DIR)/device/crypto/osr_crypto/crypto_test/hash_hmac_test/hash_test.c
-SRCS_HAL += $(MCU_FAM_DIR)/device/crypto/osr_crypto/crypto_test/hash_hmac_test/hmac_test.c
-SRCS_HAL += $(MCU_FAM_DIR)/device/crypto/osr_crypto/crypto_test/hash_hmac_test/sample_test_hash_hmac.c
-SRCS_HAL += $(MCU_FAM_DIR)/device/crypto/osr_crypto/crypto_test/hash_hmac_test/sample_test_hmac_sha1.c
-SRCS_HAL += $(MCU_FAM_DIR)/device/crypto/osr_crypto/crypto_test/hash_hmac_test/sample_test_hmac_sha256.c
-SRCS_HAL += $(MCU_FAM_DIR)/device/crypto/osr_crypto/crypto_test/hash_hmac_test/sample_test_hmac_sm3.c
-SRCS_HAL += $(MCU_FAM_DIR)/device/crypto/osr_crypto/crypto_test/hash_hmac_test/sample_test_sha1.c
-SRCS_HAL += $(MCU_FAM_DIR)/device/crypto/osr_crypto/crypto_test/hash_hmac_test/sample_test_sha256.c
-SRCS_HAL += $(MCU_FAM_DIR)/device/crypto/osr_crypto/crypto_test/hash_hmac_test/sample_test_sm3.c
-
-SRCS_HAL += $(MCU_FAM_DIR)/device/crypto/osr_crypto/crypto_test/pke_test/eccp_get_curve_paras_test.c
-SRCS_HAL += $(MCU_FAM_DIR)/device/crypto/osr_crypto/crypto_test/pke_test/eccp_get_key_test.c
-SRCS_HAL += $(MCU_FAM_DIR)/device/crypto/osr_crypto/crypto_test/pke_test/ecdh_test.c
-SRCS_HAL += $(MCU_FAM_DIR)/device/crypto/osr_crypto/crypto_test/pke_test/ecdsa_test.c
-SRCS_HAL += $(MCU_FAM_DIR)/device/crypto/osr_crypto/crypto_test/pke_test/sm2_test.c
-
-SRCS_HAL += $(MCU_FAM_DIR)/device/crypto/osr_crypto/crypto_test/ske_test/ske_gcm_test.c
-SRCS_HAL += $(MCU_FAM_DIR)/device/crypto/osr_crypto/crypto_test/ske_test/ske_sample_test.c
-SRCS_HAL += $(MCU_FAM_DIR)/device/crypto/osr_crypto/crypto_test/ske_test/ske_test.c
 endif
 
 SRCS_HAL += $(MCU_DEVICE_DIR)/CMSIS/system_$(MCU_DEVICE_LC).c
 
 SRCS_HAL_STARTUP += $(MCU_DEVICE_DIR)/CMSIS/TOOLCHAIN_GCC_ARM/startup_$(MCU_DEVICE_LC).s
 
+ifeq ($(MCU_DEVICE),VC6330)
+SRCS_TESTS += tests/hplc_crypto/hplc_aes_cbc_test.c
+SRCS_TESTS += tests/hplc_crypto/hplc_aes_gcm_test.c
+SRCS_TESTS += tests/hplc_crypto/hplc_ecc_test.c
+SRCS_TESTS += tests/hplc_crypto/hplc_sha256_test.c
+SRCS_TESTS += tests/hplc_crypto/hplc_sm2_test.c
+SRCS_TESTS += tests/hplc_crypto/hplc_sm3_test.c
+SRCS_TESTS += tests/hplc_crypto/hplc_sm4_test.c
+
+SRCS_TESTS += tests/osr_crypto/hash_hmac_test/hash_test.c
+SRCS_TESTS += tests/osr_crypto/hash_hmac_test/hmac_test.c
+SRCS_TESTS += tests/osr_crypto/hash_hmac_test/sample_test_hash_hmac.c
+SRCS_TESTS += tests/osr_crypto/hash_hmac_test/sample_test_hmac_sha1.c
+SRCS_TESTS += tests/osr_crypto/hash_hmac_test/sample_test_hmac_sha256.c
+SRCS_TESTS += tests/osr_crypto/hash_hmac_test/sample_test_hmac_sm3.c
+SRCS_TESTS += tests/osr_crypto/hash_hmac_test/sample_test_sha1.c
+SRCS_TESTS += tests/osr_crypto/hash_hmac_test/sample_test_sha256.c
+SRCS_TESTS += tests/osr_crypto/hash_hmac_test/sample_test_sm3.c
+SRCS_TESTS += tests/osr_crypto/pke_test/eccp_get_curve_paras_test.c
+SRCS_TESTS += tests/osr_crypto/pke_test/eccp_get_key_test.c
+SRCS_TESTS += tests/osr_crypto/pke_test/ecdh_test.c
+SRCS_TESTS += tests/osr_crypto/pke_test/ecdsa_test.c
+SRCS_TESTS += tests/osr_crypto/pke_test/sm2_test.c
+SRCS_TESTS += tests/osr_crypto/ske_test/ske_gcm_test.c
+SRCS_TESTS += tests/osr_crypto/ske_test/ske_sample_test.c
+SRCS_TESTS += tests/osr_crypto/ske_test/ske_test.c
+endif
+
 SRCS_MAIN += main.c
 
 OBJS_HAL += $(addprefix $(BUILD)/, $(SRCS_HAL:.c=.o))
 OBJS_HAL_STARTUP += $(addprefix $(BUILD)/, $(SRCS_HAL_STARTUP:.s=.o))
 OBJS_MAIN += $(addprefix $(BUILD)/, $(SRCS_MAIN:.c=.o))
+OBJS_TESTS += $(addprefix $(BUILD)/, $(SRCS_TESTS:.c=.o))
 
 OBJS_DIR += $(sort $(dir $(OBJS_HAL)))
 OBJS_DIR += $(sort $(dir $(OBJS_HAL_STARTUP)))
 OBJS_DIR += $(sort $(dir $(OBJS_MAIN)))
+OBJS_DIR += $(sort $(dir $(OBJS_TESTS)))
 
 LIB_TARGET_HAL_A = $(BUILD)/$(LIB_TARGET_HAL)
 LIB_TARGET_HAL_OBJS += $(OBJS_HAL)
@@ -124,8 +134,12 @@ LIB_TARGET_HAL_OBJS += $(OBJS_HAL_STARTUP)
 LIB_TARGET_MAIN_A = $(BUILD)/$(LIB_TARGET_MAIN)
 LIB_TARGET_MAIN_OBJS += $(OBJS_MAIN)
 
+LIB_TARGET_TESTS_A = $(BUILD)/$(LIB_TARGET_TESTS)
+LIB_TARGET_TESTS_OBJS += $(OBJS_TESTS)
+
 A_FILES += $(LIB_TARGET_HAL_A)
 A_FILES += $(LIB_TARGET_MAIN_A)
+A_FILES += $(LIB_TARGET_TESTS_A)
 
 all: | $(OBJS_DIR) $(A_FILES)
 
@@ -148,5 +162,8 @@ $(LIB_TARGET_HAL_A): $(LIB_TARGET_HAL_OBJS)
 
 $(LIB_TARGET_MAIN_A): $(LIB_TARGET_MAIN_OBJS)
 
+$(LIB_TARGET_TESTS_A): $(LIB_TARGET_TESTS_OBJS)
+
 -include $(OBJS_HAL:%.o=%.d)
 -include $(OBJS_MAIN:%.o=%.d)
+-include $(OBJS_TESTS:%.o=%.d)
