@@ -30,8 +30,8 @@
 
 #define RUN_PRINT_TEST        0
 #define RUN_OSR_CRYPTO_TEST   0
-#define RUN_HPLC_CRYPTO_TEST  1
-#define RUN_HPLC_SPEED_TEST   0
+#define RUN_HPLC_CRYPTO_TEST  0
+#define RUN_HPLC_SPEED_TEST   1
 #define RUN_TRNG_TEST         0
 
 extern int stdio_uart_inited;
@@ -194,8 +194,127 @@ static void HPLC_all_test(void)
 #endif
 
 #if RUN_HPLC_SPEED_TEST
+extern uint32_t ske_speed_test();
+#ifdef SKE_LP_DMA_FUNCTION
+extern uint32_t ske_dma_speed_test();
+#endif
+extern uint32_t ske_gcm_speed_test();
+#ifdef SKE_LP_DMA_FUNCTION
+extern uint32_t ske_dma_gcm_speed_test();
+#endif
+
+extern void SM2_keyget_speed_test();
+extern void SM2_sign_speed_test();
+extern void SM2_verify_speed_test();
+extern void SM2_encrypt_speed_test();
+extern void SM2_decrypt_speed_test();
+extern void SM2_exchange_speed_test();
+
+extern uint32_t ecdsa_speed_test(eccp_curve_t *curve);
+extern uint32_t ecdh_speed_test(const eccp_curve_t *curve);
+
+extern void hash_speed_test(void);
+#ifdef HASH_DMA_FUNCTION
+extern void hash_dma_speed_test(void);
+#endif
+
+extern void hmac_speed_test(void);
+#ifdef HASH_DMA_FUNCTION
+extern void hmac_dma_speed_test(void);
+#endif
+
 static void HPLC_speed_test(void)
 {
+  // ----- SKE IP speed test
+  if (ske_speed_test()) {
+    printf("SKE speed test failed\n");
+    return;
+  }
+
+#if 0
+
+#ifdef SKE_LP_DMA_FUNCTION
+  if (ske_dma_speed_test()) {
+    printf("SKE DMA speed test failed\n");
+    return;
+  }
+#endif
+
+  if (ske_gmc_speed_test()) {
+    printf("SKE GCM speed test failed\n");
+    return;
+  }
+
+#ifdef SKE_LP_DMA_FUNCTION
+  if (ske_dma_gcm_speed_test()) {
+    printf("SKE DMA GCM speed test failed\n");
+    return;
+  }
+#endif
+
+  // ----- PKE SM2 speed test
+  SM2_keyget_speed_test();
+
+  SM2_sign_speed_test();
+
+  SM2_verify_speed_test();
+
+  SM2_encrypt_speed_test();
+
+  SM2_decrypt_speed_test();
+
+  SM2_exchange_speed_test();
+
+  // ----- PKE ecdsa speed test
+	printf("\r\n---brainpoolp160r1 \r\n");
+	if(ecdsa_speed_test((eccp_curve_t *)brainpoolp160r1))  //brainpoolp160r1 //secp521r1
+		return ;
+
+  /*
+	printf("\r\n---secp192r1 \r\n");
+	if(ecdsa_speed_test((eccp_curve_t *)secp192r1))
+		return; 
+
+	printf("\r\n---secp224r1 \r\n");
+	if(ecdsa_speed_test((eccp_curve_t *)secp224r1))
+		return;
+
+	printf("\r\n---secp256r1 \r\n");
+	if(ecdsa_speed_test((eccp_curve_t *)secp256r1))
+		return;
+
+	printf("\r\n---secp384r1 \r\n");
+	if(ecdsa_speed_test((eccp_curve_t *)secp384r1))
+		return;
+
+	printf("\r\n---brainpoolp512r1 \r\n");
+	if(ecdsa_speed_test((eccp_curve_t *)brainpoolp512r1))
+		return;
+
+	printf("\r\n---secp521r1 \r\n");
+	if(ecdsa_speed_test((eccp_curve_t *)secp521r1))
+		return;
+  */
+
+  // ----- PKE ecdh speed test
+	if(ecdh_speed_test(secp521r1))  //brainpoolp512r1 //secp521r1 //secp224r1
+		return 1;
+
+  // ----- HASH speed test
+  hash_speed_test();
+
+#if HASH_DMA_FUNCTION
+  hash_dma_speed_test();
+#endif
+
+  // ----- HMAC speed test
+  hmac_speed_test();
+
+#if HASH_DMA_FUNCTION
+  hmac_dma_speed_test();
+#endif
+
+#endif // #if 0
 
 }
 #endif
