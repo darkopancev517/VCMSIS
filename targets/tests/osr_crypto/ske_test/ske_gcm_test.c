@@ -4,6 +4,7 @@
 #include "../../crypto_include/utility.h"
 
 extern uint32_t get_systick_micros(void);
+extern uint32_t get_systick_milis(void);
 
 extern uint32_t ske_get_rand_number(uint32_t max_number);
 
@@ -999,7 +1000,9 @@ uint32_t ske_gcm_speed_test()
 	uint32_t i;
 	uint32_t ret;
 
-	printf("\r\n begin");//fflush(stdout);
+	printf("\r\n SKE GCM SPEED TEST: 10000 * 4KB blocks - begin ...");//fflush(stdout);
+
+  uint32_t start = get_systick_milis();
 
 	for(i=0;i<10000;i++)
 	{
@@ -1012,7 +1015,9 @@ uint32_t ske_gcm_speed_test()
 		}
 	}
 
-	printf("\r\n finished");//fflush(stdout);
+  uint32_t duration = get_systick_milis() - start;
+
+	printf("\r\n finished - duration: %lu ms", duration);//fflush(stdout);
 
 	return 0;
 }
@@ -1035,9 +1040,11 @@ uint32_t ske_dma_gcm_speed_test()
 	uint32_t i;
 	uint32_t ret;
 
-	printf("\r\n begin");//fflush(stdout);
+	printf("\r\n SKE GCM DMA SPEED TEST: 10000 * 4KB blocks - begin ...");//fflush(stdout);
 
-	for(i=0;i<50000;i++)
+  uint32_t start = get_systick_milis();
+
+	for(i=0;i<10000;i++)
 	{
 		ret = ske_lp_dma_gcm_crypto(SKE_ALG_SM4, SKE_CRYPTO_ENCRYPT, key, 0, iv,
 				iv_bytes, aad, aad_bytes, in, in, c_bytes, mac_bytes, ske_call_manage);
@@ -1047,7 +1054,10 @@ uint32_t ske_dma_gcm_speed_test()
 			return 1;
 		}
 	}
-	printf("\r\n finished");fflush(stdout);
+
+  uint32_t duration = get_systick_milis() - start;
+
+	printf("\r\n finished - duration: %lu ms", duration);fflush(stdout);
 
 	return 0;
 }

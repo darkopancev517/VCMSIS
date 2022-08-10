@@ -28,6 +28,10 @@
 #include "crypto_hal/pke.h"
 #include "crypto_hal/trng.h"
 
+#include "crypto_include/utility.h"
+#include "crypto_include/ske/ske.h"
+#include "crypto_include/trng.h"
+
 #define RUN_PRINT_TEST        0
 #define RUN_OSR_CRYPTO_TEST   0
 #define RUN_HPLC_CRYPTO_TEST  0
@@ -111,6 +115,11 @@ uint32_t osr_crypto_test(void)
 uint32_t get_systick_micros(void)
 {
   return systick_milis*1000 +1000-SysTick->VAL/(SystemCoreClock/1000000UL);
+}
+
+uint32_t get_systick_milis(void)
+{
+  return systick_milis;
 }
 
 #if RUN_TRNG_TEST
@@ -231,8 +240,6 @@ static void HPLC_speed_test(void)
     return;
   }
 
-#if 0
-
 #ifdef SKE_LP_DMA_FUNCTION
   if (ske_dma_speed_test()) {
     printf("SKE DMA speed test failed\n");
@@ -240,7 +247,8 @@ static void HPLC_speed_test(void)
   }
 #endif
 
-  if (ske_gmc_speed_test()) {
+#if 0
+  if (ske_gcm_speed_test()) {
     printf("SKE GCM speed test failed\n");
     return;
   }

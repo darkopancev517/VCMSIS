@@ -4,6 +4,7 @@
 #include "../../crypto_include/trng.h"
 
 extern uint32_t get_systick_micros(void);
+extern uint32_t get_systick_milis(void);
 
 
 void get_rand_(uint8_t *rand, uint32_t bytes)
@@ -2167,7 +2168,9 @@ uint32_t TDES_EEE_192_Test()
 
 
 //*
-uint32_t ske_speed_test()
+
+static uint32_t _ske_speed_test(SKE_ALG alg, SKE_MODE mode,
+                                const char *alg_str, const char *mode_str)
 {
 	uint8_t in[4096];
 	uint8_t key[64];
@@ -2177,19 +2180,24 @@ uint32_t ske_speed_test()
 
 	//for ECB/CBC/CFB/OFB/CTR
 
-	printf("\r\n begin");fflush(stdout);
+	printf("\r\n SKE %s - %s SPEED TEST: 10000 * 4KB blocks - begin ...", alg_str, mode_str);
+  fflush(stdout);
 
-	ret = ske_lp_init(SKE_ALG_SM4, SKE_MODE_CTR, SKE_CRYPTO_DECRYPT, key, 0, iv);
+	ret = ske_lp_init(alg, mode, SKE_CRYPTO_DECRYPT, key, 0, iv);
 	if(SKE_SUCCESS != ret)
 	{
 		printf("\r\n init error ret=%lu", ret); fflush(stdout);
 		return 1;
 	}
 
+  uint32_t start = get_systick_milis();
+
 	for(i=0;i<10000;i++)
 	{
 		ret |= ske_lp_update_blocks(in, in, 4096);
 	}
+
+  uint32_t duration = get_systick_milis() - start;
 
 	if(SKE_SUCCESS != ret)
 	{
@@ -2197,13 +2205,46 @@ uint32_t ske_speed_test()
 		return 1;
 	}
 
-	printf("\r\n finished");fflush(stdout);
+	printf("\r\n finished - duration: %lu ms", duration);
+  fflush(stdout);
 	return 0;
 }
 
+uint32_t ske_speed_test()
+{
+  printf("\r\n--------------------- SKE SPEED TEST START ------------------------\r\n");
 
-#ifdef SKE_LP_DMA_FUNCTION
-uint32_t ske_dma_speed_test()
+  if (_ske_speed_test(SKE_ALG_AES_128, SKE_MODE_ECB, "AES 128", "ECB") != 0) return 1;
+  if (_ske_speed_test(SKE_ALG_AES_128, SKE_MODE_CBC, "AES 128", "CBC") != 0) return 1;
+  if (_ske_speed_test(SKE_ALG_AES_128, SKE_MODE_CFB, "AES 128", "CFB") != 0) return 1;
+  if (_ske_speed_test(SKE_ALG_AES_128, SKE_MODE_OFB, "AES 128", "OFB") != 0) return 1;
+  if (_ske_speed_test(SKE_ALG_AES_128, SKE_MODE_CTR, "AES 128", "CTR") != 0) return 1;
+
+  if (_ske_speed_test(SKE_ALG_AES_192, SKE_MODE_ECB, "AES 192", "ECB") != 0) return 1;
+  if (_ske_speed_test(SKE_ALG_AES_192, SKE_MODE_CBC, "AES 192", "CBC") != 0) return 1;
+  if (_ske_speed_test(SKE_ALG_AES_192, SKE_MODE_CFB, "AES 192", "CFB") != 0) return 1;
+  if (_ske_speed_test(SKE_ALG_AES_192, SKE_MODE_OFB, "AES 192", "OFB") != 0) return 1;
+  if (_ske_speed_test(SKE_ALG_AES_192, SKE_MODE_CTR, "AES 192", "CTR") != 0) return 1;
+
+  if (_ske_speed_test(SKE_ALG_AES_256, SKE_MODE_ECB, "AES 256", "ECB") != 0) return 1;
+  if (_ske_speed_test(SKE_ALG_AES_256, SKE_MODE_CBC, "AES 256", "CBC") != 0) return 1;
+  if (_ske_speed_test(SKE_ALG_AES_256, SKE_MODE_CFB, "AES 256", "CFB") != 0) return 1;
+  if (_ske_speed_test(SKE_ALG_AES_256, SKE_MODE_OFB, "AES 256", "OFB") != 0) return 1;
+  if (_ske_speed_test(SKE_ALG_AES_256, SKE_MODE_CTR, "AES 256", "CTR") != 0) return 1;
+
+  if (_ske_speed_test(SKE_ALG_SM4, SKE_MODE_ECB, "SM4", "ECB") != 0) return 1;
+  if (_ske_speed_test(SKE_ALG_SM4, SKE_MODE_CBC, "SM4", "CBC") != 0) return 1;
+  if (_ske_speed_test(SKE_ALG_SM4, SKE_MODE_CFB, "SM4", "CFB") != 0) return 1;
+  if (_ske_speed_test(SKE_ALG_SM4, SKE_MODE_OFB, "SM4", "OFB") != 0) return 1;
+  if (_ske_speed_test(SKE_ALG_SM4, SKE_MODE_CTR, "SM4", "CTR") != 0) return 1;
+
+  printf("\r\n\r\n DONE\r\n");
+ 
+  return 0;
+}
+
+static uint32_t _ske_dma_speed_test(SKE_ALG alg, SKE_MODE mode,
+                                    const char *alg_str, const char *mode_str)
 {
 	uint32_t *in = (uint32_t *)DMA_RAM_BASE;
 	uint8_t key[64];
@@ -2213,19 +2254,24 @@ uint32_t ske_dma_speed_test()
 
 	//for ECB/CBC/CFB/OFB/CTR
 
-	printf("\r\n begin");fflush(stdout);
+	printf("\r\n SKE DMA %s - %s SPEED TEST: 1000 * 40KB blocks - begin ...", alg_str, mode_str);
+  fflush(stdout);
 
-	ret = ske_lp_dma_init(SKE_ALG_SM4, SKE_MODE_CFB, SKE_CRYPTO_DECRYPT, key, 0, iv);
+	ret = ske_lp_dma_init(alg, mode, SKE_CRYPTO_DECRYPT, key, 0, iv);
 	if(SKE_SUCCESS != ret)
 	{
 		printf("\r\n dma init error ret=%lu", ret); fflush(stdout);
 		return 1;
 	}
 
+  uint32_t start = get_systick_milis();
+
 	for(i=0;i<1000;i++)
 	{
 		ret |= ske_lp_dma_update_blocks(in, in, 40960, ske_call_manage);
 	}
+
+  uint32_t duration = get_systick_milis() - start;
 
 	if(SKE_SUCCESS != ret)
 	{
@@ -2233,8 +2279,44 @@ uint32_t ske_dma_speed_test()
 		return 1;
 	}
 
-	printf("\r\n finished");fflush(stdout);
+	printf("\r\n finished - duration: %lu ms", duration);
+  fflush(stdout);
+
 	return 0;
+}
+
+#ifdef SKE_LP_DMA_FUNCTION
+uint32_t ske_dma_speed_test()
+{
+  printf("\r\n--------------------- SKE DMA SPEED TEST START ------------------------\r\n");
+
+  if (_ske_dma_speed_test(SKE_ALG_AES_128, SKE_MODE_ECB, "AES 128", "ECB") != 0) return 1;
+  if (_ske_dma_speed_test(SKE_ALG_AES_128, SKE_MODE_CBC, "AES 128", "CBC") != 0) return 1;
+  if (_ske_dma_speed_test(SKE_ALG_AES_128, SKE_MODE_CFB, "AES 128", "CFB") != 0) return 1;
+  if (_ske_dma_speed_test(SKE_ALG_AES_128, SKE_MODE_OFB, "AES 128", "OFB") != 0) return 1;
+  if (_ske_dma_speed_test(SKE_ALG_AES_128, SKE_MODE_CTR, "AES 128", "CTR") != 0) return 1;
+
+  if (_ske_dma_speed_test(SKE_ALG_AES_192, SKE_MODE_ECB, "AES 192", "ECB") != 0) return 1;
+  if (_ske_dma_speed_test(SKE_ALG_AES_192, SKE_MODE_CBC, "AES 192", "CBC") != 0) return 1;
+  if (_ske_dma_speed_test(SKE_ALG_AES_192, SKE_MODE_CFB, "AES 192", "CFB") != 0) return 1;
+  if (_ske_dma_speed_test(SKE_ALG_AES_192, SKE_MODE_OFB, "AES 192", "OFB") != 0) return 1;
+  if (_ske_dma_speed_test(SKE_ALG_AES_192, SKE_MODE_CTR, "AES 192", "CTR") != 0) return 1;
+
+  if (_ske_dma_speed_test(SKE_ALG_AES_256, SKE_MODE_ECB, "AES 256", "ECB") != 0) return 1;
+  if (_ske_dma_speed_test(SKE_ALG_AES_256, SKE_MODE_CBC, "AES 256", "CBC") != 0) return 1;
+  if (_ske_dma_speed_test(SKE_ALG_AES_256, SKE_MODE_CFB, "AES 256", "CFB") != 0) return 1;
+  if (_ske_dma_speed_test(SKE_ALG_AES_256, SKE_MODE_OFB, "AES 256", "OFB") != 0) return 1;
+  if (_ske_dma_speed_test(SKE_ALG_AES_256, SKE_MODE_CTR, "AES 256", "CTR") != 0) return 1;
+
+  if (_ske_dma_speed_test(SKE_ALG_SM4, SKE_MODE_ECB, "SM4", "ECB") != 0) return 1;
+  if (_ske_dma_speed_test(SKE_ALG_SM4, SKE_MODE_CBC, "SM4", "CBC") != 0) return 1;
+  if (_ske_dma_speed_test(SKE_ALG_SM4, SKE_MODE_CFB, "SM4", "CFB") != 0) return 1;
+  if (_ske_dma_speed_test(SKE_ALG_SM4, SKE_MODE_OFB, "SM4", "OFB") != 0) return 1;
+  if (_ske_dma_speed_test(SKE_ALG_SM4, SKE_MODE_CTR, "SM4", "CTR") != 0) return 1;
+
+  printf("\r\n\r\n DONE\r\n");
+
+  return 0;
 }
 #endif
 //*/
