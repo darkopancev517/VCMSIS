@@ -247,7 +247,8 @@ static void HPLC_speed_test(void)
   }
 #endif
 
-#if 0
+#if 0 // -- starting point
+
   if (ske_gcm_speed_test()) {
     printf("SKE GCM speed test failed\n");
     return;
@@ -369,6 +370,6 @@ void SysTick_Handler(void)
 
 void HardFault_Handler(void)
 {
-  printf("HARDFAULT!!!\r\n");
+  printf("\r\nHARDFAULT!!!\r\n");
   while (1);
 }

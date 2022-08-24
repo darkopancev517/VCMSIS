@@ -2172,15 +2172,17 @@ uint32_t TDES_EEE_192_Test()
 static uint32_t _ske_speed_test(SKE_ALG alg, SKE_MODE mode,
                                 const char *alg_str, const char *mode_str)
 {
-	uint8_t in[4096];
 	uint8_t key[64];
 	uint8_t iv[16];
 	uint32_t i;
 	uint32_t ret;
 
+	uint8_t in[400];
+  uint32_t iteration = 100000;
+
 	//for ECB/CBC/CFB/OFB/CTR
 
-	printf("\r\n SKE %s - %s SPEED TEST: 10000 * 4KB blocks - begin ...", alg_str, mode_str);
+	printf("\r\n SKE %s - %s SPEED TEST: %lu * %u Bytes blocks - begin ...", alg_str, mode_str, iteration, sizeof(in));
   fflush(stdout);
 
 	ret = ske_lp_init(alg, mode, SKE_CRYPTO_DECRYPT, key, 0, iv);
@@ -2192,9 +2194,9 @@ static uint32_t _ske_speed_test(SKE_ALG alg, SKE_MODE mode,
 
   uint32_t start = get_systick_milis();
 
-	for(i=0;i<10000;i++)
+	for(i=0;i<iteration;i++)
 	{
-		ret |= ske_lp_update_blocks(in, in, 4096);
+		ret |= ske_lp_update_blocks(in, in, sizeof(in));
 	}
 
   uint32_t duration = get_systick_milis() - start;
@@ -2252,9 +2254,12 @@ static uint32_t _ske_dma_speed_test(SKE_ALG alg, SKE_MODE mode,
 	uint32_t i;
 	uint32_t ret;
 
+  uint32_t in_size = 400;
+  uint32_t iteration = 100000;
+
 	//for ECB/CBC/CFB/OFB/CTR
 
-	printf("\r\n SKE DMA %s - %s SPEED TEST: 1000 * 40KB blocks - begin ...", alg_str, mode_str);
+	printf("\r\n SKE DMA %s - %s SPEED TEST: %lu * %lu Bytes blocks - begin ...", alg_str, mode_str, iteration, in_size);
   fflush(stdout);
 
 	ret = ske_lp_dma_init(alg, mode, SKE_CRYPTO_DECRYPT, key, 0, iv);
@@ -2266,9 +2271,9 @@ static uint32_t _ske_dma_speed_test(SKE_ALG alg, SKE_MODE mode,
 
   uint32_t start = get_systick_milis();
 
-	for(i=0;i<1000;i++)
+	for(i=0;i<iteration;i++)
 	{
-		ret |= ske_lp_dma_update_blocks(in, in, 40960, ske_call_manage);
+		ret |= ske_lp_dma_update_blocks(in, in, in_size, ske_call_manage);
 	}
 
   uint32_t duration = get_systick_milis() - start;
