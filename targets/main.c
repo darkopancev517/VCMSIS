@@ -234,20 +234,20 @@ extern void hmac_dma_speed_test(void);
 
 static void HPLC_speed_test(void)
 {
-  // ----- SKE IP speed test
-  if (ske_speed_test()) {
-    printf("SKE speed test failed\n");
-    return;
-  }
-
 #ifdef SKE_LP_DMA_FUNCTION
   if (ske_dma_speed_test()) {
     printf("SKE DMA speed test failed\n");
     return;
   }
 #endif
-
+ 
 #if 0 // -- starting point
+
+ // ----- SKE IP speed test
+  if (ske_speed_test()) {
+    printf("SKE speed test failed\n");
+    return;
+  }
 
   if (ske_gcm_speed_test()) {
     printf("SKE GCM speed test failed\n");
@@ -323,7 +323,7 @@ static void HPLC_speed_test(void)
   hmac_dma_speed_test();
 #endif
 
-#endif // #if 0
+#endif // #if 0 -- starting point
 
 }
 #endif
