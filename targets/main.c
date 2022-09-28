@@ -33,9 +33,9 @@
 #include "crypto_include/trng.h"
 
 #define RUN_PRINT_TEST        0
-#define RUN_OSR_CRYPTO_TEST   0
+#define RUN_OSR_CRYPTO_TEST   1
 #define RUN_HPLC_CRYPTO_TEST  0
-#define RUN_HPLC_SPEED_TEST   1
+#define RUN_HPLC_SPEED_TEST   0
 #define RUN_TRNG_TEST         0
 
 extern int stdio_uart_inited;
@@ -59,6 +59,57 @@ void print_test(void)
 	printf("\r\n %08lx %08lx", *p, *(p+1));  // 55667788 11223344
 	printf("\r\n %llx ", ((uint64_t)0x22334455)*0x11223344);  //249F93204851594
   printf("\r\n");
+}
+#endif
+
+#if defined(SUPPORT_SKE_IRQ)
+static volatile uint8_t ske_irq_requested = 0;
+static volatile uint8_t ske_irq = 0;
+
+volatile static ske_lp_reg_t * const ske_lp_reg = (ske_lp_reg_t *)(SKE_LP_BASE_ADDR);
+
+void ske_lp_request_irq(void)
+{
+  ske_lp_enable_irq();
+
+  ske_irq_requested = 1;
+  ske_irq = 0;
+}
+
+int ske_lp_query_irq(void)
+{
+  if (ske_irq != 1 && !NVIC_GetEnableIRQ(SKE_IRQn))
+  {
+    NVIC_EnableIRQ(SKE_IRQn);
+  }
+
+  int res = ske_irq ? SKE_SUCCESS : SKE_ERROR;
+
+  if (ske_irq == 1)
+  {
+    ske_irq = 0;
+  }
+
+  return res;
+}
+
+void ske_lp_free_irq(void)
+{
+  ske_lp_disable_irq();
+  NVIC_DisableIRQ(SKE_IRQn);
+
+  ske_irq_requested = 0;
+  ske_irq = 0;
+}
+
+void SKE_Handler(void)
+{
+  if (ske_irq_requested && (ske_lp_reg->sr2 & 1)) {
+    ske_lp_reg->sr2 = 0;
+    ske_irq = 1;
+    //printf("SKE IRQ\r\n");
+    NVIC_DisableIRQ(SKE_IRQn);
+  }
 }
 #endif
 

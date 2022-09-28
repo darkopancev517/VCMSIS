@@ -32,4 +32,6 @@ tags
 ######################
 .DS_Store
 
-
+# Code editor files
+######################
+.ccls-cache/

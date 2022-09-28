@@ -23,7 +23,7 @@ extern "C" {
 #define SUPPORT_SKE_AES_256
 #define SUPPORT_SKE_SM4
 
-//#define SUPPORT_SKE_IRQ
+#define SUPPORT_SKE_IRQ
 
 #define SUPPORT_SKE_MODE_ECB
 #define SUPPORT_SKE_MODE_CBC
@@ -244,6 +244,10 @@ typedef void (*SKE_CALLBACK)(void);
 
 
 //APIs
+
+void ske_lp_enable_irq(void);
+
+void ske_lp_disable_irq(void);
 
 uint32_t ske_lp_get_version(void);
 

@@ -6,6 +6,11 @@
 extern uint32_t get_systick_micros(void);
 extern uint32_t get_systick_milis(void);
 
+#if defined(SUPPORT_SKE_IRQ)
+extern void ske_lp_request_irq(void);
+extern int ske_lp_query_irq(void);
+extern void ske_lp_free_irq(void);
+#endif
 
 void get_rand_(uint8_t *rand, uint32_t bytes)
 {
@@ -681,11 +686,10 @@ uint32_t SKE_DMA_test(SKE_ALG ske_alg, SKE_MODE mode, const uint8_t *std_plain,
 
 
 #if defined(SUPPORT_SKE_IRQ)
-
 	ske_lp_request_irq();
 
-	cipher_=(uint32_t *)(DMA_SKE_BASE);
-	replain_=(uint32_t *)(DMA_SKE_BASE+2048);
+	cipher_=(uint32_t *)(DMA_RAM_BASE);
+	replain_=(uint32_t *)(DMA_RAM_BASE+2048);
 
 	for (i = 0;i < 256 ;i++)
 	{
@@ -694,7 +698,7 @@ uint32_t SKE_DMA_test(SKE_ALG ske_alg, SKE_MODE mode, const uint8_t *std_plain,
 	}
 
 	//ENCRYPT
-	ret = ske_lp_dma_init(ske_alg, mode, SKE_CRYPTO_ENCRYPT, key, 0, iv);
+	ret = ske_lp_dma_init(ske_alg, mode, SKE_CRYPTO_ENCRYPT, (uint8_t *)key, 0, (uint8_t *)iv);
 	if (SKE_SUCCESS != ret)
 	{
 		printf("\r\n ske dma irq decrypt error");
@@ -704,22 +708,21 @@ uint32_t SKE_DMA_test(SKE_ALG ske_alg, SKE_MODE mode, const uint8_t *std_plain,
 	ske_lp_dma_update_blocks(cipher_, replain_, 256, ske_call_manage);
 	while (SKE_SUCCESS != ske_lp_query_irq())
 	{
-		xil_printf("\r\n %s %s irq  start encrypt multiple !!", name[ske_alg], oper_mode[mode]);
+		printf("\r\n %s %s irq  start encrypt multiple !!", name[ske_alg], oper_mode[mode]);
 	}
 
-
 	//DECRYPT
-	ret = ske_lp_dma_init(ske_alg, mode, SKE_CRYPTO_DECRYPT, key, 0, iv);
+	ret = ske_lp_dma_init(ske_alg, mode, SKE_CRYPTO_DECRYPT, (uint8_t *)key, 0, (uint8_t *)iv);
 	if (SKE_SUCCESS != ret)
 	{
 		printf("\r\n ske dma irq decrypt error");
 		return 1;
 	}
-	ske_lp_dma_update_blocks(replain_, cipher_, 256, ske_call_manage);
 
+	ske_lp_dma_update_blocks(replain_, cipher_, 256, ske_call_manage);
 	while (SKE_SUCCESS != ske_lp_query_irq())
 	{
-		xil_printf("\r\n %s %s irq  start decrypt multiple !!", name[ske_alg], oper_mode[mode]);
+		printf("\r\n %s %s irq  start decrypt multiple !!", name[ske_alg], oper_mode[mode]);
 	}
 
 	for (i = 0;i < 256 ;i++)
@@ -729,14 +732,14 @@ uint32_t SKE_DMA_test(SKE_ALG ske_alg, SKE_MODE mode, const uint8_t *std_plain,
 
 	if(uint32_BigNumCmp(replain_, 256, cipher_, 256))
 	{
-		xil_printf("\r\n %s %s irq multiple input test failure(one block every time)!!", name[ske_alg], oper_mode[mode]);
+		printf("\r\n %s %s irq multiple input test failure(one block every time)!!", name[ske_alg], oper_mode[mode]);
 		print_buf_U32(cipher_, wordLen, "cipher");
 		print_buf_U32(replain_, wordLen, "replain");
 		return 1;
 	}
 	else
 	{
-		xil_printf("\r\n %s %s DMA irq multiple input test success(one block every time)!!", name[ske_alg], oper_mode[mode]);
+		printf("\r\n %s %s DMA irq multiple input test success(one block every time)!!", name[ske_alg], oper_mode[mode]);
 	}
 
 
@@ -747,24 +750,26 @@ uint32_t SKE_DMA_test(SKE_ALG ske_alg, SKE_MODE mode, const uint8_t *std_plain,
 		replain_[i] = 0;
 	}
 
-	ret = ske_lp_dma_crypto(ske_alg, mode, SKE_CRYPTO_ENCRYPT, key, 0, iv, cipher_, replain_, wordLen, ske_call_manage);
+	ret = ske_lp_dma_crypto(ske_alg, mode, SKE_CRYPTO_ENCRYPT, (uint8_t *)key, 0, (uint8_t *)iv, cipher_, replain_, wordLen, ske_call_manage);
 	if(SKE_SUCCESS != ret)
 	{
 		return 1;
-	}
-	while (SKE_SUCCESS != ske_lp_query_irq())
-	{
-		xil_printf("\r\n %s %s irq  start encrypt one !!", name[ske_alg], oper_mode[mode]);
 	}
 
-	ret = ske_lp_dma_crypto(ske_alg, mode, SKE_CRYPTO_DECRYPT, key, 0, iv, cipher_, replain_, wordLen, ske_call_manage);
+	while (SKE_SUCCESS != ske_lp_query_irq())
+	{
+		printf("\r\n %s %s irq  start encrypt one !!", name[ske_alg], oper_mode[mode]);
+	}
+
+	ret = ske_lp_dma_crypto(ske_alg, mode, SKE_CRYPTO_DECRYPT, (uint8_t *)key, 0, (uint8_t *)iv, cipher_, replain_, wordLen, ske_call_manage);
 	if(SKE_SUCCESS != ret)
 	{
 		return 1;
 	}
+
 	while (SKE_SUCCESS != ske_lp_query_irq())
 	{
-		xil_printf("\r\n %s %s irq  start decrypt one !!", name[ske_alg], oper_mode[mode]);
+		printf("\r\n %s %s irq  start decrypt one !!", name[ske_alg], oper_mode[mode]);
 	}
 
 	for (i = 0;i < 256 ;i++)
@@ -774,14 +779,14 @@ uint32_t SKE_DMA_test(SKE_ALG ske_alg, SKE_MODE mode, const uint8_t *std_plain,
 
 	if(uint32_BigNumCmp(replain_, 256, cipher_, 256))
 	{
-		xil_printf("\r\n %s %s irq one input test failure(one block every time)!!", name[ske_alg], oper_mode[mode]);
+		printf("\r\n %s %s irq one input test failure(one block every time)!!", name[ske_alg], oper_mode[mode]);
 		print_buf_U32(cipher_, wordLen, "cipher");
 		print_buf_U32(replain_, wordLen, "replain");
 		return 1;
 	}
 	else
 	{
-		xil_printf("\r\n %s %s DMA irq one input test success(one block every time)!!", name[ske_alg], oper_mode[mode]);
+		printf("\r\n %s %s DMA irq one input test success(one block every time)!!", name[ske_alg], oper_mode[mode]);
 	}
 
 	ske_lp_free_irq();

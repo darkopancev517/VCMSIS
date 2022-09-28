@@ -9,7 +9,19 @@
 //ske_lp register pointer
 volatile static ske_lp_reg_t * const g_ske_lp_reg = (ske_lp_reg_t *)(SKE_LP_BASE_ADDR);
 
+void ske_lp_enable_irq(void)
+{
+  volatile uint32_t flag = (((uint32_t)1) << SKE_LP_IRQ_OFFSET);
 
+  g_ske_lp_reg->cfg |= flag;
+}
+
+void ske_lp_disable_irq(void)
+{
+  volatile uint32_t mask = ~(((uint32_t)1) << SKE_LP_IRQ_OFFSET);
+
+	g_ske_lp_reg->cfg &= mask;
+}
 
 /* function: get ske IP version
  * parameters: none
@@ -457,12 +469,15 @@ uint32_t ske_lp_dma_calc_wait_till_done(SKE_CALLBACK callback)
 #ifdef SUPPORT_SKE_IRQ
 	volatile uint32_t flag_irq = (((uint32_t)1) << SKE_LP_IRQ_OFFSET);
 
-	if(ske_lp_reg->cfg & flag_irq)
+	if(g_ske_lp_reg->cfg & flag_irq)
 	{
 		return SKE_SUCCESS;
 	}
 	else
-	{;}
+	{
+    //printf("SKE LP REG not set to flag IRQ");
+    ;
+  }
 #endif
 
 	while(!(g_ske_lp_reg->sr2 & finish_flag))
