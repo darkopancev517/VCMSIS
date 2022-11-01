@@ -62,6 +62,7 @@ export BUILD_DIR         = Build
 export TARGET_FAM_DIR    = targets/TARGET_$(VENDOR)/TARGET_$(MCU_FAM)
 export TARGET_DEVICE_DIR = $(TARGET_FAM_DIR)/TARGET_$(MCU_DEVICE)
 export TARGET_BOARD_DIR  = $(TARGET_DEVICE_DIR)/TARGET_$(MCU_BOARD)
+export PLC_BBP_DIR       = $(TOP_DIR)/$(TARGET_FAM_DIR)/device/plc/bbp
 export CMSIS_DIR         = CMSIS_5/CMSIS
 export HAL_DIR           = hal
 export TOOLS_DIR         = tools
@@ -215,6 +216,19 @@ ifeq ($(MCU_DEVICE),VC7351)
 	$(RM) $(MAIN_IMAGE)_padding.bin
 	$(ECHO) "combine radio + main soc images"
 	$(CAT) $(MAIN_IMAGE)_528KB.bin $(RADIOFW_IMAGE).bin $(DSP_IMAGE).bin > $(MAIN_IMAGE_WITH_RADIO).bin
+endif
+ifeq ($(MCU_DEVICE),VC6330)
+	$(ECHO) "---------------------------------------------------------------------"
+	$(ECHO) "\033[33mIMAGE PRE-PROCESSING for VC6330\033[0m"
+	$(ECHO) "---------------------------------------------------------------------"
+	$(ECHO) "create soc + bbp binary as $(MCU_DEVICE_LC).bin"
+	$(MAKE) -C tools/mkimage clean all
+	@cd $(PLC_BBP_DIR); $(TOP_DIR)/tools/mkimage/$(HOST_MACHINE)/mkimg \
+	$(BUILD)/$(MCU_DEVICE_LC)_main.bin \
+	$(PLC_BBP_DIR)/magpie_bbp_sec_map.txt \
+	$(PLC_BBP_DIR)/magpie_bbp_fw_ver.bin \
+	$(BUILD)/$(MCU_DEVICE_LC).bin \
+	$(BUILD)/$(MCU_DEVICE_LC)_bbp.bin
 endif
 
 BUILD_FINISHED_INFO:
