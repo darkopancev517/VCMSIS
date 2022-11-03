@@ -81,17 +81,17 @@ $2 ~ /(\.*.\.text$|.*\.literal$)/ {
   err_flag = 0
   cnt_iram = cnt_iram+1
   FileOffset  = ("0x" $6) + 0
-  if (LMA < dram0_start_addr) {
-    loc = "data1"
-    offset = LMA - dram1_start_addr
-  } else if (LMA < iram_start_addr) {
+  if (LMA >= dram0_start_addr && LMA < dram0_start_addr+dram0_max_size) {
     loc = "data0"
     offset = LMA - dram0_start_addr
-  } else if (LMA >= iram_start_addr && LMA < iram_start_addr+iram_max_size){
+  } else if (LMA >= dram1_start_addr && LMA < dram1_start_addr+dram1_max_size) {
+    loc = "data1"
+    offset = LMA - dram1_start_addr
+  } else if (LMA >= iram_start_addr && LMA < iram_start_addr+iram_max_size) {
     loc = "iram"
     offset = LMA - iram_start_addr
   } else {
-     err_flag = 1
+    err_flag = 1
   }
   if (err_flag == 0) {
     if (cnt_iram==1) {
@@ -126,16 +126,16 @@ $2 ~ /(\.data$|\.rodata$|^\.text$)/ {
   err_flag = 0
   cnt_dram0 = cnt_dram0+1
   FileOffset  = ("0x" $6) + 0
-  if (LMA < dram0_start_addr) {
-    loc = "data1"
-    offset = LMA - dram1_start_addr
-  } else if (LMA < iram_start_addr) {
+  if (LMA >= dram0_start_addr && LMA < dram0_start_addr+dram0_max_size) {
     loc = "data0"
     offset = LMA - dram0_start_addr
-  } else if (LMA >= iram_start_addr && LMA < iram_start_addr+iram_max_size){
+  } else if (LMA >= dram1_start_addr && LMA < dram1_start_addr+dram1_max_size) {
+    loc = "data1"
+    offset = LMA - dram1_start_addr
+  } else if (LMA >= iram_start_addr && LMA < iram_start_addr+iram_max_size) {
     loc = "iram"
     offset = LMA - iram_start_addr
-  }else {
+  } else {
     err_flag = 1
   }
   if (err_flag == 0) {
@@ -172,6 +172,9 @@ gawk 'BEGIN {
   data0_bin_file = "phoenix_dsp_dram0_tmp.bin"
   catcmd = sprintf("touch %s",data0_bin_file)
   system(catcmd)
+  data1_bin_file = "phoenix_dsp_dram1_tmp.bin"
+  catcmd = sprintf("touch %s",data1_bin_file)
+  system(catcmd)
   iram_bin_file = "phoenix_dsp_iram_tmp.bin"
   catcmd = sprintf("touch %s",iram_bin_file)
   system(catcmd)
@@ -183,19 +186,27 @@ gawk 'BEGIN {
   padding_file = bin_file "_padding"
   if (loc == "data0") {
     if (padding != 0) {
-    printf("cat %s > %s\n",padding_file,data0_bin_file)
-    catcmd = sprintf("cat %s >> %s",padding_file,data0_bin_file)
-    system(catcmd) 
+      printf("cat %s > %s\n",padding_file,data0_bin_file)
+      catcmd = sprintf("cat %s >> %s",padding_file,data0_bin_file)
+      system(catcmd) 
     }
     printf("cat %s > %s\n",bin_file,data0_bin_file)
     catcmd = sprintf("cat %s >> %s",bin_file,data0_bin_file)
     system(catcmd) 
-     
+  } else if (loc == "data1") {
+    if (padding != 0) {
+      printf("cat %s > %s\n",padding_file,data1_bin_file)
+      catcmd = sprintf("cat %s >> %s",padding_file,data1_bin_file)
+      system(catcmd) 
+    }
+    printf("cat %s > %s\n",bin_file,data1_bin_file)
+    catcmd = sprintf("cat %s >> %s",bin_file,data1_bin_file)
+    system(catcmd) 
   } else if (loc == "iram") {
     if (padding != 0) {
-    printf("cat %s > %s\n",padding_file,iram_bin_file)
-    catcmd = sprintf("cat %s >> %s",padding_file,iram_bin_file)
-    system(catcmd) 
+      printf("cat %s > %s\n",padding_file,iram_bin_file)
+      catcmd = sprintf("cat %s >> %s",padding_file,iram_bin_file)
+      system(catcmd) 
     }
     printf("cat %s > %s\n",bin_file,iram_bin_file)
     catcmd = sprintf("cat %s >> %s",bin_file,iram_bin_file)
@@ -210,8 +221,15 @@ DRAM0FILELASTNAME=phoenix_dsp_dram0.bin
 DRAM0FILESIZE=$(gstat -c%s "$DRAM0FILENAME")
 DRAM0PADDINGBYTES=$((${DRAM0_MAX_SIZE_BYTES}-${DRAM0FILESIZE}))
 dd if=/dev/zero of=$DRAM0FILEPADDINGNAME bs=1 count=$DRAM0PADDINGBYTES
-#cat %s %s > %s,$DRAM0FILENAME,$DRAM0FILEPADDINGNAME,$DRAM0FILELASTNAME
 cat $DRAM0FILENAME $DRAM0FILEPADDINGNAME > $DRAM0FILELASTNAME
+
+DRAM1FILENAME=phoenix_dsp_dram1_tmp.bin
+DRAM1FILEPADDINGNAME=phoenix_dsp_dram1_tmp.bin_padding
+DRAM1FILELASTNAME=phoenix_dsp_dram1.bin
+DRAM1FILESIZE=$(gstat -c%s "$DRAM1FILENAME")
+DRAM1PADDINGBYTES=$((${DRAM1_MAX_SIZE_BYTES}-${DRAM1FILESIZE}))
+dd if=/dev/zero of=$DRAM1FILEPADDINGNAME bs=1 count=$DRAM1PADDINGBYTES
+cat $DRAM1FILENAME $DRAM1FILEPADDINGNAME > $DRAM1FILELASTNAME
 
 IRAMFILENAME=phoenix_dsp_iram_tmp.bin
 IRAMFILEPADDINGNAME=phoenix_dsp_iram_tmp.bin_padding
@@ -229,4 +247,5 @@ mv magpie_bbp_sec_header infom/
 
 mkdir -p output
 mv infom/phoenix_dsp_dram0.bin output/
+mv infom/phoenix_dsp_dram1.bin output/
 mv infom/phoenix_dsp_iram.bin output/
