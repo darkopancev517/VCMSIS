@@ -47,7 +47,7 @@ $OBJDUMP -h $img_file > magpie_bbp_sec_header
 # Expetected output format
 #   1:bbp_substr(Name).bin 2:data0|data1|iram 3:offset 4:size
 
-awk --non-decimal-data \
+gawk --non-decimal-data \
     -v img_file=$img_file \
     -v objcopy=$OBJCOPY \
     -v compress=$COMPRESS\
@@ -168,11 +168,11 @@ $2 ~ /(\.data$|\.rodata$|^\.text$)/ {
 
 
 
-awk 'BEGIN {
-  data0_bin_file = "sonata_dsp_dram0_tmp.bin"
+gawk 'BEGIN {
+  data0_bin_file = "phoenix_dsp_dram0_tmp.bin"
   catcmd = sprintf("touch %s",data0_bin_file)
   system(catcmd)
-  iram_bin_file = "sonata_dsp_iram_tmp.bin"
+  iram_bin_file = "phoenix_dsp_iram_tmp.bin"
   catcmd = sprintf("touch %s",iram_bin_file)
   system(catcmd)
 }
@@ -204,19 +204,19 @@ awk 'BEGIN {
 }' magpie_bbp_sec_map.txt >cat_sec_map.txt
 
 
-DRAM0FILENAME=sonata_dsp_dram0_tmp.bin
-DRAM0FILEPADDINGNAME=sonata_dsp_dram0_tmp.bin_padding
-DRAM0FILELASTNAME=sonata_dsp_dram0.bin
-DRAM0FILESIZE=$(stat -c%s "$DRAM0FILENAME")
+DRAM0FILENAME=phoenix_dsp_dram0_tmp.bin
+DRAM0FILEPADDINGNAME=phoenix_dsp_dram0_tmp.bin_padding
+DRAM0FILELASTNAME=phoenix_dsp_dram0.bin
+DRAM0FILESIZE=$(gstat -c%s "$DRAM0FILENAME")
 DRAM0PADDINGBYTES=$((${DRAM0_MAX_SIZE_BYTES}-${DRAM0FILESIZE}))
 dd if=/dev/zero of=$DRAM0FILEPADDINGNAME bs=1 count=$DRAM0PADDINGBYTES
 #cat %s %s > %s,$DRAM0FILENAME,$DRAM0FILEPADDINGNAME,$DRAM0FILELASTNAME
 cat $DRAM0FILENAME $DRAM0FILEPADDINGNAME > $DRAM0FILELASTNAME
 
-IRAMFILENAME=sonata_dsp_iram_tmp.bin
-IRAMFILEPADDINGNAME=sonata_dsp_iram_tmp.bin_padding
-IRAMFILELASTNAME=sonata_dsp_iram.bin
-IRAMFILESIZE=$(stat -c%s "$IRAMFILENAME")
+IRAMFILENAME=phoenix_dsp_iram_tmp.bin
+IRAMFILEPADDINGNAME=phoenix_dsp_iram_tmp.bin_padding
+IRAMFILELASTNAME=phoenix_dsp_iram.bin
+IRAMFILESIZE=$(gstat -c%s "$IRAMFILENAME")
 IRAMPADDINGBYTES=$((${IRAM_MAX_SIZE_BYTES}-${IRAMFILESIZE}))
 dd if=/dev/zero of=$IRAMFILEPADDINGNAME bs=1 count=$IRAMPADDINGBYTES
 cat $IRAMFILENAME $IRAMFILEPADDINGNAME > $IRAMFILELASTNAME
@@ -228,5 +228,5 @@ mv *.txt infom/
 mv magpie_bbp_sec_header infom/
 
 mkdir -p output
-mv infom/sonata_dsp_dram0.bin output/
-mv infom/sonata_dsp_iram.bin output/
+mv infom/phoenix_dsp_dram0.bin output/
+mv infom/phoenix_dsp_iram.bin output/
