@@ -81,6 +81,8 @@ SRCS_HAL += $(MCU_FAM_DIR)/device/crypto/osr_crypto/crypto_lib/ske/ske_ctr.c
 SRCS_HAL += $(MCU_FAM_DIR)/device/crypto/osr_crypto/crypto_lib/ske/ske_ecb.c
 SRCS_HAL += $(MCU_FAM_DIR)/device/crypto/osr_crypto/crypto_lib/ske/ske_gcm_gmac.c
 SRCS_HAL += $(MCU_FAM_DIR)/device/crypto/osr_crypto/crypto_lib/ske/ske_ofb.c
+
+SRCS_HAL += $(MCU_FAM_DIR)/device/plc/vc_plc_phy.c
 endif
 
 SRCS_HAL += $(MCU_DEVICE_DIR)/CMSIS/system_$(MCU_DEVICE_LC).c

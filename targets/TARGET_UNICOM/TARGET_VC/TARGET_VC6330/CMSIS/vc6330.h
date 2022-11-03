@@ -2634,6 +2634,22 @@ typedef struct
 #define VC_KEYSCAN_INTSTS_INTSTS_Pos            0
 #define VC_KEYSCAN_INTSTS_INTSTS_Msk            (0xFFFFUL << VC_KEYSCAN_INTSTS_INTSTS_Pos)
 
+/* ========================================================================= */
+/* ============                         PLC                     ============ */
+/* ========================================================================= */
+
+typedef struct
+{
+  __IOM uint32_t CR1;                   /* (0x0000) PHY control register 1 */
+  __IOM uint32_t CR2;                   /* (0x0004) PHY control register 2 */
+  __IOM uint32_t CR3;                   /* (0x0008) PHY control register 3 */
+  __IOM uint32_t CR4;                   /* (0x000C) PHY control register 4 */
+  __IOM uint32_t IR1;                   /* (0x0010) PHY information register 1 */
+  __IOM uint32_t IR2;                   /* (0x0014) PHY information register 2 */
+  __IOM uint32_t IR3;                   /* (0x0018) PHY information register 3 */
+  __IOM uint32_t IR4;                   /* (0x001C) PHY information register 4 */
+} VC_PLC_PHY_TypeDef;
+
 /* ================  End of section using anonymous unions  ================ */
 #if   defined (__CC_ARM)
   #pragma pop
@@ -2699,6 +2715,10 @@ typedef struct
 #define VC_AHBMISC_BASE                 (0x40004000UL)
 #define VC_KEYSCAN_BASE                 (0x4004D000UL)
 
+#define VC_PLC_DMA_BASE                 (0x40010000UL)
+#define VC_PLC_BASE                     (0x40011000UL)
+#define VC_PLC_PHY_BASE                 (0x400111C0UL)
+
 #define VC_SKE_BASE                     (0x40008000UL)
 #define VC_PKE_BASE                     (0x4000C000UL)
 #define VC_TRNG_BASE                    (0x40014000UL)
@@ -2752,6 +2772,7 @@ typedef struct
 #define VC_AHBMISC                      ((VC_AHBMISC_TypeDef *) VC_AHBMISC_BASE)
 #define VC_MISC2_FPGA                   ((VC_MISC2_FPGA_TypeDef *) VC_MISC2_FPGA_BASE)
 #define VC_KEYSCAN                      ((VC_KEYSCAN_TypeDef *) VC_KEYSCAN_BASE)
+#define VC_PLC_PHY                      ((VC_PLC_PHY_TypeDef *) VC_PLC_PHY_BASE)
 
 #ifdef __cplusplus
 }

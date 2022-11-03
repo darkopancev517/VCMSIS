@@ -1,9 +1,12 @@
 #include "hal/gpio_api.h"
 #include "hal/us_ticker_api.h"
 #include "hal/serial_api.h"
-#include "hal/log.h"
 #include "hal/rtc_api.h"
 #include "hal/lp_ticker_api.h"
+
+#include "vc_plc_phy.h"
+
+#include <stdio.h>
 
 extern int stdio_uart_inited;
 extern serial_t stdio_uart;
@@ -20,14 +23,13 @@ int main(void)
     serial_init(&stdio_uart, STDIO_UART_TX, STDIO_UART_RX);
   }
 
-  hal_log("Hello World\r\n");
+  printf("VC6300 PSO verification start\r\n");
+
+  vc_plc_phy_init();
+
+  printf("VC6300 PSO verification done\r\n");
 
   while (1) {
-    if ((systick_counter % 1000) == 0) {
-      hal_log("systick counter: %lu\r\n", second_counter++);
-      const ticker_data_t *us_ticker = get_us_ticker_data();
-      hal_log("usticker read: %lu\r\n", us_ticker->interface->read());
-    }
   }
 
   return 0;
