@@ -48,6 +48,14 @@ else
 export MAKE     = $(Q)make -s
 endif
 
+ifeq ($(HOST_MACHINE),Darwin)
+export STAT = gstat
+export AWK = gawk
+else
+export STAT = stat
+export AWK = awk
+endif
+
 export VENDOR     ?= UNICOM
 export MCU_FAM    ?= VC
 
@@ -95,6 +103,7 @@ CFLAGS += -I$(TOP_DIR)/$(TARGET_FAM_DIR)/device/crypto/osr_crypto/crypto_lib
 CFLAGS += -I$(TOP_DIR)/$(TARGET_FAM_DIR)/device/crypto/osr_crypto/crypto_lib/hash_hmac
 CFLAGS += -I$(TOP_DIR)/$(TARGET_FAM_DIR)/device/crypto/osr_crypto/crypto_lib/pke
 CFLAGS += -I$(TOP_DIR)/$(TARGET_FAM_DIR)/device/crypto/osr_crypto/crypto_lib/ske
+CFLAGS += -I$(TOP_DIR)/$(TARGET_FAM_DIR)/device/plc
 endif
 
 ifeq ($(MCU_DEVICE),VC6330)
@@ -164,12 +173,19 @@ endif
 
 MAIN_IMAGE = $(BUILD)/$(MCU_DEVICE_LC)_main
 MAIN_IMAGE_WITH_RADIO = $(BUILD)/$(MCU_DEVICE_LC)_main_with_radio
+MAIN_IMAGE_WITH_PLC = $(BUILD)/$(MCU_DEVICE_LC)_main_with_plc
 
 ifeq ($(MCU_DEVICE),VC7351)
-RADIOFW_IMAGE       = $(BUILD_TARGET_DIR)/sonata_radio
+RADIOFW_IMAGE = $(BUILD_TARGET_DIR)/sonata_radio
 RADIODSP_DATA_IMAGE = $(BUILD_TARGET_DIR)/sonata_dsp_dram0
 RADIODSP_IRAM_IMAGE = $(BUILD_TARGET_DIR)/sonata_dsp_iram
-DSP_IMAGE           = $(BUILD_TARGET_DIR)/sonata_dsp
+DSP_IMAGE = $(BUILD_TARGET_DIR)/sonata_dsp
+endif
+
+ifeq ($(MCU_DEVICE),VC6330)
+PLCDSP_DATA_IMAGE = $(BUILD_TARGET_DIR)/phoenix_dsp_dram0
+PLCDSP_IRAM_IMAGE = $(BUILD_TARGET_DIR)/phoenix_dsp_iram
+DSP_IMAGE = $(BUILD_TARGET_DIR)/phoenix_dsp
 endif
 
 all: $(VENDOR) BUILD_FINISHED_INFO
@@ -186,6 +202,10 @@ ifeq ($(MCU_DEVICE),VC7351)
 	$(CP) -f $(TOP_DIR)/$(TARGET_FAM_DIR)/device/rf/sonata_radio.bin $(BUILD_TARGET_DIR)
 	$(CP) -f $(TOP_DIR)/$(TARGET_FAM_DIR)/device/rf/sonata_dsp_iram.bin $(BUILD_TARGET_DIR)
 	$(CP) -f $(TOP_DIR)/$(TARGET_FAM_DIR)/device/rf/sonata_dsp_dram0.bin $(BUILD_TARGET_DIR)
+endif
+ifeq ($(MCU_DEVICE),VC6330)
+	$(CP) -f $(TOP_DIR)/$(TARGET_FAM_DIR)/device/plc/bbp/output/phoenix_dsp_iram.bin $(BUILD_TARGET_DIR)
+	$(CP) -f $(TOP_DIR)/$(TARGET_FAM_DIR)/device/plc/bbp/output/phoenix_dsp_dram0.bin $(BUILD_TARGET_DIR)
 endif
 
 $(MAIN_IMAGE).elf: $(MAIN_LIBS) $(LDSCRIPT)
@@ -211,7 +231,7 @@ ifeq ($(MCU_DEVICE),VC7351)
 	$(ECHO) "combine radio images: sonata_dsp_iram.bin, sonata_dsp_dram0.bin"
 	$(CAT) $(RADIODSP_IRAM_IMAGE).bin $(RADIODSP_DATA_IMAGE).bin > $(DSP_IMAGE).bin
 	$(ECHO) "append main soc images to 528KB"
-	$(DD) if=/dev/zero of=$(MAIN_IMAGE)_padding.bin bs=1 count=$(shell echo 540672 $(shell stat -c %s $(MAIN_IMAGE).bin) | awk '{print $$1 - $$2}')
+	$(DD) if=/dev/zero of=$(MAIN_IMAGE)_padding.bin bs=1 count=$(shell echo 540672 $(shell $(STAT) -c %s $(MAIN_IMAGE).bin) |$(AWK) '{print $$1 - $$2}')
 	$(CAT) $(MAIN_IMAGE).bin $(MAIN_IMAGE)_padding.bin > $(MAIN_IMAGE)_528KB.bin
 	$(RM) $(MAIN_IMAGE)_padding.bin
 	$(ECHO) "combine radio + main soc images"
@@ -221,14 +241,14 @@ ifeq ($(MCU_DEVICE),VC6330)
 	$(ECHO) "---------------------------------------------------------------------"
 	$(ECHO) "\033[33mIMAGE PRE-PROCESSING for VC6330\033[0m"
 	$(ECHO) "---------------------------------------------------------------------"
-	$(ECHO) "create soc + bbp binary as $(MCU_DEVICE_LC).bin"
-	$(MAKE) -C tools/mkimage clean all
-	@cd $(PLC_BBP_DIR); $(TOP_DIR)/tools/mkimage/$(HOST_MACHINE)/mkimg \
-	$(BUILD)/$(MCU_DEVICE_LC)_main.bin \
-	$(PLC_BBP_DIR)/magpie_bbp_sec_map.txt \
-	$(PLC_BBP_DIR)/magpie_bbp_fw_ver.bin \
-	$(BUILD)/$(MCU_DEVICE_LC).bin \
-	$(BUILD)/$(MCU_DEVICE_LC)_bbp.bin
+	$(ECHO) "combine plc images: phoenix_dsp_iram.bin, phoenix_dsp_dram0.bin"
+	$(CAT) $(PLCDSP_IRAM_IMAGE).bin $(PLCDSP_DATA_IMAGE).bin > $(DSP_IMAGE).bin
+	$(ECHO) "append main soc images to 528KB"
+	$(DD) if=/dev/zero of=$(MAIN_IMAGE)_padding.bin bs=1 count=$(shell echo 540672 $(shell $(STAT) -c %s $(MAIN_IMAGE).bin) |$(AWK) '{print $$1 - $$2}')
+	$(CAT) $(MAIN_IMAGE).bin $(MAIN_IMAGE)_padding.bin > $(MAIN_IMAGE)_528KB.bin
+	$(RM) $(MAIN_IMAGE)_padding.bin
+	$(ECHO) "combine plc dsp + main soc images"
+	$(CAT) $(MAIN_IMAGE)_528KB.bin $(DSP_IMAGE).bin > $(MAIN_IMAGE_WITH_PLC).bin
 endif
 
 BUILD_FINISHED_INFO:
@@ -239,6 +259,9 @@ BUILD_FINISHED_INFO:
 	$(ECHO) "Build/\033[32m$(MCU_DEVICE_LC)_main.bin\033[0m"
 ifeq ($(MCU_DEVICE),VC7351)
 	$(ECHO) "Build/\033[32m$(MCU_DEVICE_LC)_main_with_radio.bin\033[0m"
+endif
+ifeq ($(MCU_DEVICE),VC6330)
+	$(ECHO) "Build/\033[32m$(MCU_DEVICE_LC)_main_with_plc.bin\033[0m"
 endif
 	$(ECHO) "---------------------------------------------------------------------"
 
