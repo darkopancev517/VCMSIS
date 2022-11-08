@@ -3,34 +3,21 @@
 #include "hal/serial_api.h"
 #include "hal/rtc_api.h"
 #include "hal/lp_ticker_api.h"
+#include "cli.h"
 
 #include "vc_plc_phy.h"
 
-#include <stdio.h>
-
-extern int stdio_uart_inited;
-extern serial_t stdio_uart;
-
 static volatile uint32_t systick_counter = 0;
-static volatile uint32_t second_counter = 0;
 
 int main(void)
 {
   SysTick_Config(SystemCoreClock / 1000); /* 1ms systick interrupt */
   us_ticker_init();
-
-  if (!stdio_uart_inited) {
-    serial_init(&stdio_uart, STDIO_UART_TX, STDIO_UART_RX);
-  }
-
-  printf("VC6300 PSO verification start\r\n");
+  cli_uart_init();
 
   vc_plc_phy_init();
 
-  printf("VC6300 PSO verification done\r\n");
-
-  while (1) {
-  }
+  cli_uart_run();
 
   return 0;
 }

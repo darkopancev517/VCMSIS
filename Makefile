@@ -74,10 +74,9 @@ export PLC_BBP_DIR       = $(TOP_DIR)/$(TARGET_FAM_DIR)/device/plc/bbp
 export CMSIS_DIR         = CMSIS_5/CMSIS
 export HAL_DIR           = hal
 export TOOLS_DIR         = tools
-export TOOLS_BUILD       = heap
+export TOOLS_BUILD       = heap cli
 
 BUILD = $(TOP_DIR)/$(BUILD_DIR)
-
 
 export MCU_DEVICE_LC = $(shell echo $(MCU_DEVICE) | tr A-Z a-z)
 
@@ -119,6 +118,7 @@ CFLAGS += -I$(TOP_DIR)/$(TARGET_DEVICE_DIR)/CMSIS
 CFLAGS += -I$(TOP_DIR)/$(TARGET_BOARD_DIR)
 CFLAGS += -I$(TOP_DIR)/$(TOOLS_DIR)/dbgstore
 CFLAGS += -I$(TOP_DIR)/$(TOOLS_DIR)/heap
+CFLAGS += -I$(TOP_DIR)/$(TOOLS_DIR)/cli
 
 # MBED-HAL FLAGS
 CFLAGS += -DDEVICE_INTERRUPTIN=1
@@ -158,6 +158,7 @@ export LIB_TARGET_MAIN    = libtarget_main.a
 export LIB_TARGET_TESTS   = libtarget_tests.a
 export LIB_TOOLS_DBGSTORE = libtools_dbgstore.a
 export LIB_TOOLS_HEAP     = libtools_heap.a
+export LIB_TOOLS_CLI      = libtools_cli.a
 
 MAIN_LIBS += $(BUILD_TARGET_DIR)/$(LIB_TARGET_HAL)
 MAIN_LIBS += $(BUILD_TARGET_DIR)/$(LIB_TARGET_MAIN)
@@ -169,6 +170,10 @@ endif
 
 ifneq (,$(filter $(TOOLS_BUILD), heap))
 MAIN_LIBS += $(BUILD_TARGET_DIR)/$(LIB_TOOLS_HEAP)
+endif
+
+ifneq (,$(filter $(TOOLS_BUILD), cli))
+MAIN_LIBS += $(BUILD_TARGET_DIR)/$(LIB_TOOLS_CLI)
 endif
 
 MAIN_IMAGE = $(BUILD)/$(MCU_DEVICE_LC)_main
@@ -195,7 +200,7 @@ $(BUILD):
 
 objects:
 	$(MAKE) -C targets BUILD=$(BUILD_TARGET_DIR) CFLAGS="$(CFLAGS) -MMD"
-ifneq (,$(filter $(TOOLS_BUILD), dbgstore heap))
+ifneq (,$(filter $(TOOLS_BUILD), dbgstore heap cli))
 	$(MAKE) -C tools BUILD=$(BUILD_TARGET_DIR) CFLAGS="$(CFLAGS) -MMD"
 endif
 ifeq ($(MCU_DEVICE),VC7351)
@@ -243,12 +248,12 @@ ifeq ($(MCU_DEVICE),VC6330)
 	$(ECHO) "---------------------------------------------------------------------"
 	$(ECHO) "combine plc images: phoenix_dsp_iram.bin, phoenix_dsp_dram0.bin"
 	$(CAT) $(PLCDSP_IRAM_IMAGE).bin $(PLCDSP_DATA_IMAGE).bin > $(DSP_IMAGE).bin
-	$(ECHO) "append main soc images to 528KB"
-	$(DD) if=/dev/zero of=$(MAIN_IMAGE)_padding.bin bs=1 count=$(shell echo 540672 $(shell $(STAT) -c %s $(MAIN_IMAGE).bin) |$(AWK) '{print $$1 - $$2}')
-	$(CAT) $(MAIN_IMAGE).bin $(MAIN_IMAGE)_padding.bin > $(MAIN_IMAGE)_528KB.bin
+	$(ECHO) "append main soc images to 256KB"
+	$(DD) if=/dev/zero of=$(MAIN_IMAGE)_padding.bin bs=1 count=$(shell echo 262144 $(shell $(STAT) -c %s $(MAIN_IMAGE).bin) |$(AWK) '{print $$1 - $$2}')
+	$(CAT) $(MAIN_IMAGE).bin $(MAIN_IMAGE)_padding.bin > $(MAIN_IMAGE)_256KB.bin
 	$(RM) $(MAIN_IMAGE)_padding.bin
 	$(ECHO) "combine plc dsp + main soc images"
-	$(CAT) $(MAIN_IMAGE)_528KB.bin $(DSP_IMAGE).bin > $(MAIN_IMAGE_WITH_PLC).bin
+	$(CAT) $(MAIN_IMAGE)_256KB.bin $(DSP_IMAGE).bin > $(MAIN_IMAGE_WITH_PLC).bin
 endif
 
 BUILD_FINISHED_INFO:
