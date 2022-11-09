@@ -18,46 +18,6 @@
 #define FLASH_IRAM_START  (FLASH_START + FLASH_DSP_OFFSET)
 #define FLASH_DATA0_START (FLASH_IRAM_START + DSP_IRAM_SIZE)
 
-#if 0
-static void mem_dump(const void *address, uint32_t bytes)
-{
-  volatile uint8_t *addr = (volatile uint8_t *)address;
-  uint32_t lines = 0;
-
-  if (bytes == 0)
-    return;
-
-  lines = bytes / 16;
-
-  printf("\r\n");
-
-  while (lines--) {
-    printf("%08lX : ", (uint32_t)addr);
-    printf("%02X %02X %02X %02X %02X %02X %02X %02X",
-            addr[0], addr[1], addr[2], addr[3], addr[4], addr[5], addr[6], addr[7]);
-    printf(" - ");
-    printf("%02X %02X %02X %02X %02X %02X %02X %02X",
-            addr[8], addr[9], addr[10], addr[11], addr[12], addr[13], addr[14], addr[15]);
-    printf("\r\n");
-    addr += 16;
-  }
-
-  bytes = bytes & 0x0f;
-
-  if (bytes) {
-    printf("%08lX :", (uint32_t)addr);
-    for (int i = 0; i < bytes; ++i) {
-      if (i == 8) {
-        printf(" -");
-      }
-      printf(" %02X", addr[i]);
-    }
-    printf("\r\n");
-  }
-}
-#endif
-
-
 static int vc_memcpy32(void *s1, void *s2, unsigned long n)
 {
   unsigned long *desc = (unsigned long *)s1;
@@ -148,14 +108,4 @@ void vc_plc_phy_init(void)
 
     printf("Wait DSP Ready...%lu\r\n", (50-timeout));
   }
-
-  //printf("\r\nIRAM DUMP:\r\n");
-
-  //mem_dump((void *)FLASH_IRAM_START, 1024);
-  //mem_dump((void *)DSP_IRAM_BASE, 1024);
-
-  //printf("\r\nDATA0 DUMP:\r\n");
-
-  //mem_dump((void *)FLASH_DATA0_START, 1024);
-  //mem_dump((void *)DSP_DATA0_BASE, 1024);
 }

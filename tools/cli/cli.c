@@ -156,6 +156,16 @@ static void process_line(char *buf, uint16_t length)
     }
   }
 
+  if (strcmp(cmd, "help") == 0)
+  {
+    for (i = 0; i < user_commands_length; i++)
+    {
+      uart_output_format("%s\r\n", user_commands[i].name);
+    }
+
+    i = 0;
+  }
+
   if (i == user_commands_length)
   {
     uart_output_format("Unknown command: %s\r\n", cmd);
