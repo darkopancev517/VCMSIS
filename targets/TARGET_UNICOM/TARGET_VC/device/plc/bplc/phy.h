@@ -5,7 +5,7 @@
 
 #if defined(DEVICE_MCU_VC6320)
 #define PHY_REG_BASEADDR 0x400111c0
-#elif define(DEVICE_MCU_VC6330)
+#elif defined(DEVICE_MCU_VC6330)
 #define PHY_REG_BASEADDR 0x400111a0
 #else
 #error "Invalid PLC Device MCU"
