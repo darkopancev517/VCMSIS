@@ -18,31 +18,31 @@
 
 #include "vc_misc.h"
 
-#ifdef DEVICE_MCU_VC7351
+#if defined(DEVICE_MCU_VC7351)
 
 void vcmisc_set_m0_addrh(uint8_t base)
 {
-    VC_MISC2->AHBBADDRH = base;
+  VC_MISC2->AHBBADDRH = base;
 }
 
 void vcmisc_ahb_async_bridge_unlock()
 {
-    VC_MISC2->AHBBPASS = 0x55AAAA55;
+  VC_MISC2->AHBBPASS = 0x55AAAA55;
 }
 
 void vcmisc_ahb_async_bridge_lock()
 {
-    VC_MISC2->AHBBPASS = 0;
+  VC_MISC2->AHBBPASS = 0;
 }
 
 void vcmisc_m0_start(bool ben)
 {
-    VC_MISC2->M0HOLD = ben ? 1 : 0;
+  VC_MISC2->M0HOLD = ben ? 1 : 0;
 }
 
 void vcmisc_m0_clksel(uint8_t sel)
 {
-    VC_MISC2->CLKM0SEL = sel;
+  VC_MISC2->CLKM0SEL = sel;
 }
 
 #endif // #ifdef DEVICE_MCU_VC7351

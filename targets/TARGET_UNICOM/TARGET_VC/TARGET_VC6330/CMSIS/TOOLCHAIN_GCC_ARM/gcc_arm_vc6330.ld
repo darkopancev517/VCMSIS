@@ -22,7 +22,7 @@
  * limitations under the License.
  */
 
-__ROM_BASE = 0x00000000;
+__ROM_BASE = 0x04000000;
 __ROM_SIZE = 0x00200000;
 
 __RAM_BASE = 0x20000000;

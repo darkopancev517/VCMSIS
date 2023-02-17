@@ -65,7 +65,7 @@ void spi_get_capabilities(PinName ssel, bool slave, spi_capabilities_t *cap)
 
 void spi_init(spi_t *obj, PinName mosi, PinName miso, PinName sclk, PinName ssel)
 {
-    struct spi_s *spi_inst = obj;
+    struct spi_s *spi_inst = (struct spi_s *)obj;
 
     /* Get instance based on requested pins */
     spi_inst->instance = pin_instance_spi(sclk, miso, mosi);
@@ -110,7 +110,7 @@ void spi_init(spi_t *obj, PinName mosi, PinName miso, PinName sclk, PinName ssel
 
 void spi_free(spi_t *obj)
 {
-    struct spi_s *spi_inst = obj;
+    struct spi_s *spi_inst = (struct spi_s *)obj;
     int instance = spi_inst->instance;
     vcspi_uninit(instance);
 }
@@ -119,12 +119,14 @@ void spi_format(spi_t *obj, int bits, int mode, int slave)
 {
     (void) bits;    /* SPI module only support 8 bit transfers */
     (void) slave;   /* SPI module doesn't support Mbed HAL Slave API */
-    vcspi_format_mode(obj->instance, mode);
+
+    struct spi_s *spi_inst = (struct spi_s *)obj;
+    vcspi_format_mode(spi_inst->instance, mode);
 }
 
 void spi_frequency(spi_t *obj, int hz)
 {
-    struct spi_s *spi_inst = obj;
+    struct spi_s *spi_inst = (struct spi_s *)obj;
     int instance = spi_inst->instance;
     uint32_t correct_hz = vcspi_update_frequency(instance, hz);
     if (correct_hz != hz) {
@@ -135,7 +137,7 @@ void spi_frequency(spi_t *obj, int hz)
 /** Write a byte out in master mode and receive a value */
 int spi_master_write(spi_t *obj, int value)
 {
-    struct spi_s *spi_inst = obj;
+    struct spi_s *spi_inst = (struct spi_s *)obj;
     int instance = spi_inst->instance;
 
     /* Local variables used in transfer */
@@ -168,7 +170,7 @@ int spi_master_block_write(spi_t *obj,
                            int rx_length,
                            char write_fill)
 {
-    struct spi_s *spi_inst = obj;
+    struct spi_s *spi_inst = (struct spi_s *)obj;
     int instance = spi_inst->instance;
 
     /* Configure peripheral if necessary */
@@ -202,13 +204,13 @@ int spi_busy(spi_t *obj)
 
 uint8_t spi_get_module(spi_t *obj)
 {
-    struct spi_s *spi_inst = obj;
+    struct spi_s *spi_inst = (struct spi_s *)obj;
     return spi_inst->instance;
 }
 
 static void spi_configure_driver_instance(spi_t *obj)
 {
-    struct spi_s *spi_inst = obj;
+    struct spi_s *spi_inst = (struct spi_s *)obj;
     int instance = spi_inst->instance;
     if ((spi_inst != vcspi_state[instance].owner) || (spi_inst->update)) {
         spi_inst->update = false;

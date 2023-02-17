@@ -58,23 +58,17 @@ endif
 
 export VENDOR     ?= UNICOM
 export MCU_FAM    ?= VC
-
-#export MCU_DEVICE ?= VC7351
-#export MCU_BOARD  ?= VC7351_DK
-
-export MCU_DEVICE ?= VC6330
-export MCU_BOARD  ?= VC6330_FPGA
+export MCU_DEVICE ?= VC7351
+export MCU_BOARD  ?= VC7351_DK
 
 export TOP_DIR           = $(shell pwd)
-export BUILD_DIR         = Build
+export BUILD_DIR         = build/$(MCU_BOARD)
 export TARGET_FAM_DIR    = targets/TARGET_$(VENDOR)/TARGET_$(MCU_FAM)
 export TARGET_DEVICE_DIR = $(TARGET_FAM_DIR)/TARGET_$(MCU_DEVICE)
 export TARGET_BOARD_DIR  = $(TARGET_DEVICE_DIR)/TARGET_$(MCU_BOARD)
 export PLC_BBP_DIR       = $(TOP_DIR)/$(TARGET_FAM_DIR)/device/plc/bbp
 export CMSIS_DIR         = CMSIS_5/CMSIS
 export HAL_DIR           = hal
-export TOOLS_DIR         = tools
-export TOOLS_BUILD       = heap cli
 
 BUILD = $(TOP_DIR)/$(BUILD_DIR)
 
@@ -87,10 +81,16 @@ CFLAGS += -I$(TOP_DIR)/$(HAL_DIR)/include/hal
 CFLAGS += -I$(TOP_DIR)/targets
 CFLAGS += -I$(TOP_DIR)/$(TARGET_FAM_DIR)
 CFLAGS += -I$(TOP_DIR)/$(TARGET_FAM_DIR)/device
+CFLAGS += -I$(TOP_DIR)/$(TARGET_FAM_DIR)/device/atcmd
+CFLAGS += -I$(TOP_DIR)/$(TARGET_FAM_DIR)/device/lib
+
 ifeq ($(MCU_DEVICE),VC7351)
 CFLAGS += -I$(TOP_DIR)/$(TARGET_FAM_DIR)/device/rf
 endif
+
 ifeq ($(MCU_DEVICE),VC6330)
+CFLAGS += -I$(TOP_DIR)/$(TARGET_FAM_DIR)/device/plc
+CFLAGS += -I$(TOP_DIR)/$(TARGET_FAM_DIR)/device/plc/hplc
 CFLAGS += -I$(TOP_DIR)/$(TARGET_FAM_DIR)/device/crypto/osr_crypto
 CFLAGS += -I$(TOP_DIR)/$(TARGET_FAM_DIR)/device/crypto/osr_crypto/crypto_common
 CFLAGS += -I$(TOP_DIR)/$(TARGET_FAM_DIR)/device/crypto/osr_crypto/crypto_hal
@@ -102,7 +102,11 @@ CFLAGS += -I$(TOP_DIR)/$(TARGET_FAM_DIR)/device/crypto/osr_crypto/crypto_lib
 CFLAGS += -I$(TOP_DIR)/$(TARGET_FAM_DIR)/device/crypto/osr_crypto/crypto_lib/hash_hmac
 CFLAGS += -I$(TOP_DIR)/$(TARGET_FAM_DIR)/device/crypto/osr_crypto/crypto_lib/pke
 CFLAGS += -I$(TOP_DIR)/$(TARGET_FAM_DIR)/device/crypto/osr_crypto/crypto_lib/ske
+endif
+
+ifeq ($(MCU_DEVICE),VC6320)
 CFLAGS += -I$(TOP_DIR)/$(TARGET_FAM_DIR)/device/plc
+CFLAGS += -I$(TOP_DIR)/$(TARGET_FAM_DIR)/device/plc/hplc
 endif
 
 ifeq ($(MCU_DEVICE),VC6330)
@@ -116,9 +120,6 @@ endif
 CFLAGS += -I$(TOP_DIR)/$(TARGET_DEVICE_DIR)
 CFLAGS += -I$(TOP_DIR)/$(TARGET_DEVICE_DIR)/CMSIS
 CFLAGS += -I$(TOP_DIR)/$(TARGET_BOARD_DIR)
-CFLAGS += -I$(TOP_DIR)/$(TOOLS_DIR)/dbgstore
-CFLAGS += -I$(TOP_DIR)/$(TOOLS_DIR)/heap
-CFLAGS += -I$(TOP_DIR)/$(TOOLS_DIR)/cli
 
 # MBED-HAL FLAGS
 CFLAGS += -DDEVICE_INTERRUPTIN=1
@@ -135,6 +136,7 @@ CFLAGS += -DDEVICE_SPI_ASYNCH=0
 CFLAGS += -DDEVICE_I2C=1
 CFLAGS += -DDEVICE_I2C_ASYNCH=0
 CFLAGS += -DDEVICE_ANALOGIN=1
+CFLAGS += -DDEVICE_MCU_$(MCU_DEVICE)=1
 
 # SONATA RF DRIVER FLAGS
 CFLAGS += -DCSR_ACCESS=
@@ -156,29 +158,14 @@ BUILD_TARGET_DIR = $(TOP_DIR)/$(BUILD_DIR)
 export LIB_TARGET_HAL     = libtarget_hal_$(MCU_DEVICE_LC).a
 export LIB_TARGET_MAIN    = libtarget_main.a
 export LIB_TARGET_TESTS   = libtarget_tests.a
-export LIB_TOOLS_DBGSTORE = libtools_dbgstore.a
-export LIB_TOOLS_HEAP     = libtools_heap.a
-export LIB_TOOLS_CLI      = libtools_cli.a
 
 MAIN_LIBS += $(BUILD_TARGET_DIR)/$(LIB_TARGET_HAL)
 MAIN_LIBS += $(BUILD_TARGET_DIR)/$(LIB_TARGET_MAIN)
 MAIN_LIBS += $(BUILD_TARGET_DIR)/$(LIB_TARGET_TESTS)
 
-ifneq (,$(filter $(TOOLS_BUILD), dbgstore))
-MAIN_LIBS += $(BUILD_TARGET_DIR)/$(LIB_TOOLS_DBGSTORE)
-endif
-
-ifneq (,$(filter $(TOOLS_BUILD), heap))
-MAIN_LIBS += $(BUILD_TARGET_DIR)/$(LIB_TOOLS_HEAP)
-endif
-
-ifneq (,$(filter $(TOOLS_BUILD), cli))
-MAIN_LIBS += $(BUILD_TARGET_DIR)/$(LIB_TOOLS_CLI)
-endif
-
-MAIN_IMAGE = $(BUILD)/$(MCU_DEVICE_LC)_main
-MAIN_IMAGE_WITH_RADIO = $(BUILD)/$(MCU_DEVICE_LC)_main_with_radio
-MAIN_IMAGE_WITH_PLC = $(BUILD)/$(MCU_DEVICE_LC)_main_with_plc
+MAIN_IMAGE = $(BUILD)/$(MCU_BOARD)_soc
+MAIN_IMAGE_WITH_RADIO = $(BUILD)/$(MCU_BOARD)_with_radio
+MAIN_IMAGE_WITH_PLC = $(BUILD)/$(MCU_BOARD)_with_plc
 
 ifeq ($(MCU_DEVICE),VC7351)
 RADIOFW_IMAGE = $(BUILD_TARGET_DIR)/sonata_radio
@@ -200,18 +187,6 @@ $(BUILD):
 
 objects:
 	$(MAKE) -C targets BUILD=$(BUILD_TARGET_DIR) CFLAGS="$(CFLAGS) -MMD"
-ifneq (,$(filter $(TOOLS_BUILD), dbgstore heap cli))
-	$(MAKE) -C tools BUILD=$(BUILD_TARGET_DIR) CFLAGS="$(CFLAGS) -MMD"
-endif
-ifeq ($(MCU_DEVICE),VC7351)
-	$(CP) -f $(TOP_DIR)/$(TARGET_FAM_DIR)/device/rf/sonata_radio.bin $(BUILD_TARGET_DIR)
-	$(CP) -f $(TOP_DIR)/$(TARGET_FAM_DIR)/device/rf/sonata_dsp_iram.bin $(BUILD_TARGET_DIR)
-	$(CP) -f $(TOP_DIR)/$(TARGET_FAM_DIR)/device/rf/sonata_dsp_dram0.bin $(BUILD_TARGET_DIR)
-endif
-ifeq ($(MCU_DEVICE),VC6330)
-	$(CP) -f $(TOP_DIR)/$(TARGET_FAM_DIR)/device/plc/bbp/output/phoenix_dsp_iram.bin $(BUILD_TARGET_DIR)
-	$(CP) -f $(TOP_DIR)/$(TARGET_FAM_DIR)/device/plc/bbp/output/phoenix_dsp_dram0.bin $(BUILD_TARGET_DIR)
-endif
 
 $(MAIN_IMAGE).elf: $(MAIN_LIBS) $(LDSCRIPT)
 	$(CC) $(LDFLAGS) $(patsubst %,-L%,$(patsubst %/,%,$(sort $(dir $(MAIN_LIBS))))) \
@@ -229,44 +204,18 @@ main: objects $(MAIN_IMAGE).bin $(MAIN_IMAGE).lst
 	$(SIZE) --format=berkeley $(MAIN_IMAGE).elf
 
 $(VENDOR): main | $(BUILD)
-ifeq ($(MCU_DEVICE),VC7351)
-	$(ECHO) "---------------------------------------------------------------------"
-	$(ECHO) "\033[33mIMAGE PRE-PROCESSING for VC7351\033[0m"
-	$(ECHO) "---------------------------------------------------------------------"
-	$(ECHO) "combine radio images: sonata_dsp_iram.bin, sonata_dsp_dram0.bin"
-	$(CAT) $(RADIODSP_IRAM_IMAGE).bin $(RADIODSP_DATA_IMAGE).bin > $(DSP_IMAGE).bin
-	$(ECHO) "append main soc images to 528KB"
-	$(DD) if=/dev/zero of=$(MAIN_IMAGE)_padding.bin bs=1 count=$(shell echo 540672 $(shell $(STAT) -c %s $(MAIN_IMAGE).bin) |$(AWK) '{print $$1 - $$2}')
-	$(CAT) $(MAIN_IMAGE).bin $(MAIN_IMAGE)_padding.bin > $(MAIN_IMAGE)_528KB.bin
-	$(RM) $(MAIN_IMAGE)_padding.bin
-	$(ECHO) "combine radio + main soc images"
-	$(CAT) $(MAIN_IMAGE)_528KB.bin $(RADIOFW_IMAGE).bin $(DSP_IMAGE).bin > $(MAIN_IMAGE_WITH_RADIO).bin
-endif
-ifeq ($(MCU_DEVICE),VC6330)
-	$(ECHO) "---------------------------------------------------------------------"
-	$(ECHO) "\033[33mIMAGE PRE-PROCESSING for VC6330\033[0m"
-	$(ECHO) "---------------------------------------------------------------------"
-	$(ECHO) "combine plc images: phoenix_dsp_iram.bin, phoenix_dsp_dram0.bin"
-	$(CAT) $(PLCDSP_IRAM_IMAGE).bin $(PLCDSP_DATA_IMAGE).bin > $(DSP_IMAGE).bin
-	$(ECHO) "append main soc images to 256KB"
-	$(DD) if=/dev/zero of=$(MAIN_IMAGE)_padding.bin bs=1 count=$(shell echo 262144 $(shell $(STAT) -c %s $(MAIN_IMAGE).bin) |$(AWK) '{print $$1 - $$2}')
-	$(CAT) $(MAIN_IMAGE).bin $(MAIN_IMAGE)_padding.bin > $(MAIN_IMAGE)_256KB.bin
-	$(RM) $(MAIN_IMAGE)_padding.bin
-	$(ECHO) "combine plc dsp + main soc images"
-	$(CAT) $(MAIN_IMAGE)_256KB.bin $(DSP_IMAGE).bin > $(MAIN_IMAGE_WITH_PLC).bin
-endif
 
 BUILD_FINISHED_INFO:
 	$(ECHO) ""
 	$(ECHO) "---------------------------------------------------------------------"
 	$(ECHO) "\033[32mFinished Building\033[0m : $(VENDOR) DEVICE [$(MCU_DEVICE)] in $(HOST_MACHINE)"
 	$(ECHO) "---------------------------------------------------------------------"
-	$(ECHO) "Build/\033[32m$(MCU_DEVICE_LC)_main.bin\033[0m"
+	$(ECHO) "build/$(MCU_BOARD)/\033[32m$(MCU_BOARD)_soc.bin\033[0m"
 ifeq ($(MCU_DEVICE),VC7351)
-	$(ECHO) "Build/\033[32m$(MCU_DEVICE_LC)_main_with_radio.bin\033[0m"
+	$(ECHO) "build/$(MCU_BOARD)/\033[32m$(MCU_BOARD)_with_radio.bin\033[0m"
 endif
-ifeq ($(MCU_DEVICE),VC6330)
-	$(ECHO) "Build/\033[32m$(MCU_DEVICE_LC)_main_with_plc.bin\033[0m"
+ifneq (, $(filter $(MCU_DEVICE), VC6320))
+	$(ECHO) "build/$(MCU_BOARD)/\033[32m$(MCU_BOARD)_with_plc.bin\033[0m"
 endif
 	$(ECHO) "---------------------------------------------------------------------"
 

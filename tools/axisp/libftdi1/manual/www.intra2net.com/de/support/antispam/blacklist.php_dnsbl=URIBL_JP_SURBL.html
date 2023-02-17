@@ -1,0 +1,310 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+
+<title>Blacklist Performance &raquo; Statistik f&uuml;r multi.surbl.org</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="stylesheet" type="text/css" media="screen" href="../../screen.css">
+        <link rel="stylesheet" type="text/css" media="print" href="../../print.css">
+        <meta name="keywords" content="blacklist,performance,monitor,anti,spam,statistic,accuracy,dnsbl,spamassassin">
+    </head>
+    <body>
+
+<!-- header start -->
+
+<div id="header">
+
+<div id="logo">
+	<a href="../../index.html">
+		<div id="logo_screen"><img src="../../pictures/intra2net.gif" alt="Intra2net AG"></div>
+		<div id="logo_print"><img src="../../pictures/intra2net_print.gif" alt="Intra2net AG"></div>
+	</a>
+</div>
+
+<div id="search">
+	<form name="formsearch" method="get" action="http://www.intra2net.com/search/search.cgi">
+		<input type="text" name="q" maxlength="64" id="searchinput" value="">
+		<input type="image" name="submit" src="../../pictures/search.gif" alt="Suche">
+	</form>
+</div>
+
+
+<nav id="navigation">
+
+<a href="blacklist.php_dnsbl=URIBL_JP_SURBL.html#navigation"><div class="mobilemenu"><img src="../../pictures/mobile_icon.gif" alt="Navigation"></div></a>
+<a href="blacklist.php_dnsbl=URIBL_JP_SURBL.html#"><div class="mobilemenu"><img src="../../pictures/mobile_icon.gif" alt="Navigation"></div></a>
+
+<ul class="navbar">
+
+<li id="Produkte"><a href="../../../en/products/index.html">Produkte</a>
+	<div class="dropdown">
+		<div class="navgrid">
+			<div class="navgrid-unit navcol1_of_3">
+				<h4>SOFTWARE</h4>
+					<ul class="navmenu">
+						<li><a href="../../produkte/index.php">&Uuml;bersicht</a></li>
+						<li><a href="../../produkte/intranator.php">Business Server</a></li>
+						<li><a href="../../produkte/security_gateway.php">Security Gateway</a></li>
+						<li><a href="../../produkte/network_security.php">Network Security</a></li>
+						<li><a href="../../produkte/lizenzen/index.php">Lizenzbestimmungen</a></li>
+					</ul>
+			</div>
+			<div class="navgrid-unit navcol1_of_3">
+				<h4>HARDWARE</h4>
+					<ul class="navmenu">
+						<li><a href="../../produkte/hardware.php">&Uuml;bersicht</a></li>
+						<li><a href="../../produkte/appliance_eco.php">Appliance Eco</a></li>
+						<li><a href="../../produkte/appliance_pro.php">Appliance Pro</a></li>
+						<li><a href="../../produkte/appliance_ultimate.php">Appliance Ultimate</a></li>
+					</ul>
+			</div>
+			<div class="navgrid-unit navcol1_of_3">
+				<h4>REFERENZEN</h4>
+					<ul class="navmenu">
+						<li><a href="../../produkte/anwenderberichte.php">Anwenderberichte</a></li>
+						<li><a href="../../produkte/kundenstimmen.php">Kundenstimmen</a></li>
+						<li><a href="../../produkte/pressestimmen.php">Pressestimmen</a></li>
+					</ul>
+			</div>
+		</div> <!-- close .grid div -->
+	</div> <!-- close .dropdown div -->
+</li>
+
+<li id="Download"><a href="../../download.1">Download</a>
+	<div class="dropdown">
+		<ul>
+			<li><a href="../../download/index.php">Software</a></li>
+			<li><a href="../../download/datenblaetter.php">Datenbl&auml;tter</a></li>
+			<li><a href="../../download/handbuecher.php">Handb&uuml;cher</a></li>
+		</ul>
+	</div>
+</li>
+
+<li id="Support" class="selected"><a href="../../../en/support/index.html">Support</a>
+	<div class="dropdown">
+		<ul>
+			<li><a href="../anfrage.php">Support-Anfrage</a></li>
+			<li><a href="../handbuecher.php">Handb&uuml;cher</a></li>
+			<li><a href="http://forum.intra2net.com/">Forum</a></li>
+			<li><a href="../unterstuetzte_hardware.php">Unterst&uuml;tzte Hardware</a></li>
+			<li><a href="index.html">Blacklist Performance</a></li>
+			<li><a href="../schulung.php">Schulung</a></li>
+			<li><a href="../fernwartung.php">Fernwartung</a></li>
+		</ul>
+	</div>
+</li>
+
+<li id="Kaufen"><a href="../../kaufen/index.html">Kaufen</a>
+	<div class="dropdown">
+		<ul>
+			<li><a href="../../kaufen/index.php">Partner finden</a></li>
+			<li><a href="../../partner-werden">Partner werden</a></li>
+			<li><a href="http://partner.intra2net.com/">Partnerweb</a></li>
+		</ul>
+	</div>
+</li>
+
+<li id="Unternehmen"><a href="../../unternehmen/index.html">Unternehmen</a>
+	<div class="dropdown">
+		<ul>
+			<li><a href="../../unternehmen/index.php">&Uuml;ber Intra2net</a></li>
+			<li><a href="../../unternehmen/presse/index.php">Presse</a></li>
+			<li><a href="../../unternehmen/karriere.php">Karriere</a></li>
+			<li><a href="../../unternehmen/kontakt.php">Kontakt</a></li>
+		</ul>
+	</div>
+</li>
+
+</ul> <!-- close #navbar ul -->
+
+</nav>
+
+</div> <!-- close #header div -->
+
+
+<div id="page">
+
+<div class="subcontainer">
+	<ul class="sublist">
+<li><a href="index.php.html" class="selected">Blacklist Performance</a></li>
+<li><a href="aktuelle_meldungen.php.html">Aktuelle Meldungen</a></li>
+<li><a href="datenverarbeitung.php.html">Datenverarbeitung</a></li>
+	</ul>
+</div>
+
+
+<div id="content">
+
+<!-- header end -->
+<div style="float: right;"><a href="../../../en/support/antispam/blacklist.php_dnsbl=URIBL_JP_SURBL.html"><img src="../../../en/pictures/en.gif" border="0"></a></div>
+<h1>Statistik f&uuml;r multi.surbl.org</h1>
+<p><h2>W&ouml;chentliche Statistiken: 15.02.2015 - 05.04.2015</h2><br>
+
+<img src="statistics/uribl_jp_surbl.png.png" alt="Wöchentliche Statistiken für multi.surbl.org von 15.02.2015 bis 05.04.2015" width="680" height="350"></p>
+
+<p>
+<h2>&Uuml;berschneidung von multi.surbl.org mit anderen Listen</h2>
+<table cellspacing="1" cellpadding="4" width="680" border="0">
+<tr valign="middle" bgcolor="#f6f6f6">
+<td><a href="blacklist.php_dnsbl=URIBL_SURBL_COMBINED.html">SURBL COMBINED</a></td>
+<td width="405" align="left"><a href="blacklist.php_dnsbl=URIBL_SURBL_COMBINED.html"><img src="statistics/intersection/blacklist_statistic_1000.png.png" alt="100,00% Überschneidung mit multi.surbl.org" width="403" height="18"></a></td>
+</tr>
+<tr valign="middle" bgcolor="#f6f6f6">
+<td><a href="blacklist.php_dnsbl=URIBL_BLACK.html">URIBL BLACKLIST</a></td>
+<td width="405" align="left"><a href="blacklist.php_dnsbl=URIBL_BLACK.html"><img src="statistics/intersection/blacklist_statistic_0980.png.png" alt=" 98,07% Überschneidung mit multi.uribl.com" width="403" height="18"></a></td>
+</tr>
+<tr valign="middle" bgcolor="#f6f6f6">
+<td><a href="blacklist.php_dnsbl=RCVD_IN_SPAMHAUS_ZEN.html">SPAMHAUS ZEN</a></td>
+<td width="405" align="left"><a href="blacklist.php_dnsbl=RCVD_IN_SPAMHAUS_ZEN.html"><img src="statistics/intersection/blacklist_statistic_0895.png.png" alt=" 89,51% Überschneidung mit zen.spamhaus.org" width="403" height="18"></a></td>
+</tr>
+<tr valign="middle" bgcolor="#f6f6f6">
+<td><a href="blacklist.php_dnsbl=URIBL_SPAMHAUS_DBL.html">SPAMHAUS DBL</a></td>
+<td width="405" align="left"><a href="blacklist.php_dnsbl=URIBL_SPAMHAUS_DBL.html"><img src="statistics/intersection/blacklist_statistic_0892.png.png" alt=" 89,29% Überschneidung mit dbl.spamhaus.org" width="403" height="18"></a></td>
+</tr>
+<tr valign="middle" bgcolor="#f6f6f6">
+<td><a href="blacklist.php_dnsbl=RCVD_IN_CBL.html">COMPOSITE BLOCKING LIST</a></td>
+<td width="405" align="left"><a href="blacklist.php_dnsbl=RCVD_IN_CBL.html"><img src="statistics/intersection/blacklist_statistic_0874.png.png" alt=" 87,47% Überschneidung mit cbl.abuseat.org" width="403" height="18"></a></td>
+</tr>
+<tr valign="middle" bgcolor="#f6f6f6">
+<td><a href="blacklist.php_dnsbl=RCVD_IN_XBL.html">SPAMHAUS XBL</a></td>
+<td width="405" align="left"><a href="blacklist.php_dnsbl=RCVD_IN_XBL.html"><img src="statistics/intersection/blacklist_statistic_0872.png.png" alt=" 87,26% Überschneidung mit xbl.spamhaus.org" width="403" height="18"></a></td>
+</tr>
+<tr valign="middle" bgcolor="#f6f6f6">
+<td><a href="blacklist.php_dnsbl=RCVD_IN_BL_SPAMCOP_NET.html">SPAMCOP</a></td>
+<td width="405" align="left"><a href="blacklist.php_dnsbl=RCVD_IN_BL_SPAMCOP_NET.html"><img src="statistics/intersection/blacklist_statistic_0818.png.png" alt=" 81,80% Überschneidung mit bl.spamcop.net" width="403" height="18"></a></td>
+</tr>
+</table>
+</p>
+<h2>Weitere Informationen &uuml;ber SURBL JWSPAMSPY</h2>
+<p>SURBL's sind Listen von Webseiten, die in unerwünschten E-Mails auftauchen. Gegenüber den meisten Blacklisten sind SURBL's keine Listen mit E-Mail Sendern.<br />
+JP SURBL: Joe Wein's jwSpamSpy Programm bildet die Basis der JP Daten, genutzt von beiden, Joe's eigenem System und auch von Raymond Dijkxhoorn und seinen Kollegen bei Prolocation. Prolocation verarbeitet mit jwSpamSpy wahrscheinlich mehr als 300.000 unerwünschte E-Mails pro Tag und fügt diese und zusätzliche durch eigene Richtlinien Joe's Daten hinzu.</p><br>
+
+<table width="680" border="0" cellspacing="0" cellpadding="6">
+<tr>
+<td bgcolor="#f6f6f6"><b>Name</b></td>
+<td bgcolor="#f6f6f6">SURBL JWSPAMSPY</td>
+</tr>
+<tr>
+<td bgcolor="#f6f6f6"><b>Typ</b></td>
+<td bgcolor="#f6f6f6">URIBL</td>
+</tr>
+<tr>
+<td width="66" bgcolor="#f6f6f6"><b>Website</b></td>
+<td width="418" bgcolor="#f6f6f6"><a href="http://www.surbl.org">www.surbl.org</a></td>
+</tr>
+<tr>
+<td bgcolor="#f6f6f6"><b>Lookup</b></td>
+<td bgcolor="#f6f6f6">multi.surbl.org</td>
+</tr>
+</table><br>
+
+<h2>Spamassassin Einstellungen</h2><div style="border: 1px solid #E4EAF8; padding: 5px; margin: 0px; width: 668px;">
+<pre style="font-size: 11px; font-family: monospace;">urirhssub   URIBL_JP_SURBL      multi.surbl.org.        A   64
+body        URIBL_JP_SURBL      eval:check_uridnsbl('URIBL_JP_SURBL')
+describe    URIBL_JP_SURBL      Contains an URL listed in the JP SURBL blocklist
+tflags      URIBL_JP_SURBL      net
+score       URIBL_JP_SURBL      0 # please adjust the score value</pre></div>
+
+    <p>Mehr Informationen zur <a href="datenverarbeitung.php.html">Datenverarbeitung und Statistik.</a></p>
+
+    <p><a href="index.php.html">Zur Hauptseite des Blacklist Performance Monitors.</a></p>
+
+<!-- footer start -->
+
+</div> <!-- close content <div> -->
+</div> <!-- close page <div> -->
+
+<div id="sitemap">
+
+<div id="sitemapcol1">
+	<a href="../../produkte/index.php" class="sitemapheader">Produkte</a>
+	<ul class="sitemap">
+	<li><a href="../../produkte/intranator.php">Intra2net Business Server</a></li>
+	<li><a href="../../produkte/security_gateway.php">Intra2net Security Gateway</a></li>
+	<li><a href="../../produkte/network_security.php">Intra2net Network Security</a></li>
+	<li><a href="../../produkte/appliance_eco.php">Intra2net Appliance Eco</a></li>
+	<li><a href="../../produkte/appliance_pro.php">Intra2net Appliance Pro</a></li>
+	<li><a href="../../produkte/appliance_ultimate.php">Intra2net Appliance Ultimate</a></li>
+	</ul>
+</div>
+
+<div id="sitemapcol2">
+	<a href="../../download/index.php" class="sitemapheader">Download</a>
+	<ul class="sitemap">
+	<li><a href="../../download/index.php">Software</a></li>
+	<li><a href="../../download/datenblaetter.php">Datenbl&auml;tter</a></li>
+	<li><a href="../../download/handbuecher.php">Handb&uuml;cher</a></li>
+	</ul>
+</div>
+
+<div id="sitemapcol3">
+	<a href="../index.php" class="sitemapheader">Support</a>
+	<ul class="sitemap">
+	<li><a href="../anfrage.php">Support-Anfrage</a></li>
+	<li><a href="../handbuecher.php">Handb&uuml;cher</a></li>
+	<li><a href="http://forum.intra2net.com/">Forum</a></li>
+	<li><a href="../unterstuetzte_hardware.php">Unterst&uuml;tzte Hardware</a></li>
+	<li><a href="index.html">Blacklist Performance</a></li>
+	<li><a href="../schulung.php">Schulung</a></li>
+	<li><a href="../fernwartung.php">Fernwartung</a></li>
+	</ul>
+</div>
+
+<div id="sitemapcol4">
+	<a href="../../kaufen/index.php" class="sitemapheader">Kaufen</a>
+	<ul class="sitemap">
+	<li><a href="../../kaufen/index.php">Partner finden</a></li>
+	<li><a href="../../partner-werden">Partner werden</a></li>
+	<li><a href="https://partner.intra2net.com/">Partnerweb</a></li>
+	</ul>
+</div>
+
+<div id="sitemapcol5">
+	<a href="../../unternehmen/index.php" class="sitemapheader">Unternehmen</a>
+	<ul class="sitemap">
+	<li><a href="../../unternehmen/index.php">&Uuml;ber Intra2net</a></li>
+	<li><a href="../../unternehmen/presse/index.php">Presse</a></li>
+	<li><a href="../../unternehmen/karriere.php">Karriere</a></li>
+	<li><a href="../../unternehmen/kontakt.php">Kontakt</a></li>
+	</ul>
+</div>
+
+</div> <!-- close sitemap <div> -->
+
+
+<div id="footnote">
+	<div id="footnotecompany">
+
+		&copy; Intra2net AG 2015
+	</div>
+
+	<div id="footnotelinks">
+		<a href="../../impressum.php">Impressum</a>
+		<a href="../../../en/developer/index.html">Entwickler</a>
+		<a href="../../datenschutz.php">Datenschutz</a>
+		<a href="../../unternehmen/kontakt.php">Kontakt</a>
+	</div>
+</div>
+
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-151599-1']);
+  _gaq.push(['_gat._anonymizeIp'])
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+<!-- PHP error counter: 0 -->
+
+<!-- footer end -->
+
+</body>
+</html>

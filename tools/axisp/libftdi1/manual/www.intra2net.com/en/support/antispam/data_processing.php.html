@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Blacklist Performance &raquo; Data Processing and Interpretation</title>
+<link rel="stylesheet" type="text/css" media="screen" href="../../screen.css">
+<link rel="stylesheet" type="text/css" media="print" href="../../print.css">
+</head>
+
+<body>
+
+<!-- header start -->
+
+<div id="header">
+
+<div id="logo">
+	<a href="../../../de/index.html">
+		<div id="logo_screen"><img src="../../../de/pictures/intra2net.gif" alt="Intra2net AG"></div>
+		<div id="logo_print"><img src="../../../de/pictures/intra2net_print.gif" alt="Intra2net AG"></div>
+	</a>
+</div>
+
+<nav id="navigation">
+
+<a href="data_processing.php.html#navigation"><div class="mobilemenu"><img src="../../../de/pictures/mobile_icon.gif" alt="Navigation"></div></a>
+<a href="data_processing.php.html#"><div class="mobilemenu"><img src="../../../de/pictures/mobile_icon.gif" alt="Navigation"></div></a>
+
+<ul class="navbar">
+
+<li id="Products"><a href="../../products/index.html">Products</a>
+	<div class="dropdown">
+		<ul>
+			<li><a href="../../products/index.html">Continue in German</a></li>
+		</ul>
+	</div>
+</li>
+
+<li id="Support" class="selected"><a href="../index.html">Support</a>
+	<div class="dropdown">
+		<ul>
+			<li><a href="http://forum.intra2net.com/">Forum</a></li>
+			<li><a href="index.html">Blacklist Performance</a></li>
+		</ul>
+	</div>
+</li>
+
+<li id="Developer"><a href="../../developer/index.html">Developer</a>
+	<div class="dropdown">
+		<ul>
+			<li><a href="../../developer/libftdi/index.php">libFTDI</a></li>
+			<li><a href="../../developer/ipt_ACCOUNT/index.php">ipt_ACCOUNT</a></li>
+			<li><a href="../../developer/libt2n/index.php">libt2n</a></li>
+			<li><a href="../../developer/intranator/index.php">Intranator</a></li>
+		</ul>
+	</div>
+</li>
+
+</ul> <!-- close #navbar ul -->
+
+</nav>
+
+</div> <!-- close #header div -->
+
+
+<div id="page">
+
+<div class="subcontainer">
+	<ul class="sublist">
+<li><a href="index.php.html">Blacklist Performance</a></li>
+<li><a href="latest_news.php.html">Latest News</a></li>
+<li><a href="data_processing.php.html" class="selected">Data Processing</a></li>
+	</ul>
+</div>
+
+
+<div id="content">
+
+<!-- header end -->
+
+<div style="float: right;"><a href="../../../de/support/antispam/datenverarbeitung.php.html"><img src="../../../de/pictures/de.gif" border="0"></a></div>
+
+<h1>Data Processing and Interpretation</h1>
+
+<p>You might be wondering how the chart data for the <a href="index.php.html">Anti-Spam Resources</a> is compiled.
+Where does it come from? What kind of senders does it represent? Here is a
+general overview how to read the chart data and introduction to our
+methods of classifying and processing data.</p>
+<br>
+
+<h2>Data Interpretation</h2>
+
+<p>Every blacklist chart is showing the accumulated weekly statistics
+for the last eight weeks. The &quot;SPAM HITS&quot; bar is a
+percentage measurement derived from the number of spam-mails that a
+particular blacklist correctly classified as spam. The &quot;HAM
+HITS&quot; bar is a percentage measurement derived from the number
+of ham-mails (non-spam) that a particular blacklist incorrectly
+classified to be spam.<br>
+<br>
+<b>Example:</b> Assuming blacklist &quot;alpha&quot; correctly tagged
+70% of spam received (spam hits), and incorrectly tagged 0.1% of
+non-spam mail (ham hits). Assuming blacklist &quot;beta&quot;
+correctly tagged 90% of spam received (spam hits), and incorrectly
+tagged 10% of non-spam mail (ham hits). You may conclude that
+blacklist &quot;beta&quot; blocks more spam than blacklist &quot;alpha&quot;,
+however &quot;beta&quot; is incorrectly classifying
+hundred times more desired mail as spam than &quot;alpha&quot;.</p>
+<br>
+
+
+<h2>Data Classification</h2>
+
+<p>Intra2net&rsquo;s core database is fed by a cluster of reporting-servers
+located in Central Europe. We use the real mailstream of few
+selected Intra2net business customers - no spam traps, dead email
+addresses or similar methods are involved. All mails are automatically
+classified by mail-server subfolders location. No additional steps
+are required, just everyday user interaction.</p>
+
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td valign="top"><p><b>UNDEFINED</b></p></td>
+<td valign="top"><p>All mails located in top of &quot;inbox&quot; <br>
+or tagged in &quot;spam suspect&quot; subfolder</p></td>
+</tr>
+<tr>
+<td valign="top"><p><b>SPAM</b></p></td>
+<td valign="top"><p>All mails located in subfolder &quot;spam&quot;</p></td>
+</tr>
+<tr>
+<td valign="top"><p><b>HAM</b></p></td>
+<td valign="top"> <p>All mails located in any other subfolder</p></td>
+</tr>
+</table>
+<p>Users are trained to move undetected spam mails from top of
+&quot;inbox&quot; to &quot;spam&quot; subfolder and to sort out the
+subfolder &quot;spam suspect&quot; occasionally. By &quot;moving&quot;
+mails to according subfolders instead of &quot;deleting&quot;,
+a minimum change of behaviour is required by user. Deleted
+or collected (POP3) emails are ignored, same goes for backscatter.
+The automatic spamfilter is set to medium, not to hit ham-mails
+accidentally.</p>
+
+
+<h2>Data Processing</h2>
+
+<p>All incoming mails are duplicated to a dedicated reporting-server.
+Thus all protocol information is preserved in order to run
+network-based tests. All tests on the reporting-server are processed
+completely independent from the main mail-server. In order to
+classify mails we use unique IDs. Classification is done by user
+interaction as described above. Reporting-servers only report final
+test results to our core database server.<br>
+<br>
+On average the core database is showing a volume of 90% spam and 10%
+ham-mails, equal to the worldwide mailstream. However, we do have
+a high bulk mail volume (mailing lists). Our experience has shown
+that some network-based tests have problems differentiating
+legitimate and unsolicited bulk mails. We do not count any IP-
+addresses, just single mails. It makes no difference how many mails
+we receive from the same IP-address. Keep in mind: We have no
+influence on users accidentally classifying ham-mails as spam or
+vice versa, nor do we have access to the content or body of customer mails
+due to privacy reasons! <br>
+<br>
+If you have any questions or comments about anything
+here, about the Anti-Spam Resources, please don't hesitate
+to <a href="../../contact/index.html">contact us</a>.<br>
+
+<br>
+<br>
+
+<a href="index.php.html">Visit the Blacklist Performance mainpage</a> for more blacklist statistics.</p>
+
+<!-- footer start -->
+
+</div> <!-- close content <div> -->
+</div> <!-- close page <div> -->
+
+
+<div id="footnote">
+	<div id="footnotecompany">
+
+		&copy; Intra2net AG 2015
+	</div>
+
+	<div id="footnotelinks">
+		<a href="../../imprint.php">Imprint</a>
+		<a href="../../contact/index.html">Contact</a>
+	</div>
+</div>
+
+
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-151599-1']);
+  _gaq.push(['_gat._anonymizeIp'])
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+<!-- PHP error counter: 0 -->
+
+<!-- footer end -->
+
+</body>
+</html>

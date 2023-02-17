@@ -1,0 +1,328 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<title>Software Version 5.3.5 - NAT-Adressumschreibung f&uuml;r VPNs sowie neuer DynDNS-Updater</title>
+<link rel="stylesheet" type="text/css" media="screen" href="../screen.css">
+<link rel="stylesheet" type="text/css" media="print" href="../print.css">
+</head>
+
+<body>
+
+<!-- header start -->
+
+<div id="header">
+
+<div id="logo">
+	<a href="../index.html">
+		<div id="logo_screen"><img src="../pictures/intra2net.gif" alt="Intra2net AG"></div>
+		<div id="logo_print"><img src="../pictures/intra2net_print.gif" alt="Intra2net AG"></div>
+	</a>
+</div>
+
+<div id="search">
+	<form name="formsearch" method="get" action="http://www.intra2net.com/search/search.cgi">
+		<input type="text" name="q" maxlength="64" id="searchinput" value="">
+		<input type="image" name="submit" src="../pictures/search.gif" alt="Suche">
+	</form>
+</div>
+
+
+<nav id="navigation">
+
+<a href="security_gateway_news_detail.php_newsid=132.html#navigation"><div class="mobilemenu"><img src="../pictures/mobile_icon.gif" alt="Navigation"></div></a>
+<a href="security_gateway_news_detail.php_newsid=132.html#"><div class="mobilemenu"><img src="../pictures/mobile_icon.gif" alt="Navigation"></div></a>
+
+<ul class="navbar">
+
+<li id="Produkte" class="selected"><a href="../../en/products/index.html">Produkte</a>
+	<div class="dropdown">
+		<div class="navgrid">
+			<div class="navgrid-unit navcol1_of_3">
+				<h4>SOFTWARE</h4>
+					<ul class="navmenu">
+						<li><a href="index.php">&Uuml;bersicht</a></li>
+						<li><a href="intranator.php">Business Server</a></li>
+						<li><a href="security_gateway.php">Security Gateway</a></li>
+						<li><a href="network_security.php">Network Security</a></li>
+						<li><a href="lizenzen/index.php">Lizenzbestimmungen</a></li>
+					</ul>
+			</div>
+			<div class="navgrid-unit navcol1_of_3">
+				<h4>HARDWARE</h4>
+					<ul class="navmenu">
+						<li><a href="hardware.php">&Uuml;bersicht</a></li>
+						<li><a href="appliance_eco.php">Appliance Eco</a></li>
+						<li><a href="appliance_pro.php">Appliance Pro</a></li>
+						<li><a href="appliance_ultimate.php">Appliance Ultimate</a></li>
+					</ul>
+			</div>
+			<div class="navgrid-unit navcol1_of_3">
+				<h4>REFERENZEN</h4>
+					<ul class="navmenu">
+						<li><a href="anwenderberichte.php">Anwenderberichte</a></li>
+						<li><a href="kundenstimmen.php">Kundenstimmen</a></li>
+						<li><a href="pressestimmen.php">Pressestimmen</a></li>
+					</ul>
+			</div>
+		</div> <!-- close .grid div -->
+	</div> <!-- close .dropdown div -->
+</li>
+
+<li id="Download"><a href="../download.1">Download</a>
+	<div class="dropdown">
+		<ul>
+			<li><a href="../download/index.php">Software</a></li>
+			<li><a href="../download/datenblaetter.php">Datenbl&auml;tter</a></li>
+			<li><a href="../download/handbuecher.php">Handb&uuml;cher</a></li>
+		</ul>
+	</div>
+</li>
+
+<li id="Support"><a href="../../en/support/index.html">Support</a>
+	<div class="dropdown">
+		<ul>
+			<li><a href="../support/anfrage.php">Support-Anfrage</a></li>
+			<li><a href="../support/handbuecher.php">Handb&uuml;cher</a></li>
+			<li><a href="http://forum.intra2net.com/">Forum</a></li>
+			<li><a href="../support/unterstuetzte_hardware.php">Unterst&uuml;tzte Hardware</a></li>
+			<li><a href="../support/antispam/index.html">Blacklist Performance</a></li>
+			<li><a href="../support/schulung.php">Schulung</a></li>
+			<li><a href="../support/fernwartung.php">Fernwartung</a></li>
+		</ul>
+	</div>
+</li>
+
+<li id="Kaufen"><a href="../kaufen/index.html">Kaufen</a>
+	<div class="dropdown">
+		<ul>
+			<li><a href="../kaufen/index.php">Partner finden</a></li>
+			<li><a href="../partner-werden">Partner werden</a></li>
+			<li><a href="http://partner.intra2net.com/">Partnerweb</a></li>
+		</ul>
+	</div>
+</li>
+
+<li id="Unternehmen"><a href="../unternehmen/index.html">Unternehmen</a>
+	<div class="dropdown">
+		<ul>
+			<li><a href="../unternehmen/index.php">&Uuml;ber Intra2net</a></li>
+			<li><a href="../unternehmen/presse/index.php">Presse</a></li>
+			<li><a href="../unternehmen/karriere.php">Karriere</a></li>
+			<li><a href="../unternehmen/kontakt.php">Kontakt</a></li>
+		</ul>
+	</div>
+</li>
+
+</ul> <!-- close #navbar ul -->
+
+</nav>
+
+</div> <!-- close #header div -->
+
+
+<div id="page">
+
+<div class="subcontainer">
+	<ul class="sublist">
+<li><a href="security_gateway.php">Intra2net Security Gateway</a></li>
+<li><a href="funktionen_gateway.php">Funktionen</a></li>
+<li><a href="security_gateway_news.php" class="selected">Release Notes</a></li>
+	</ul>
+</div>
+
+
+<div id="content">
+
+<!-- header end -->
+
+<h1>Software Version 5.3.5</h1>
+<p><strong>NAT-Adressumschreibung f&uuml;r VPNs sowie neuer DynDNS-Updater</strong> (27.10.2010)</p>
+<ul id="list">
+
+    <li>Erm&ouml;glicht VPNs u.a. auch in folgenden F&auml;llen aufzubauen:</li>
+
+    <li>Die Gegenseite verwendet den gleichen IP-Bereich wie das eigene LAN</li>
+
+    <li>Mehrere Gegenseiten verwenden den gleichen IP-Bereich</li>
+
+    <li>Die Gegenseite gibt eine IP f&uuml;r das VPN vor, welche nicht zum LAN passt</li>
+
+</ul>
+
+<strong>Neuer DynDNS-Updater</strong>
+
+<ul id="list">
+
+    <li>Nur eine Aktualisierung mit der selben IP-Adresse</li>
+
+    <li>Regelm&auml;&szlig;ige Aktualisierung auch hinter einem Router</li>
+
+    <li>&Auml;nderungen an der Konfiguration werden sofort ausgef&uuml;hrt</li>
+
+</ul>
+
+<strong>Intelligente Dienstverwaltung</strong>
+
+<ul id="list">
+
+    <li>Anzahl der gestarteten Dienste passt sich dem Speicherausbau an</li>
+
+    <li>Dienste werden nur bei Verwendung gestartet</li>
+
+</ul>
+
+<strong>Verbesserungen am Emailfilter</strong>
+
+<ul id="list">
+
+    <li>Verwendung von vier DNS-Blacklisten auf SMTP-Ebene</li>
+
+    <li>Bei Emails mit mehreren gesperrten Anh&auml;ngen werden jetzt alle gesperrten Anh&auml;nge ersetzt</li>
+
+    <li>Neue bayesische Spam-Datenbank</li>
+
+</ul>
+
+<strong>Weitere Verbesserungen</strong>
+
+<ul id="list">
+
+    <li>Backup bricht bei voller Festplatte mit Warnmeldung ab</li>
+
+    <li>Unterst&uuml;tzung neuer APC USVs</li>
+
+    <li>MAC-Adressen in der &quot;messages&quot; Logdatei besser lesbar</li>
+
+    <li>Unterst&uuml;tzung von Dateien gr&ouml;&szlig;er als 2GB im Webproxy</li>
+
+    <li>Verbesserte Stabilit&auml;t und Geschwindigkeit des Proxy-Antivirus</li>
+
+	<li>XSS-Sicherheitsupdate an der Weboberfl&auml;che</li>
+
+</ul>
+
+<strong>Verbesserung der Sicherheit am Linux-Basissystem</strong>
+
+<ul id="list">
+
+    <li>(bind-9.6.2-5.P2: CVE-2010-0097, dhcp-4.1.1-17.P1: CVE-2010-2156, ghostscript: CVE-2010-1628, glibc-2.11.2: CVE-2010-3847, gnupg2: CVE-2010-2547, iputils-20071127-12: CVE-2010-2529, libpng-1.2.44: CVE-2010-1205 und CVE-2010-2249, libtiff-3.9.4, nano-2.0.9: CVE-2010-1160 und CVE-2010-1161, openldap-2.4.19: CVE-2010-0211 und CVE-2010-0212, perl-5.10.0-91: CVE-2010-1168 und CVE-2010-1447, perl-libwww-perl: CVE-2010-2253, python-2.6.2-8: CVE-2008-5983, CVE-2010-1634 und CVE-2010-2089, rpm-4.7.2: CVE-2010-2059 und CVE-2010-2198, socat-1.7.1.3: CVE-2010-2799, squid: CVE-2010-3072, IMP webmail: CVE-2010-0463)</li>
+
+</ul>
+
+<strong>Aktualisierung von Linux-Basisdiensten</strong>
+
+<ul id="list">
+
+    <li>(bash-4.0.38, boost-1.44.0, curl-ssl-7.21.0, dbus-glib-0.86, elfutils-0.148, e2fsprogs-1.41.9-8, findutils-4.4.2-8, glib-2.22.5, kernel-2.6.34.7, krb5-1.7.1-13, mc-4.7.4, nss-softokn-3.12.6, nss-3.12.6-7, python-pycurl-7.19.0, sharutils-4.10, strongswan-4.5.0, traceroute-2.0.15, tzdata-2010k, yum-3.2.28)</li>
+
+</ul>
+
+  
+<br>
+<p><a href="security_gateway_news.php">Zur&uuml;ck zur &Uuml;bersicht</a></p>
+
+<br>
+<br>
+<br>
+<br>
+<br>
+
+<!-- footer start -->
+
+</div> <!-- close content <div> -->
+</div> <!-- close page <div> -->
+
+<div id="sitemap">
+
+<div id="sitemapcol1">
+	<a href="index.php" class="sitemapheader">Produkte</a>
+	<ul class="sitemap">
+	<li><a href="intranator.php">Intra2net Business Server</a></li>
+	<li><a href="security_gateway.php">Intra2net Security Gateway</a></li>
+	<li><a href="network_security.php">Intra2net Network Security</a></li>
+	<li><a href="appliance_eco.php">Intra2net Appliance Eco</a></li>
+	<li><a href="appliance_pro.php">Intra2net Appliance Pro</a></li>
+	<li><a href="appliance_ultimate.php">Intra2net Appliance Ultimate</a></li>
+	</ul>
+</div>
+
+<div id="sitemapcol2">
+	<a href="../download/index.php" class="sitemapheader">Download</a>
+	<ul class="sitemap">
+	<li><a href="../download/index.php">Software</a></li>
+	<li><a href="../download/datenblaetter.php">Datenbl&auml;tter</a></li>
+	<li><a href="../download/handbuecher.php">Handb&uuml;cher</a></li>
+	</ul>
+</div>
+
+<div id="sitemapcol3">
+	<a href="../support/index.php" class="sitemapheader">Support</a>
+	<ul class="sitemap">
+	<li><a href="../support/anfrage.php">Support-Anfrage</a></li>
+	<li><a href="../support/handbuecher.php">Handb&uuml;cher</a></li>
+	<li><a href="http://forum.intra2net.com/">Forum</a></li>
+	<li><a href="../support/unterstuetzte_hardware.php">Unterst&uuml;tzte Hardware</a></li>
+	<li><a href="../support/antispam/index.html">Blacklist Performance</a></li>
+	<li><a href="../support/schulung.php">Schulung</a></li>
+	<li><a href="../support/fernwartung.php">Fernwartung</a></li>
+	</ul>
+</div>
+
+<div id="sitemapcol4">
+	<a href="../kaufen/index.php" class="sitemapheader">Kaufen</a>
+	<ul class="sitemap">
+	<li><a href="../kaufen/index.php">Partner finden</a></li>
+	<li><a href="../partner-werden">Partner werden</a></li>
+	<li><a href="https://partner.intra2net.com/">Partnerweb</a></li>
+	</ul>
+</div>
+
+<div id="sitemapcol5">
+	<a href="../unternehmen/index.php" class="sitemapheader">Unternehmen</a>
+	<ul class="sitemap">
+	<li><a href="../unternehmen/index.php">&Uuml;ber Intra2net</a></li>
+	<li><a href="../unternehmen/presse/index.php">Presse</a></li>
+	<li><a href="../unternehmen/karriere.php">Karriere</a></li>
+	<li><a href="../unternehmen/kontakt.php">Kontakt</a></li>
+	</ul>
+</div>
+
+</div> <!-- close sitemap <div> -->
+
+
+<div id="footnote">
+	<div id="footnotecompany">
+
+		&copy; Intra2net AG 2015
+	</div>
+
+	<div id="footnotelinks">
+		<a href="../impressum.php">Impressum</a>
+		<a href="../../en/developer/index.html">Entwickler</a>
+		<a href="../datenschutz.php">Datenschutz</a>
+		<a href="../unternehmen/kontakt.php">Kontakt</a>
+	</div>
+</div>
+
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-151599-1']);
+  _gaq.push(['_gat._anonymizeIp'])
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+<!-- PHP error counter: 0 -->
+
+<!-- footer end -->
+
+</body>
+</html>

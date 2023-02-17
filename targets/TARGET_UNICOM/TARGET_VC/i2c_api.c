@@ -32,7 +32,7 @@ static void i2c_configure_driver_instance(i2c_t *obj);
 
 void i2c_init(i2c_t *obj, PinName sda, PinName scl)
 {
-    struct i2c_s *i2c_inst = obj;
+    struct i2c_s *i2c_inst = (struct i2c_s *)obj;
     int instance = pin_instance_i2c(scl, sda);
     if (instance == NC) {
         return; /* Invalid I2C Pin */
@@ -52,7 +52,7 @@ void i2c_init(i2c_t *obj, PinName sda, PinName scl)
 
 void i2c_frequency(i2c_t *obj, int hz)
 {
-    struct i2c_s *i2c_inst = obj;
+    struct i2c_s *i2c_inst = (struct i2c_s *)obj;
 
 #if DEVICE_I2CSLAVE
     /* Slaves automatically get frequency from master */
@@ -70,7 +70,7 @@ void i2c_frequency(i2c_t *obj, int hz)
 /* Send START command */
 int i2c_start(i2c_t *obj)
 {
-    struct i2c_s *i2c_inst = obj;
+    struct i2c_s *i2c_inst = (struct i2c_s *)obj;
     int instance = i2c_inst->instance;
     int res = I2C_ERROR_NO_SLAVE;
     uint8_t status = 0;
@@ -96,7 +96,7 @@ int i2c_start(i2c_t *obj)
 /* Send STOP command */
 int i2c_stop(i2c_t *obj)
 {
-    struct i2c_s *i2c_inst = obj;
+    struct i2c_s *i2c_inst = (struct i2c_s *)obj;
     int instance = i2c_inst->instance;
     int res = vci2c_send_stop(instance);
     return res;
@@ -105,7 +105,7 @@ int i2c_stop(i2c_t *obj)
 /* Write one byte */
 int i2c_byte_write(i2c_t *obj, int data)
 {
-    struct i2c_s *i2c_inst = obj;
+    struct i2c_s *i2c_inst = (struct i2c_s *)obj;
     int instance = i2c_inst->instance;
     int res = I2C_ERROR_NO_SLAVE;
     uint8_t status = 0;
@@ -132,7 +132,7 @@ int i2c_byte_write(i2c_t *obj, int data)
 /* Read one byte */
 int i2c_byre_read(i2c_t *obj, int last)
 {
-    struct i2c_s *i2c_inst = obj;
+    struct i2c_s *i2c_inst = (struct i2c_s *)obj;
     int instance = i2c_inst->instance;
     int res = I2C_ERROR_NO_SLAVE;
     uint8_t status = 0;
@@ -167,7 +167,7 @@ void i2c_reset(i2c_t *obj)
  */
 int i2c_read(i2c_t *obj, int address, char *data, int length, int stop)
 {
-    struct i2c_s *i2c_inst = obj;
+    struct i2c_s *i2c_inst = (struct i2c_s *)obj;
     int instance = i2c_inst->instance;
     uint8_t status = 0;
 
@@ -233,7 +233,7 @@ int i2c_read(i2c_t *obj, int address, char *data, int length, int stop)
  */
 int i2c_write(i2c_t *obj, int address, const char *data, int length, int stop)
 {
-    struct i2c_s *i2c_inst = obj;
+    struct i2c_s *i2c_inst = (struct i2c_s *)obj;
     int instance = i2c_inst->instance;
     uint8_t status = 0;
 
@@ -268,7 +268,7 @@ int i2c_write(i2c_t *obj, int address, const char *data, int length, int stop)
 
 static void i2c_configure_driver_instance(i2c_t *obj)
 {
-    struct i2c_s *i2c_inst = obj;
+    struct i2c_s *i2c_inst = (struct i2c_s *)obj;
     int instance = i2c_inst->instance;
     if ((i2c_inst != vci2c_state[instance].owner) || (i2c_inst->update)) {
         i2c_inst->update = false;

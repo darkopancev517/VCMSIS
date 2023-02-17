@@ -1,0 +1,55 @@
+
+BPLC_CN_20221223_02.dat:     file format elf32-little
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .rodata       00002fc8  60020000  60020000  00000280  2**6
+                  CONTENTS, ALLOC, LOAD, READONLY, DATA
+  1 .data         00001e48  60022fd0  60022fd0  00003250  2**4
+                  CONTENTS, ALLOC, LOAD, DATA
+  2 .dram1.bss    000108d8  60024e20  60024e20  000050a0  2**4
+                  ALLOC
+  3 .bss          00017f78  60040020  60040020  000050a0  2**4
+                  ALLOC
+  4 .ResetVector.text 000000fc  60080000  60080000  000050a0  2**4
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  5 .WindowVectors.text 0000016c  60080400  60080400  0000519c  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  6 .Level2InterruptVector.text 00000008  6008057c  6008057c  00005308  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  7 .Level3InterruptVector.text 00000008  6008059c  6008059c  00005310  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  8 .Level4InterruptVector.text 00000008  600805c0  600805c0  00005318  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  9 .Level5InterruptVector.text 00000008  60080600  60080600  00005320  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+ 10 .DebugExceptionVector.text 0000000c  60080640  60080640  00005328  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+ 11 .NMIExceptionVector.text 00000004  6008067c  6008067c  00005334  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+ 12 .KernelExceptionVector.text 00000008  6008069c  6008069c  00005338  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+ 13 .UserExceptionVector.text 0000001c  600806bc  600806bc  00005340  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+ 14 .DoubleExceptionVector.text 00000008  600806dc  600806dc  0000535c  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+ 15 .text         0002f8d4  600806f0  600806f0  00005370  2**4
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+ 16 .debug_aranges 00001290  00000000  00000000  00034c48  2**3
+                  CONTENTS, READONLY, DEBUGGING
+ 17 .debug_pubnames 00006e52  00000000  00000000  00035ed8  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 18 .debug_info   00052b60  00000000  00000000  0003cd2a  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 19 .debug_abbrev 000061fe  00000000  00000000  0008f88a  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 20 .debug_line   00023745  00000000  00000000  00095a88  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 21 .xt.prop      00018f78  00000000  00000000  000b91cd  2**0
+                  CONTENTS, READONLY
+ 22 .xtensa.info  00000200  00000000  00000000  000d2145  2**0
+                  CONTENTS, READONLY
+ 23 .comment      00004133  00000000  00000000  000d2345  2**0
+                  CONTENTS, READONLY
+ 24 .debug_ranges 00000020  00000000  00000000  000d6478  2**3
+                  CONTENTS, READONLY, DEBUGGING

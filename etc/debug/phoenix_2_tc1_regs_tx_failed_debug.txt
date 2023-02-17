@@ -1,0 +1,186 @@
+>
+> vc+wm=400111c0,0 -----------------> Note: reset CR1 register
+400111C0 | 00000000 
++WM:OK
+> 
+> vc+dm=400111c0
+Addr=400111C0, len=16
+
+400111C0 | 00000000 00000000 - 00000000 08800000
+400111D0 | 00000000 00000000 - 00000000 00000000
+400111E0 | 00000000 00000000 - 00000000 00000000
+400111F0 | 00000000 00000000 - 00000000 00000000
++DM:OK
+> 
+> vc+wm=400111c0,1003 --------------> Note: set CR1 to (1003) prepare for dsp load
+400111C0 | 00001003 
++WM:OK
+> 
+> ----------------------------------> Note: at this point we load dsp using jtag & xt-gdb
+> 
+> vc+wm=400111c0,0 -----------------> Note: reset CR1 register
+400111C0 | 00000000 
++WM:OK
+> 
+> vc+bbp=init ----------------------> Note: run bbp init command (it also set band to 1 and cfg txpwr)
+Wait for DSP ready...1
+PHY_INIT: OK
+PHY_IR1=4000007
+PHY_IR3=0
+LMAC KICK TX DMA - ntb_count: 739dc, addr: 400111a0
+<- bbp busy!!DMA ISR=80B
+DmaTxcmp
+DmaTxunavail
+DmaTxUpdate
+DmaRxUpdate
+MAC ISR=4000001
++BBP:OK
+> 
+> ----------------------------------> Note: at this time we quit xt-gdb
+> 
+> vc+dm=400111c0 -------------------> Note: dump CR1 register after init expected IR1 & (0x7) for idle
+Addr=400111C0, len=16
+
+400111C0 | 0010C003 80000000 - 0000000C 08800000
+400111D0 | 04000007 00006100 - A2617540 00000C00
+400111E0 | 00000000 00000000 - 00000000 00000000
+400111F0 | 00000000 00000000 - 00000000 00000000
++DM:OK
+> 
+> vc+dm=40011000 -------------------> Note: dump MAC CR register after init
+Addr=40011000, len=16
+
+40011000 | 00040001 00000000 - 00000000 00000000
+40011010 | 00000057 00030045 - 00000000 00000000
+40011020 | 7FFFF3FF 00000000 - 00000000 00000000
+40011030 | 00112233 00000FEF - 00000000 00000000
++DM:OK
+> 
+> vc+dm=40011100 -------------------> Note: dump CNTXP debug register after init
+Addr=40011100, len=16
+
+40011100 | 00005100 00000000 - 00000000 00000001
+40011110 | 00000000 00000000 - 00000000 00000000
+40011120 | 00000000 00000000 - 00000000 00000000
+40011130 | 00000000 00000000 - 00000000 00000000
++DM:OK
+> 
+> vc+dm=400113b0 -------------------> Note: dump DSPIF MIC counters
+Addr=400113B0, len=16
+
+400113B0 | 00000001 00000000 - 00000000 00000000
+400113C0 | 0A000000 00000001 - 00000000 00000000
+400113D0 | 00200000 00000000 - 00000000 00000000
+400113E0 | 00000000 01000000 - 00000001 00000000
++DM:OK
+> 
+> vc+bbp=1001 ----------------------> Note: issue bbp raw command to see if it success (OK)
+input: [ 1001 ]
+DMA ISR=8
+DmaTxUpdate
+LMAC KICK TX DMA - ntb_count: 8fda3fe6, addr: 400111a0
+DMA ISR=3
+DmaTxcmp
+DmaTxunavail
+DMA ISR=100
+DmaRxcmp
+RX BBP RAW CMD [00001001]
+LEN: 16
+20001864 : 64 00 00 0C 00 00 00 04 - 01 10 00 00 0E 00 00 00
+MAC ISR=4000011
++BBP:OK
+> 
+> 
+> 
+> vc+dm=400111c0 -------------------> Note: dump CR1 register after bbp raw command (1001)
+Addr=400111C0, len=16
+
+400111C0 | 0010C003 80000000 - 0000000C 08800000
+400111D0 | 04000007 00006100 - A2617540 00000200
+400111E0 | 00000000 00000000 - 00000000 00000000
+400111F0 | 00000000 00000000 - 00000000 00000000
++DM:OK
+> 
+> vc+dm=40011000 -------------------> Note: dump MAC CR register after bbw raw command (1001)
+Addr=40011000, len=16
+
+40011000 | 00040001 00000000 - 00000000 00000000
+40011010 | 00000057 00030045 - 00000000 00000000
+40011020 | 7FFFF3FF 00000000 - 00000000 00000000
+40011030 | 00112233 00000FEF - 00000000 00000000
++DM:OK
+> 
+> vc+dm=40011100 -------------------> Note: dump CNTXP debug register after bbp raw command (1001)
+Addr=40011100, len=16
+
+40011100 | 00005100 00000000 - 00000000 00000001
+40011110 | 00000000 00000000 - 00000000 00000000
+40011120 | 00006400 00000000 - 00000000 00000001
+40011130 | 00000000 00000000 - 00000000 00000000
++DM:OK
+> 
+> vc+dm=400113b0 -------------------> Note: dump DSPIF MIB counters after bbp raw command (1001)
+Addr=400113B0, len=16
+
+400113B0 | 00000001 00000000 - 00000101 00000000
+400113C0 | 0A000000 00001001 - 00000000 00000000
+400113D0 | 0020000E 0000000E - 00000000 00000000
+400113E0 | 00000000 01100000 - 00000001 0E000000
++DM:OK
+> 
+> 
+> 
+> vc+tx=1,16,1 ----------------------> Note: test tx command (failed)
+TRANSMIT count: 1, length: 16, interval: 1
+DMA ISR=8
+DmaTxUpdate
+LMAC KICK TX DMA - ntb_count: c9f0b7bf, addr: 400111a0
+MAC ISR=4000000
+DMA ISR=3
+DmaTxcmp
+DmaTxunavail
+Waiting too long for plc_m_csma_get_para ---> Note: this variable will be set in MAC interrupt handler if it was triggered
+Waiting too long for plc_m_txp_done ---> Note: this variable will be set in MAC interrupt handler if it was triggered
++TX:OK
+> 
+> vc+dm=400111c0 --------------------> Note: dump CR1 register after tx command (DSP seems not in idle anymore)
+Addr=400111C0, len=16
+
+400111C0 | 0010C003 80000000 - 0000000C 08800000
+400111D0 | 0400000B 00007400 - A24A7540 00000600
+400111E0 | 00000000 00000000 - 00000000 00000000
+400111F0 | 00000000 00000000 - 00000000 00000000
++DM:OK
+> 
+> vc+dm=40011000 --------------------> Note: dump MAC CR register after tx command
+Addr=40011000, len=16
+
+40011000 | 00040001 00000000 - 00000000 00000000
+40011010 | 00000057 00030045 - 00000000 00000000
+40011020 | 7FFFF3FF 00000000 - 00000000 00000000
+40011030 | 00112233 00000FEF - 00000000 00000000
++DM:OK
+> 
+> vc+dm=40011100 -------------------> Note: dump CNTXP debug register after tx command
+Addr=40011100, len=16
+
+40011100 | 00001109 00040004 - 00860086 00000000
+40011110 | 00000000 00000000 - 00000000 00000000
+40011120 | 00006400 00000000 - 00000000 00000000
+40011130 | 00000000 00000000 - 00000000 00000000
++DM:OK
+> 
+> vc+dm=400113b0 --------------------> Note: dump DSPIF MIB counters after tx command
+Addr=400113B0, len=16
+
+400113B0 | 00000001 00000000 - 00000000 00000000
+400113C0 | 02100000 00000000 - 00000000 00000000
+400113D0 | 0020000E 0000000E - 00000000 00000000
+400113E0 | 00000000 00000000 - 00000001 0E000000
++DM:OK
+> 
+> vc+bbp=1001 -----------------------> Note: at this point can't issue bbp raw command any more due to DSP wasn't in idle state
+input: [ 1001 ]
+<- bbp busy!!+BBP:OK
+> 
+> 

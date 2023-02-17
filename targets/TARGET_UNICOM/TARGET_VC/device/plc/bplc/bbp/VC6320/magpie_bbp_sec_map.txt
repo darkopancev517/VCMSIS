@@ -1,0 +1,19 @@
+# image                   region  offset    size
+# ------------------      ------  --------  --------
+magpie_sec_idx0.bin       o_data1  00000000  00002fc8
+magpie_sec_idx0.bin.xz    z_data1  00000000  00000fa4 
+magpie_sec_idx1.bin       o_data1  00002fd0  00001e48
+magpie_sec_idx1.bin.xz    z_data1  00002fd0  00000fa4 
+magpie_sec_idx4.bin       iram    00000000  000000fc
+magpie_sec_idx5.bin       iram    00000400  0000016c
+magpie_sec_idx6.bin       iram    0000057c  00000008
+magpie_sec_idx7.bin       iram    0000059c  00000008
+magpie_sec_idx8.bin       iram    000005c0  00000008
+magpie_sec_idx9.bin       iram    00000600  00000008
+magpie_sec_idx10.bin      iram    00000640  0000000c
+magpie_sec_idx11.bin      iram    0000067c  00000004
+magpie_sec_idx12.bin      iram    0000069c  00000008
+magpie_sec_idx13.bin      iram    000006bc  0000001c
+magpie_sec_idx14.bin      iram    000006dc  00000008
+magpie_sec_idx15.bin      o_iram  000006f0  0002f8d4
+magpie_sec_idx15.bin.xz   z_iram  000006f0  0001b5b0  

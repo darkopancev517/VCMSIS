@@ -1,0 +1,17 @@
+set *0x400111c0=0x0
+
+ 
+restore ~/SHARE/Trx/Magpie2/vtec/bbp/magpie_sec_idx0.bin      binary 0x200e0000
+restore ~/SHARE/Trx/Magpie2/vtec/bbp/magpie_sec_idx1.bin      binary 0x200e2fd0
+restore ~/SHARE/Trx/Magpie2/vtec/bbp/magpie_sec_idx4.bin      binary 0x20080000
+restore ~/SHARE/Trx/Magpie2/vtec/bbp/magpie_sec_idx5.bin      binary 0x20080400
+restore ~/SHARE/Trx/Magpie2/vtec/bbp/magpie_sec_idx6.bin      binary 0x2008057c
+restore ~/SHARE/Trx/Magpie2/vtec/bbp/magpie_sec_idx7.bin      binary 0x2008059c
+restore ~/SHARE/Trx/Magpie2/vtec/bbp/magpie_sec_idx8.bin      binary 0x200805c0
+restore ~/SHARE/Trx/Magpie2/vtec/bbp/magpie_sec_idx9.bin      binary 0x20080600
+restore ~/SHARE/Trx/Magpie2/vtec/bbp/magpie_sec_idx10.bin     binary 0x20080640
+restore ~/SHARE/Trx/Magpie2/vtec/bbp/magpie_sec_idx11.bin     binary 0x2008067c
+restore ~/SHARE/Trx/Magpie2/vtec/bbp/magpie_sec_idx12.bin     binary 0x2008069c
+restore ~/SHARE/Trx/Magpie2/vtec/bbp/magpie_sec_idx13.bin     binary 0x200806bc
+restore ~/SHARE/Trx/Magpie2/vtec/bbp/magpie_sec_idx14.bin     binary 0x200806dc
+restore ~/SHARE/Trx/Magpie2/vtec/bbp/magpie_sec_idx15.bin     binary 0x200806f0

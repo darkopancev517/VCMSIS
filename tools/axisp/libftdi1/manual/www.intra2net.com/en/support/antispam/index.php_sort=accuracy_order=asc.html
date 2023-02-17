@@ -1,0 +1,481 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Blacklist Performance &raquo; Statistics of accuracy and failure rates</title>
+<link rel="stylesheet" type="text/css" media="screen" href="../../screen.css">
+<link rel="stylesheet" type="text/css" media="print" href="../../print.css">
+<meta name="keywords" content="email,anti,spam,statistics,blacklist,accuracy,dnsbl,spamassassin,software">
+</head>
+<body>
+
+<!-- header start -->
+
+<div id="header">
+
+<div id="logo">
+	<a href="../../../de/index.html">
+		<div id="logo_screen"><img src="../../../de/pictures/intra2net.gif" alt="Intra2net AG"></div>
+		<div id="logo_print"><img src="../../../de/pictures/intra2net_print.gif" alt="Intra2net AG"></div>
+	</a>
+</div>
+
+<nav id="navigation">
+
+<a href="index.php_sort=accuracy_order=asc.html#navigation"><div class="mobilemenu"><img src="../../../de/pictures/mobile_icon.gif" alt="Navigation"></div></a>
+<a href="index.php_sort=accuracy_order=asc.html#"><div class="mobilemenu"><img src="../../../de/pictures/mobile_icon.gif" alt="Navigation"></div></a>
+
+<ul class="navbar">
+
+<li id="Products"><a href="../../products/index.html">Products</a>
+	<div class="dropdown">
+		<ul>
+			<li><a href="../../products/index.html">Continue in German</a></li>
+		</ul>
+	</div>
+</li>
+
+<li id="Support" class="selected"><a href="../index.html">Support</a>
+	<div class="dropdown">
+		<ul>
+			<li><a href="http://forum.intra2net.com/">Forum</a></li>
+			<li><a href="index.html">Blacklist Performance</a></li>
+		</ul>
+	</div>
+</li>
+
+<li id="Developer"><a href="../../developer/index.html">Developer</a>
+	<div class="dropdown">
+		<ul>
+			<li><a href="../../developer/libftdi/index.php">libFTDI</a></li>
+			<li><a href="../../developer/ipt_ACCOUNT/index.php">ipt_ACCOUNT</a></li>
+			<li><a href="../../developer/libt2n/index.php">libt2n</a></li>
+			<li><a href="../../developer/intranator/index.php">Intranator</a></li>
+		</ul>
+	</div>
+</li>
+
+</ul> <!-- close #navbar ul -->
+
+</nav>
+
+</div> <!-- close #header div -->
+
+
+<div id="page">
+
+<div class="subcontainer">
+	<ul class="sublist">
+<li><a href="index.php.html" class="selected">Blacklist Performance</a></li>
+<li><a href="latest_news.php.html">Latest News</a></li>
+<li><a href="data_processing.php.html">Data Processing</a></li>
+	</ul>
+</div>
+
+
+<div id="content">
+
+<!-- header end -->
+
+<div style="float: right;"><a href="../../../de/support/antispam/index.html"><img src="../../../de/pictures/de.gif" border="0"></a></div>
+
+<h1>Blacklist Performance</h1>
+
+<p>Welcome to our Blacklist Performance Monitoring, tracking more than 40 blacklists.</p>
+
+<p>Blacklists, also known as RBL, DNSBL or URIBL, help administrators to block messages from specific IP's which have a history of sending spam.
+They can be used by software like <a href="http://spamassassin.apache.org" target="_blank">SpamAssassin</a>
+to reject or flag unwanted messages. Most public blacklists have their own standards and criteria for listing spammers.
+Hence, results can vary greatly from one to the other.</p>
+
+<h2>Latest News</h2>
+
+<table cellspacing="0" cellpadding="0" border="0">
+<tr valign="top">
+<td width="105">2015-01-27</td>
+<td>
+<p style="margin-top: -2px;">
+Removed FREE V4BL because the service is unavailable.<br>
+<a href="latest_news.php.html">&raquo; More news</a></td>
+</tr>
+</table>
+
+<h2>Blacklists performance from 2015-03-30 till 2015-04-05</h2>
+<p>Below are weekly statistics of accuracy and failure rates for specific blacklists:</p>
+
+<table cellspacing="1" cellpadding="4" width="100%" border="0">
+<tr>
+<td width="45%"><b><a href="index.php_sort=name_order=asc.html">Name</a></b></td>
+<td width="15%"><b><a href="index.php_sort=type_order=asc.html">Type</a></b></td>
+<td width="20%"><b><a href="index.php_sort=accuracy_order=desc.html">Accuracy <img border="0" src="../../../de/pictures/arrow_desc.gif" style="display: inline;"></a></b></td>
+<td width="20%"><b><a href="index.php_sort=inaccuracy_order=asc.html">Inaccuracy</a></b></td>
+<tr valign="top" bgcolor="#F6F6F6">
+<td><a href="blacklist.php_dnsbl=HASH_IX_HOSTEU.html">IX HASH HOSTEUROPE</a></td>
+<td>CHECK</td>
+<td>0.31%</td>
+<td>0%</td>
+</tr>
+<tr valign="top">
+<td><a href="blacklist.php_dnsbl=URIBL_MW_SURBL.html">SURBL MALWARE</a></td>
+<td>URIBL</td>
+<td>0.35%</td>
+<td>0%</td>
+</tr>
+<tr valign="top" bgcolor="#F6F6F6">
+<td><a href="blacklist.php_dnsbl=RCVD_IN_DNSWL_NON.html">DNSWL NONE</a></td>
+<td>DNSWL</td>
+<td>0.87%</td>
+<td>0.71%</td>
+</tr>
+<tr valign="top">
+<td><a href="blacklist.php_dnsbl=RCVD_IN_DNSWL_LOW.html">DNSWL LOW</a></td>
+<td>DNSWL</td>
+<td>1.32%</td>
+<td>0%</td>
+</tr>
+<tr valign="top" bgcolor="#F6F6F6">
+<td><a href="blacklist.php_dnsbl=URIBL_SEM_FRESH.html">SPAM EATING MONKEY - URI FRESH</a></td>
+<td>URIBL</td>
+<td>2.65%</td>
+<td>0%</td>
+</tr>
+<tr valign="top">
+<td><a href="blacklist.php_dnsbl=URIBL_AB_SURBL.html">SURBL ABUSEBUTLER</a></td>
+<td>URIBL</td>
+<td>3.05%</td>
+<td>0%</td>
+</tr>
+<tr valign="top" bgcolor="#F6F6F6">
+<td><a href="blacklist.php_dnsbl=URIBL_SEM_FRESH_10.html">SPAM EATING MONKEY - URI FRESH 10</a></td>
+<td>URIBL</td>
+<td>3.89%</td>
+<td>0%</td>
+</tr>
+<tr valign="top">
+<td><a href="blacklist.php_dnsbl=URIBL_SEM_FRESH_15.html">SPAM EATING MONKEY - URI FRESH 15</a></td>
+<td>URIBL</td>
+<td>4.11%</td>
+<td>0.03%</td>
+</tr>
+<tr valign="top" bgcolor="#F6F6F6">
+<td><a href="blacklist.php_dnsbl=HASH_IX_GENERIC.html">IX HASH GENERIC</a></td>
+<td>CHECK</td>
+<td>4.46%</td>
+<td>0.25%</td>
+</tr>
+<tr valign="top">
+<td><a href="blacklist.php_dnsbl=RCVD_IN_DNSWL_MED.html">DNSWL MEDIUM</a></td>
+<td>DNSWL</td>
+<td>4.5%</td>
+<td>0%</td>
+</tr>
+<tr valign="top" bgcolor="#F6F6F6">
+<td><a href="blacklist.php_dnsbl=RCVD_IN_SWINOG_SPAM.html">SWINOG DNSRBL</a></td>
+<td>DNSBL</td>
+<td>5.08%</td>
+<td>0%</td>
+</tr>
+<tr valign="top">
+<td><a href="blacklist.php_dnsbl=URIBL_SC_SURBL.html">SURBL SPAMCOP</a></td>
+<td>URIBL</td>
+<td>5.39%</td>
+<td>0%</td>
+</tr>
+<tr valign="top" bgcolor="#F6F6F6">
+<td><a href="blacklist.php_dnsbl=RCVD_IN_SORBS_DUL.html">SORBS DUL</a></td>
+<td>DNSBL</td>
+<td>6.41%</td>
+<td>0%</td>
+</tr>
+<tr valign="top">
+<td><a href="blacklist.php_dnsbl=RCVD_IN_CBLCN.html">CBLCN PLUS</a></td>
+<td>DNSBL</td>
+<td>7.07%</td>
+<td>0.19%</td>
+</tr>
+<tr valign="top" bgcolor="#F6F6F6">
+<td><a href="blacklist.php_dnsbl=RCVD_IN_IMP_SPAMLIST.html">IMP SPAMLIST</a></td>
+<td>DNSBL</td>
+<td>7.11%</td>
+<td>0%</td>
+</tr>
+<tr valign="top">
+<td><a href="blacklist.php_dnsbl=RCVD_IN_UCEPROTECT3.html">UCEPROTECT 3</a></td>
+<td>DNSBL</td>
+<td>7.38%</td>
+<td>0%</td>
+</tr>
+<tr valign="top" bgcolor="#F6F6F6">
+<td><a href="blacklist.php_dnsbl=HASH_IX_SEM.html">IX HASH SEM</a></td>
+<td>CHECK</td>
+<td>12.55%</td>
+<td>0%</td>
+</tr>
+<tr valign="top">
+<td><a href="blacklist.php_dnsbl=URIBL_SBL.html">SPAMHAUS SBL</a></td>
+<td>URIBL</td>
+<td>13.17%</td>
+<td>0.07%</td>
+</tr>
+<tr valign="top" bgcolor="#F6F6F6">
+<td><a href="blacklist.php_dnsbl=RCVD_IN_UCEPROTECT2.html">UCEPROTECT 2</a></td>
+<td>DNSBL</td>
+<td>19.58%</td>
+<td>0.06%</td>
+</tr>
+<tr valign="top">
+<td><a href="blacklist.php_dnsbl=URIBL_WS_SURBL.html">SURBL SPAMASSASSIN BL</a></td>
+<td>URIBL</td>
+<td>22.58%</td>
+<td>0%</td>
+</tr>
+<tr valign="top" bgcolor="#F6F6F6">
+<td><a href="blacklist.php_dnsbl=RCVD_IN_SPAMRATS_DYNA.html">SPAMRATS DYNA</a></td>
+<td>DNSBL</td>
+<td>23.24%</td>
+<td>0.01%</td>
+</tr>
+<tr valign="top">
+<td><a href="blacklist.php_dnsbl=RCVD_IN_JIPPG.html">JIPPG</a></td>
+<td>DNSBL</td>
+<td>23.51%</td>
+<td>0%</td>
+</tr>
+<tr valign="top" bgcolor="#F6F6F6">
+<td><a href="blacklist.php_dnsbl=RCVD_IN_GBUDB.html">GBUDB.COM TRUNCATE</a></td>
+<td>DNSBL</td>
+<td>24.75%</td>
+<td>0%</td>
+</tr>
+<tr valign="top">
+<td><a href="blacklist.php_dnsbl=RCVD_IN_SPAMRATS_NOPTR.html">SPAMRATS NOPTR</a></td>
+<td>DNSBL</td>
+<td>27.84%</td>
+<td>0%</td>
+</tr>
+<tr valign="top" bgcolor="#F6F6F6">
+<td><a href="blacklist.php_dnsbl=URIBL_SEM.html">SPAM EATING MONKEY - URI BLACK</a></td>
+<td>URIBL</td>
+<td>29.87%</td>
+<td>0.04%</td>
+</tr>
+<tr valign="top">
+<td><a href="blacklist.php_dnsbl=URIBL_SEM_RED.html">SPAM EATING MONKEY - URI RED</a></td>
+<td>URIBL</td>
+<td>29.87%</td>
+<td>0.04%</td>
+</tr>
+<tr valign="top" bgcolor="#F6F6F6">
+<td><a href="blacklist.php_dnsbl=RCVD_IN_SORBS_WEB.html">SORBS WEB</a></td>
+<td>DNSBL</td>
+<td>30.36%</td>
+<td>0%</td>
+</tr>
+<tr valign="top">
+<td><a href="blacklist.php_dnsbl=HASH_IX.html">IX HASH MANITU</a></td>
+<td>CHECK</td>
+<td>32.13%</td>
+<td>0%</td>
+</tr>
+<tr valign="top" bgcolor="#F6F6F6">
+<td><a href="blacklist.php_dnsbl=URIBL_SC_SWINOG.html">SWINOG URIBL</a></td>
+<td>URIBL</td>
+<td>33.8%</td>
+<td>7.27%</td>
+</tr>
+<tr valign="top">
+<td><a href="blacklist.php_dnsbl=RCVD_IN_PBL.html">SPAMHAUS PBL</a></td>
+<td>DNSBL</td>
+<td>34.33%</td>
+<td>0%</td>
+</tr>
+<tr valign="top" bgcolor="#F6F6F6">
+<td><a href="blacklist.php_dnsbl=HASH_IX_COMBINED.html">IX HASH COMBINED</a></td>
+<td>CHECK</td>
+<td>34.95%</td>
+<td>0.25%</td>
+</tr>
+<tr valign="top">
+<td><a href="blacklist.php_dnsbl=URIBL_JP_SURBL.html">SURBL JWSPAMSPY</a></td>
+<td>URIBL</td>
+<td>38.75%</td>
+<td>0%</td>
+</tr>
+<tr valign="top" bgcolor="#F6F6F6">
+<td><a href="blacklist.php_dnsbl=URIBL_SURBL_COMBINED.html">SURBL COMBINED</a></td>
+<td>URIBL</td>
+<td>40.43%</td>
+<td>0%</td>
+</tr>
+<tr valign="top">
+<td><a href="blacklist.php_dnsbl=RCVD_IN_SEM_BLACK.html">SPAM EATING MONKEY - BLACK</a></td>
+<td>DNSBL</td>
+<td>41.23%</td>
+<td>0%</td>
+</tr>
+<tr valign="top" bgcolor="#F6F6F6">
+<td><a href="blacklist.php_dnsbl=RCVD_IN_INPS.html">INPS.DE DNSBL</a></td>
+<td>DNSBL</td>
+<td>43.35%</td>
+<td>0%</td>
+</tr>
+<tr valign="top">
+<td><a href="blacklist.php_dnsbl=RCVD_IN_NIX_SPAM.html">NIX SPAM</a></td>
+<td>DNSBL</td>
+<td>45.47%</td>
+<td>0%</td>
+</tr>
+<tr valign="top" bgcolor="#F6F6F6">
+<td><a href="blacklist.php_dnsbl=RCVD_IN_SORBS_NR_SPAM.html">SORBS NEW AND RECENT SPAM</a></td>
+<td>DNSBL</td>
+<td>48.25%</td>
+<td>0.06%</td>
+</tr>
+<tr valign="top">
+<td><a href="blacklist.php_dnsbl=RCVD_IN_MAILSPIKE_BL.html">MAILSPIKE BL</a></td>
+<td>DNSBL</td>
+<td>49.27%</td>
+<td>0%</td>
+</tr>
+<tr valign="top" bgcolor="#F6F6F6">
+<td><a href="blacklist.php_dnsbl=RCVD_IN_SORBS.html">SORBS COMBINED</a></td>
+<td>DNSBL</td>
+<td>57.58%</td>
+<td>0.06%</td>
+</tr>
+<tr valign="top">
+<td><a href="blacklist.php_dnsbl=DCC_CHECK.html">DCC</a></td>
+<td>CHECK</td>
+<td>59.04%</td>
+<td>5.86%</td>
+</tr>
+<tr valign="top" bgcolor="#F6F6F6">
+<td><a href="blacklist.php_dnsbl=RCVD_IN_UNSUBSCORE.html">UNSUBSCRIBE BLACKLIST</a></td>
+<td>DNSBL</td>
+<td>59.08%</td>
+<td>2%</td>
+</tr>
+<tr valign="top">
+<td><a href="blacklist.php_dnsbl=URIBL_SPAMHAUS_DBL.html">SPAMHAUS DBL</a></td>
+<td>URIBL</td>
+<td>62%</td>
+<td>0.03%</td>
+</tr>
+<tr valign="top" bgcolor="#F6F6F6">
+<td><a href="blacklist.php_dnsbl=RCVD_IN_WPBL.html">WPBL</a></td>
+<td>DNSBL</td>
+<td>63.19%</td>
+<td>0%</td>
+</tr>
+<tr valign="top">
+<td><a href="blacklist.php_dnsbl=RCVD_IN_PSBL.html">PSBL SURRIEL</a></td>
+<td>DNSBL</td>
+<td>64.47%</td>
+<td>0%</td>
+</tr>
+<tr valign="top" bgcolor="#F6F6F6">
+<td><a href="blacklist.php_dnsbl=RCVD_IN_JMF_BL.html">JMF-BLACK</a></td>
+<td>DNSBL</td>
+<td>65.44%</td>
+<td>0%</td>
+</tr>
+<tr valign="top">
+<td><a href="blacklist.php_dnsbl=URIBL_BLACK.html">URIBL BLACKLIST</a></td>
+<td>URIBL</td>
+<td>65.53%</td>
+<td>0.04%</td>
+</tr>
+<tr valign="top" bgcolor="#F6F6F6">
+<td><a href="blacklist.php_dnsbl=RCVD_IN_UCEPROTECT1.html">UCEPROTECT 1</a></td>
+<td>DNSBL</td>
+<td>70.22%</td>
+<td>0.32%</td>
+</tr>
+<tr valign="top">
+<td><a href="blacklist.php_dnsbl=RCVD_IN_BL_SPAMCOP_NET.html">SPAMCOP</a></td>
+<td>DNSBL</td>
+<td>70.26%</td>
+<td>0.03%</td>
+</tr>
+<tr valign="top" bgcolor="#F6F6F6">
+<td><a href="blacklist.php_dnsbl=RCVD_IN_DNSWL_HI.html">DNSWL HIGH</a></td>
+<td>DNSWL</td>
+<td>80.27%</td>
+<td>0.22%</td>
+</tr>
+<tr valign="top">
+<td><a href="blacklist.php_dnsbl=RCVD_IN_XBL.html">SPAMHAUS XBL</a></td>
+<td>DNSBL</td>
+<td>80.82%</td>
+<td>0%</td>
+</tr>
+<tr valign="top" bgcolor="#F6F6F6">
+<td><a href="blacklist.php_dnsbl=RCVD_IN_CBL.html">COMPOSITE BLOCKING LIST</a></td>
+<td>DNSBL</td>
+<td>80.87%</td>
+<td>0%</td>
+</tr>
+<tr valign="top">
+<td><a href="blacklist.php_dnsbl=RCVD_IN_SPAMHAUS_ZEN.html">SPAMHAUS ZEN</a></td>
+<td>DNSBL</td>
+<td>83.52%</td>
+<td>0%</td>
+</tr>
+<tr valign="top" bgcolor="#F6F6F6">
+<td><a href="blacklist.php_dnsbl=RCVD_IN_JMF_WHITE.html">JMF-WHITE</a></td>
+<td>DNSWL</td>
+<td>84.65%</td>
+<td>0.31%</td>
+</tr>
+<tr valign="top">
+<td><a href="blacklist.php_dnsbl=RCVD_IN_MAILSPIKE_WL.html">MAILSPIKE WL</a></td>
+<td>DNSWL</td>
+<td>85.2%</td>
+<td>1.94%</td>
+</tr>
+</table>
+
+<br>
+<p><a href="data_processing.php.html">View the data processing guide</a> to learn more.</p>
+
+<!-- footer start -->
+
+</div> <!-- close content <div> -->
+</div> <!-- close page <div> -->
+
+
+<div id="footnote">
+	<div id="footnotecompany">
+
+		&copy; Intra2net AG 2015
+	</div>
+
+	<div id="footnotelinks">
+		<a href="../../imprint.php">Imprint</a>
+		<a href="../../contact/index.html">Contact</a>
+	</div>
+</div>
+
+
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-151599-1']);
+  _gaq.push(['_gat._anonymizeIp'])
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+<!-- PHP error counter: 0 -->
+
+<!-- footer end -->
+
+</body>
+</html>

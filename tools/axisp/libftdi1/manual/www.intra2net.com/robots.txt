@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /de/include
+Disallow: /en/include
+Disallow: /include
+Disallow: /en/developer/intranator/download
+Sitemap: http://www.intra2net.com/sitemap.xml.gz

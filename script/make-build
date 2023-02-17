@@ -1,0 +1,107 @@
+#!/bin/bash
+
+set -euxo pipefail
+
+VC_SRCDIR="$(cd "$(dirname "$0")"/.. && pwd)"
+
+VC_PLCDIR="targets/TARGET_UNICOM/TARGET_VC/device/plc"
+VC_RFDIR="targets/TARGET_UNICOM/TARGET_VC/device/rf"
+
+readonly VC_SRCDIR
+readonly VC_PLCDIR
+readonly VC_RFDIR
+readonly VC_TARGETS=(VC6320_MTR VC6330_FPGA VC6330_EVB VC7351_DK)
+
+die()
+{
+  echo " ** ERROR: EMCORE Make doesn't support target \"$1\""
+  exit 1
+}
+
+build()
+{
+  local target=$1
+  local builddir="${VC_CMAKE_BUILD_DIR:-build/${target}}"
+  shift
+
+  mkdir -p "${builddir}"
+
+  make "$@"
+
+  case "${target}" in
+    *"VC6320"*)
+      # make bbp image
+      mkdir -p ${builddir}/bbp
+      rsync ${VC_PLCDIR}/hplc/bbp/VC6320/* ${builddir}/bbp
+      cp ${builddir}/${target}_soc.bin ${builddir}/bbp
+      cd "${builddir}/bbp"
+      ./axisp -p1 mkimg ${target}_soc.bin magpie_bbp_sec_map.txt magpie_bbp_fw_ver.bin ${target}_with_plc.bin ${target}_with_plc.bin.xz 524288 0
+      cd ..
+      mv bbp/${target}_with_plc.bin .
+      ;;
+    *"VC6330_FPGA"*)
+      # make bbp image
+      mkdir -p ${builddir}/bbp
+      rsync ${VC_PLCDIR}/hplc/bbp/VC6330/* ${builddir}/bbp
+      cp ${builddir}/${target}_soc.bin ${builddir}/bbp
+      cd "${builddir}/bbp"
+      ./axisp -p1 mkimg ${target}_soc.bin magpie_bbp_sec_map.txt magpie_bbp_fw_ver.bin ${target}_with_plc.bin ${target}_with_plc.bin.xz 524288 0
+      cd ..
+      mv bbp/${target}_with_plc.bin .
+      ;;
+    *"VC7351"*)
+      # combine rf dsp_iram and dsp_dram0 as single dsp_image
+      cat ${VC_RFDIR}/sonata_dsp_iram.bin ${VC_RFDIR}/sonata_dsp_dram0.bin > ${builddir}/${target}_dsp_image.bin
+      cp ${VC_RFDIR}/sonata_radio.bin ${builddir}
+      cd "${builddir}"
+      # append soc image to 528KB
+      dd if=/dev/zero of=${target}_padding.bin bs=1 count=$(echo 540672 $(stat -c %s ${target}_soc.bin) | gawk '{print $1 - $2}')
+      cat ${target}_soc.bin ${target}_padding.bin > ${target}_soc_528KB.bin
+      # combine 528KB soc image with dsp_image and rf fw image
+      cat ${target}_soc_528KB.bin sonata_radio.bin ${target}_dsp_image.bin > ${target}_with_rf.bin
+      chmod +x ${target}_with_rf.bin
+      rm -f ${target}_padding.bin ${target}_soc_528KB.bin
+      ;;
+  esac
+
+  cd "${VC_SRCDIR}"
+}
+
+main()
+{
+  if [[ $# == 0 ]]; then
+    echo "Please specify a target: ${VC_TARGETS[*]}"
+    exit 1
+  fi
+
+  local target="$1"
+  # Check if the platform supports cmake.
+  echo "${VC_TARGETS[@]}" | grep -wq "${target}" || die "${target}"
+
+  shift
+  local options=()
+
+  case "${target}" in
+    VC6320_MTR)
+      options+=("MCU_DEVICE=VC6320")
+      options+=("MCU_BOARD=VC6320_MTR")
+      ;;
+    VC6330_FPGA)
+      options+=("MCU_DEVICE=VC6330")
+      options+=("MCU_BOARD=VC6330_FPGA")
+      ;;
+    VC6330_EVB)
+      options+=("MCU_DEVICE=VC6330")
+      options+=("MCU_BOARD=VC6330_EVB")
+      ;;
+    VC7351_DK)
+      options+=("MCU_DEVICE=VC7351")
+      options+=("MCU_BOARD=VC7351_DK")
+      ;;
+  esac
+
+  options+=("$@")
+  build "${target}" "${options[@]}"
+}
+
+main "$@"

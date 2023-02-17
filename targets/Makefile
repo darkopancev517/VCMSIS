@@ -81,8 +81,15 @@ SRCS_HAL += $(MCU_FAM_DIR)/device/crypto/osr_crypto/crypto_lib/ske/ske_ctr.c
 SRCS_HAL += $(MCU_FAM_DIR)/device/crypto/osr_crypto/crypto_lib/ske/ske_ecb.c
 SRCS_HAL += $(MCU_FAM_DIR)/device/crypto/osr_crypto/crypto_lib/ske/ske_gcm_gmac.c
 SRCS_HAL += $(MCU_FAM_DIR)/device/crypto/osr_crypto/crypto_lib/ske/ske_ofb.c
+endif
 
-SRCS_HAL += $(MCU_FAM_DIR)/device/plc/vc_plc_phy.c
+ifneq (, $(filter $(MCU_DEVICE), VC6330 VC6320))
+SRCS_HAL += $(MCU_FAM_DIR)/device/plc/hplc/hplc.c
+SRCS_HAL += $(MCU_FAM_DIR)/device/plc/hplc/hplc_bbp.c
+SRCS_HAL += $(MCU_FAM_DIR)/device/plc/hplc/hplc_dma.c
+SRCS_HAL += $(MCU_FAM_DIR)/device/plc/hplc/hplc_pll.c
+SRCS_HAL += $(MCU_FAM_DIR)/device/plc/hplc/hplc_rx.c
+SRCS_HAL += $(MCU_FAM_DIR)/device/plc/hplc/hplc_tx.c
 endif
 
 SRCS_HAL += $(MCU_DEVICE_DIR)/CMSIS/system_$(MCU_DEVICE_LC).c
@@ -90,36 +97,48 @@ SRCS_HAL += $(MCU_DEVICE_DIR)/CMSIS/system_$(MCU_DEVICE_LC).c
 SRCS_HAL_STARTUP += $(MCU_DEVICE_DIR)/CMSIS/TOOLCHAIN_GCC_ARM/startup_$(MCU_DEVICE_LC).s
 
 ifeq ($(MCU_DEVICE),VC6330)
-SRCS_TESTS += tests/hplc_crypto/hplc_aes_cbc_test.c
-SRCS_TESTS += tests/hplc_crypto/hplc_aes_gcm_test.c
-SRCS_TESTS += tests/hplc_crypto/hplc_ecc_test.c
-SRCS_TESTS += tests/hplc_crypto/hplc_sha256_test.c
-SRCS_TESTS += tests/hplc_crypto/hplc_sm2_test.c
-SRCS_TESTS += tests/hplc_crypto/hplc_sm3_test.c
-SRCS_TESTS += tests/hplc_crypto/hplc_sm4_test.c
+SRCS_TESTS += $(MCU_FAM_DIR)/device/crypto/tests/hplc_crypto/hplc_aes_cbc_test.c
+SRCS_TESTS += $(MCU_FAM_DIR)/device/crypto/tests/hplc_crypto/hplc_aes_gcm_test.c
+SRCS_TESTS += $(MCU_FAM_DIR)/device/crypto/tests/hplc_crypto/hplc_ecc_test.c
+SRCS_TESTS += $(MCU_FAM_DIR)/device/crypto/tests/hplc_crypto/hplc_sha256_test.c
+SRCS_TESTS += $(MCU_FAM_DIR)/device/crypto/tests/hplc_crypto/hplc_sm2_test.c
+SRCS_TESTS += $(MCU_FAM_DIR)/device/crypto/tests/hplc_crypto/hplc_sm3_test.c
+SRCS_TESTS += $(MCU_FAM_DIR)/device/crypto/tests/hplc_crypto/hplc_sm4_test.c
 
-SRCS_TESTS += tests/osr_crypto/hash_hmac_test/hash_test.c
-SRCS_TESTS += tests/osr_crypto/hash_hmac_test/hmac_test.c
-SRCS_TESTS += tests/osr_crypto/hash_hmac_test/sample_test_hash_hmac.c
-SRCS_TESTS += tests/osr_crypto/hash_hmac_test/sample_test_hmac_sha1.c
-SRCS_TESTS += tests/osr_crypto/hash_hmac_test/sample_test_hmac_sha256.c
-SRCS_TESTS += tests/osr_crypto/hash_hmac_test/sample_test_hmac_sm3.c
-SRCS_TESTS += tests/osr_crypto/hash_hmac_test/sample_test_sha1.c
-SRCS_TESTS += tests/osr_crypto/hash_hmac_test/sample_test_sha256.c
-SRCS_TESTS += tests/osr_crypto/hash_hmac_test/sample_test_sm3.c
-SRCS_TESTS += tests/osr_crypto/pke_test/eccp_get_curve_paras_test.c
-SRCS_TESTS += tests/osr_crypto/pke_test/eccp_get_key_test.c
-SRCS_TESTS += tests/osr_crypto/pke_test/ecdh_test.c
-SRCS_TESTS += tests/osr_crypto/pke_test/ecdsa_test.c
-SRCS_TESTS += tests/osr_crypto/pke_test/sm2_test.c
-SRCS_TESTS += tests/osr_crypto/ske_test/ske_gcm_test.c
-SRCS_TESTS += tests/osr_crypto/ske_test/ske_sample_test.c
-SRCS_TESTS += tests/osr_crypto/ske_test/ske_test.c
+SRCS_TESTS += $(MCU_FAM_DIR)/device/crypto/tests/osr_crypto/hash_hmac_test/hash_test.c
+SRCS_TESTS += $(MCU_FAM_DIR)/device/crypto/tests/osr_crypto/hash_hmac_test/hmac_test.c
+SRCS_TESTS += $(MCU_FAM_DIR)/device/crypto/tests/osr_crypto/hash_hmac_test/sample_test_hash_hmac.c
+SRCS_TESTS += $(MCU_FAM_DIR)/device/crypto/tests/osr_crypto/hash_hmac_test/sample_test_hmac_sha1.c
+SRCS_TESTS += $(MCU_FAM_DIR)/device/crypto/tests/osr_crypto/hash_hmac_test/sample_test_hmac_sha256.c
+SRCS_TESTS += $(MCU_FAM_DIR)/device/crypto/tests/osr_crypto/hash_hmac_test/sample_test_hmac_sm3.c
+SRCS_TESTS += $(MCU_FAM_DIR)/device/crypto/tests/osr_crypto/hash_hmac_test/sample_test_sha1.c
+SRCS_TESTS += $(MCU_FAM_DIR)/device/crypto/tests/osr_crypto/hash_hmac_test/sample_test_sha256.c
+SRCS_TESTS += $(MCU_FAM_DIR)/device/crypto/tests/osr_crypto/hash_hmac_test/sample_test_sm3.c
+
+SRCS_TESTS += $(MCU_FAM_DIR)/device/crypto/tests/osr_crypto/pke_test/eccp_get_curve_paras_test.c
+SRCS_TESTS += $(MCU_FAM_DIR)/device/crypto/tests/osr_crypto/pke_test/eccp_get_key_test.c
+SRCS_TESTS += $(MCU_FAM_DIR)/device/crypto/tests/osr_crypto/pke_test/ecdh_test.c
+SRCS_TESTS += $(MCU_FAM_DIR)/device/crypto/tests/osr_crypto/pke_test/ecdsa_test.c
+SRCS_TESTS += $(MCU_FAM_DIR)/device/crypto/tests/osr_crypto/pke_test/sm2_test.c
+
+SRCS_TESTS += $(MCU_FAM_DIR)/device/crypto/tests/osr_crypto/ske_test/ske_gcm_test.c
+SRCS_TESTS += $(MCU_FAM_DIR)/device/crypto/tests/osr_crypto/ske_test/ske_sample_test.c
+SRCS_TESTS += $(MCU_FAM_DIR)/device/crypto/tests/osr_crypto/ske_test/ske_test.c
 endif
+
+SRCS_ATCMD += $(MCU_FAM_DIR)/device/atcmd/argpars.c
+SRCS_ATCMD += $(MCU_FAM_DIR)/device/atcmd/cli.c
+SRCS_ATCMD += $(MCU_FAM_DIR)/device/atcmd/commands.c
+
+SRCS_LIB += $(MCU_FAM_DIR)/device/lib/heap.c
+SRCS_LIB += $(MCU_FAM_DIR)/device/lib/wrap_malloc.c
+SRCS_LIB += $(MCU_FAM_DIR)/device/lib/vc_lib.c
 
 SRCS_MAIN += main.c
 
 OBJS_HAL += $(addprefix $(BUILD)/, $(SRCS_HAL:.c=.o))
+OBJS_HAL += $(addprefix $(BUILD)/, $(SRCS_ATCMD:.c=.o))
+OBJS_HAL += $(addprefix $(BUILD)/, $(SRCS_LIB:.c=.o))
 OBJS_HAL_STARTUP += $(addprefix $(BUILD)/, $(SRCS_HAL_STARTUP:.s=.o))
 OBJS_MAIN += $(addprefix $(BUILD)/, $(SRCS_MAIN:.c=.o))
 OBJS_TESTS += $(addprefix $(BUILD)/, $(SRCS_TESTS:.c=.o))

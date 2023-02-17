@@ -1,0 +1,90 @@
+/* --- HTML --- */
+body { background: #FFF; font: 14px "Segoe UI", sans-serif; margin: 24px 24px 10px 24px; }
+
+h1 { color:#000; font: 26px "Segoe UI", sans-serif; margin: 48px 0px 18px 0px; }
+h2 { color:#000; font: 22px "Segoe UI", sans-serif; margin: 24px 0px 14px 0px; }
+h3 { color:#000; font: 16px "Segoe UI", sans-serif; margin: 24px 0px 14px 0px; }
+h4,h5,h6 { color:#000; font: bold 14px "Segoe UI", sans-serif; }
+
+p { font: 14px/22px "Segoe UI", sans-serif; margin: 14px 0px 14px 0px; }
+
+table { border: 0px; }
+
+form { margin: 0px 0px 12px 0px; }
+input, select { font-size: 14px; }
+
+a:link { text-decoration: none; color:#000;}
+a:visited, a:active { text-decoration: none; color:#000;}
+
+
+/* --- Formattings --- */
+
+.small { font-size: 11px; }
+.smallgrey { font-size: 11px; color:#999; }
+.red { color: #A0002C; font-weight: bold; }
+.error { color: #FFF; background: #A9002F; font-weight: bold; }
+.line { border-bottom: 1px solid #D5D5D5; }
+
+ul.frenchlist { margin: 10px 0px 16px 19px; padding: 0px; }
+.listfrench li { list-style-image: url(pictures/bullet.gif); font: 14px/22px "Segoe UI", sans-serif; }
+
+
+/* --- Layout --- */
+
+#header { }
+#logo { }
+#logo:after {
+  content: ".";
+  display: block;
+  clear: both;
+  height: 0;
+  visibility: hidden;
+}
+#logo_screen { display: none; }
+#logo_print { float: right; }
+
+#search { display: none; }
+#contact{ display: none; }
+#footer { display: none; }
+
+#navmain { display: none; }
+#navbar  { display: none; }
+
+#sitemap { display: none; }
+#sitemapcol1 { display: none; }
+#sitemapcol2 { display: none; }
+#sitemapcol3 { display: none; }
+#sitemapcol4 { display: none; }
+#sitemapcol5 { display: none; }
+
+#footnote { display: none; }
+#footcol1 { display: none; }
+#footcol2 { display: none; }
+
+#content { width: 100%; }
+
+#item { margin: 0px; padding: 0px; height: 7em; }
+#item_pic { width: 70px; margin: 0px 0px 0px 5px; padding: 0px; text-align: center; float: left; }
+#item_text { margin: 0px 0px 10px 90px; padding: 5px 0px 0px 0px; }
+#item_text p { margin: 0px; }
+
+
+/* --- Navigation --- */
+
+#navigation { display: none;  }
+
+
+/* --- Sub-Navigation --- */
+
+.subcontainer { display: none; }
+.sublist { display: none; }
+
+
+/* --- Product Links --- */
+
+.productlinks ul li { list-style-image: url(../de/pictures/bullet.gif); line-height: 22px; }
+
+
+/* --- Button --- */
+
+.button { display: none; }

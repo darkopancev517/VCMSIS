@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>libFTDI &raquo; FTDI USB driver with bitbang mode</title>
+<link rel="stylesheet" type="text/css" media="screen" href="../../screen.css">
+<link rel="stylesheet" type="text/css" media="print" href="../../print.css">
+</head>
+
+<body>
+
+<!-- header start -->
+
+<div id="header">
+
+<div id="logo">
+	<a href="../../../de/index.html">
+		<div id="logo_screen"><img src="../../../de/pictures/intra2net.gif" alt="Intra2net AG"></div>
+		<div id="logo_print"><img src="../../../de/pictures/intra2net_print.gif" alt="Intra2net AG"></div>
+	</a>
+</div>
+
+<nav id="navigation">
+
+<a href="index.php#navigation"><div class="mobilemenu"><img src="../../../de/pictures/mobile_icon.gif" alt="Navigation"></div></a>
+<a href="index.php#"><div class="mobilemenu"><img src="../../../de/pictures/mobile_icon.gif" alt="Navigation"></div></a>
+
+<ul class="navbar">
+
+<li id="Products"><a href="../../products/index.html">Products</a>
+	<div class="dropdown">
+		<ul>
+			<li><a href="../../products/index.html">Continue in German</a></li>
+		</ul>
+	</div>
+</li>
+
+<li id="Support"><a href="../../support/index.html">Support</a>
+	<div class="dropdown">
+		<ul>
+			<li><a href="http://forum.intra2net.com/">Forum</a></li>
+			<li><a href="../../support/antispam/index.html">Blacklist Performance</a></li>
+		</ul>
+	</div>
+</li>
+
+<li id="Developer" class="selected"><a href="../index.html">Developer</a>
+	<div class="dropdown">
+		<ul>
+			<li><a href="index.php">libFTDI</a></li>
+			<li><a href="../ipt_ACCOUNT/index.php">ipt_ACCOUNT</a></li>
+			<li><a href="../libt2n/index.php">libt2n</a></li>
+			<li><a href="../intranator/index.php">Intranator</a></li>
+		</ul>
+	</div>
+</li>
+
+</ul> <!-- close #navbar ul -->
+
+</nav>
+
+</div> <!-- close #header div -->
+
+
+<div id="page">
+
+<div class="subcontainer">
+	<ul class="sublist">
+<li><a href="index.php" class="selected">libFTDI</a></li>
+<li><a href="download.php">Download</a></li>
+<li><a href="repository.php">Repository</a></li>
+<li><a href="documentation.php">Documentation</a></li>
+<li><a href="mailinglist.php">Mailinglist</a></li>
+<li><a href="links.php">Links</a></li>
+	</ul>
+</div>
+
+
+<div id="content">
+
+<!-- header end -->
+
+<h1>libFTDI - FTDI USB driver with bitbang mode</h1>
+
+<p>libFTDI is an open source <b>library to talk to <a href="http://www.ftdichip.com/">FTDI</a> chips:</b>
+FT232BM, FT245BM, FT2232C, FT2232D, FT245R, FT232H and FT230X including the popular bitbang mode.
+The library is linked with your program in userspace, no kernel driver required.</p>
+<p>libFTDI works perfectly with Linux, Windows, MacOS X and BSD variants thanks to libusb.</p>
+
+
+<h2>News</h2>
+
+<p>
+
+<strong>2014-11-21:</strong> Version 1.2 of libftdi released
+<ul>
+<li>Support for FT230X devices (Uwe Bonnes)</li>
+<li>ftdi_usb_get_strings(): Don't try to open an already open device (Denis Sirotkin)</li>
+<li>Support for finding devices bricked by the Windows driver (Forest Crossman)</li>
+<li>cmake build system: New LibFTDI1ConfigVersion.cmake file (xantares09)</li>
+<li>Fix a typo in the MPSSE command CLK_BYTES_OR_LOW (Benjamin Vanheuverzwijn)</li>
+<li>Minor fixes for MSVC++ (Andrei Errapart)</li>
+<li>Various small code improvements (Florian Preinstorfer, Jochen Sprickerhof, xantares09)</li>
+</ul>
+
+<strong>2014-02-05:</strong> Version 1.1 of libftdi released
+<ul>
+<li>Fix FT232H eeprom suspend pulldown setting (Davide Michelizza)</li>
+<li>Fix FT232H eeprom user area size (Davide Michelizza)</li>
+<li>Improved mingw build (Paul Fertser and Michel Zou)</li>
+<li>C++ wrapper: Get/set functions for USB timeouts (Jochen Sprickerhof)</li>
+<li>Partial support for FT230X (Nathael Pajani)</li>
+<li>New API function: ftdi_eeprom_set_strings() (Nathael Pajani)</li>
+<li>Prevent possible segfault in ftdi_eeprom_decode() (Nathael Pajani)</li>
+<li>Save device release number in eeprom (Jarkko Sonninen)</li>
+<li>Fix &quot;self powered&quot; eeprom flag (Jarkko Sonninen)</li>
+<li>Improved python wrapper (Michel Zou)</li>
+<li>Many buildsystem improvements (Michel Zou and Mike Frysinger)</li>
+<li>See the git history for more changes and fixes</li>
+</ul>
+
+<strong>2013-01-29:</strong> Version 1.0 of libftdi released
+<ul>
+<li>Ported to libusb 1.x (initial work by Jie Zhang)</li>
+<li>Many eeprom handling improvements (Uwe Bonnes, Anders Larsen)</li>
+<li>Renamed pkconfig, library .so etc. files to &quot;libftdi1&quot; (Intra2net)</li>
+<li>ftdi_eeprom is part of libftdi now (Intra2net)</li>
+<li>New baudrate calculation code + unit tests (Uwe Bonnes and Intra2net)</li>
+<li>Improved python bindings including python3 support (Michel Zou)</li>
+<li>Switched completely to cmake build system (Intra2net)</li>
+<li>cmake: Easy libftdi discovery via find_package() (Michel Zou)</li>
+<li>eeprom handling now done via get()/set() functions (Uwe Bonnes)</li>
+<li>C++ wrapper: Fixed use-after-free in List::find_all() (Intra2net)</li>
+<li>Documentation updates (Xiaofan Chen)</li>
+<li>See the git history for more changes and fixes</li>
+</ul>
+
+</p>
+
+
+<h2>License</h2>
+
+<p>The library itself is licensed under <a href="http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html">LGPL 2.1</a> (not any later),<br>
+the EEPROM programmer is licensed under <a href="http://www.gnu.org/licenses/old-licenses/gpl-2.0.html">GPL 2</a> (not any later)</p>
+
+
+<!-- footer start -->
+
+</div> <!-- close content <div> -->
+</div> <!-- close page <div> -->
+
+
+<div id="footnote">
+	<div id="footnotecompany">
+
+		&copy; Intra2net AG 2015
+	</div>
+
+	<div id="footnotelinks">
+		<a href="../../imprint.php">Imprint</a>
+		<a href="../../contact/index.html">Contact</a>
+	</div>
+</div>
+
+
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-151599-1']);
+  _gaq.push(['_gat._anonymizeIp'])
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+<!-- PHP error counter: 0 -->
+
+<!-- footer end -->
+
+</body>
+</html>

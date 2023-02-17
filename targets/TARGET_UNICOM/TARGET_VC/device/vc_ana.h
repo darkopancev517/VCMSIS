@@ -34,12 +34,12 @@ void     vcana_init_adc(int channel, uint32_t *frequency);
 void     vcana_conti_mode_enable(void);
 void     vcana_conti_mode_disable(void);
 uint16_t vcana_mread(int channel);
-
-#ifdef DEVICE_MCU_VC7351
 void     vcana_set_gppll_120mhz(void);
+void     vcana_set_gppll_150mhz(void);
+void     vcana_set_gppll_200mhz(void);
 void     vcana_set_bbpll_192mhz(void);
+void     vcana_set_bbpll_300mhz(void);
 void     vcana_set_adc_delay(uint8_t adc_clocks);
-#endif
 
 #ifdef __cplusplus
 }

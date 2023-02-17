@@ -139,7 +139,6 @@ typedef enum IRQn
 #define __DSP_PRESENT           0U       /* Set to 1 if DSP extension are present */
 #define __SAUREGION_PRESENT     0U       /* Set to 1 if SAU regions are present */
 
-/* TODO: Update PMU information */
 #define __PMU_PRESENT           0U       /* Set to 1 if PMU is present */
 #define __PMU_NUM_EVENTCNT      0U       /* Set number of PMU Event Counters */
 
@@ -374,151 +373,320 @@ typedef struct
   __IOM uint32_t RG_XTAL_CTRL;              /* (0x0000) XTAL control register */
   __IOM uint32_t RG_GPPLL_CTRL0;            /* (0x0004) General purpose PLL control 0 register */
   __IOM uint32_t RG_GPPLL_CTRL1;            /* (0x0008) General purpose PLL control 1 register */
-  __IOM uint32_t RG_FNPLL_CTRL;             /* (0x000C) FNPLL control register */
-  __IOM uint32_t RG_RSV;                    /* (0x0010) Reserved register */
-  __IOM uint32_t RG_BGREF_CTRL;             /* (0x0014) Bandgap reference register */
-  __IM uint32_t  RESERVED[14];
+  __IOM uint32_t RG_BBPLL_CTRL0;            /* (0x000C) Base band PLL control 0 register */
+  __IOM uint32_t RG_BBPLL_CTRL1;            /* (0x0010) Base band PLL control 1 register */
+  __IM uint32_t RESERVED[7];
+  __IOM uint32_t ANA_TRNGCTRL; 	            /* (0x0030) True random number generator control register */
+  __IOM uint32_t ANA_TRNGDATA;              /* (0x0034) True random number generator data register */
+  __IOM uint32_t ANA_PRNGDATA;              /* (0x0038) Pseudo random number generator data register */
+  __IM uint32_t RESERVED1;
+  __IOM uint32_t ANA_RSV1;     	            /* (0x0040) Analog reserved register 1 */
+  __IOM uint32_t ANA_RSV2;                  /* (0x0044) Analog reserved register 2 */
+  __IOM uint32_t RG_ATEST_CTRL;             /* (0x0048) ATEST control register */
+  __IM uint32_t RESERVED2;
   __IOM uint32_t ANA_CTRL;                  /* (0x0050) Analog control register */
-  __IM uint32_t  RESERVED1[3];
+  __IM uint32_t  RESERVED3[3];
   __IOM uint32_t ANA_INTSTS;                /* (0x0060) Analog interrupt status register */
   __IOM uint32_t ANA_INTEN;                 /* (0x0064) Analog interrupt enable register */
-  __IM uint32_t  RESERVED2[42];
+  __IM uint32_t  RESERVED4[42];
   __IOM uint32_t RG_SOC_FNPLL_CTRL;         /* (0x0110) SOC FNPLL control register */
   __IOM uint32_t RG_SOC_FNPLL_DDSMIN;       /* (0x0114) SOC FNPLL DDSMIN register */
   __IOM uint32_t RG_SOC_FNPLL_OFFSETIN;     /* (0x0118) SOC FNPLL OFFSETIN register */
   __IOM uint32_t RG_SOC_FNPLL_TESTIN;       /* (0x011C) SOC FNPLL TESTIN register */
   __IM uint32_t  RG_SOC_FNPLL_PROBE;        /* (0x0120) SOC FNPLL PROBE register */
   __IOM uint32_t RG_SOC_FNPLL_METER_CTRL;   /* (0x0124) SOC FNPLL METER control register */
-  __IM uint32_t  RESERVED3[2];
+  __IM uint32_t  RESERVED5[2];
   __IOM uint32_t RG_AUXSAR_CTRL;            /* (0x0130) AUXSAR control register */
-  __IM uint32_t  RESERVED4[3];
+  __IM uint32_t  RESERVED6[3];
   __IOM uint32_t ADCCTRL;                   /* (0x0140) ADC control */
   __IOM uint32_t ADCCHEN;                   /* (0x0144) ADC channel enable */
   __IOM uint32_t ADCDATA;                   /* (0x0148) ADC data */
-  __IM uint32_t  RESERVED5;
+  __IM uint32_t  RESERVED7;
   __IOM uint32_t ADCDATAx[16];              /* (0x0150) ADC CHx (0 - 15) data */
   __IOM uint32_t DYING_GASP_THRESHOLD;      /* (0x0190) Dying gasp threshold register */
+  __IOM uint32_t RG_DTUNE_CTRL;             /* (0x0194) DTUNE register control */
+  __IOM uint32_t RG_LVD_CTRL;               /* (0x0198) LVD control register */
+  __IOM uint32_t RG_ABBBG_CTRL;             /* (0x019C) Bandgap reference register */
+  __IOM uint32_t RESERVED8[24];
+  __IOM uint32_t RG_SOC_GPPLL_CTRL;         /* (0x0200) SOC GPPLL control register */
+  __IOM uint32_t RG_SOC_GPPLL_DDSMIN;       /* (0x0204) SOC GPPLL DDSMIN register */
+  __IOM uint32_t RG_SOC_GPPLL_OFFSETIN;     /* (0x0208) SOC GPPLL OFFSETIN register */
+  __IOM uint32_t RG_SOC_GPPLL_TESTIN;       /* (0x020C) SOC GPPLL TESTIN register */
+  __IOM uint32_t RG_SOC_GPPLL_PROBE;        /* (0x0210) SOC GPPLL PROBE register */
+  __IOM uint32_t RG_SOC_GPPLL_METER_CTRL;   /* (0x0214) SOC GPPLL METER control register */
+  __IOM uint32_t RG_SOC_GPPLL_DDSM;         /* (0x0218) SOC GPPLL DDSM value */
+  __IOM uint32_t RG_SOC_GPPLL_DDSM_OFFSET;  /* (0x021C) SOC GPPLL DDSM offset value */
 } VC_ANA_TypeDef;
 
 /* RG_XTAL_CTRL register */
-#define VC_ANA_RG_XTAL_LPF_BYP_Pos              0
-#define VC_ANA_RG_XTAL_LPF_BYP_Msk              (1UL << VC_ANA_RG_XTAL_LPF_BYP_Pos)
+#define VC_ANA_RG_XTAL_CTRL_HFXO_SOC_EN_Pos     1
+#define VC_ANA_RG_XTAL_CTRL_HFXO_SOC_EN_Msk     (1UL << VC_ANA_RG_XTAL_CTRL_HFXO_SOC_EN_Pos)
 
-#define VC_ANA_RG_XTAL_INJ_EN_Pos               1
-#define VC_ANA_RG_XTAL_INJ_EN_Msk               (1UL << VC_ANA_RG_XTAL_INJ_EN_Pos)
+#define VC_ANA_RG_XTAL_CTRL_HFXO_GPPLL_EN_Pos   2
+#define VC_ANA_RG_XTAL_CTRL_HFXO_GPPLL_EN_Msk   (1UL << VC_ANA_RG_XTAL_CTRL_HFXO_GPPLL_EN_Pos)
 
-#define VC_ANA_RG_XTAL_INJ_DLSEL_Pos            2
-#define VC_ANA_RG_XTAL_INJ_DLSEL_Msk            (0x3UL << VC_ANA_RG_XTAL_INJ_DLSEL_Pos)
+#define VC_ANA_RG_XTAL_CTRL_HFXO_BBPLL_EN_Pos   3
+#define VC_ANA_RG_XTAL_CTRL_HFXO_BBPLL_EN_Msk   (1UL << VC_ANA_RG_XTAL_CTRL_HFXO_BBPLL_EN_Pos)
 
-#define VC_ANA_RG_XTAL_EN_Pos                   4
-#define VC_ANA_RG_XTAL_EN_Msk                   (1UL << VC_ANA_RG_XTAL_EN_Pos)
+#define VC_ANA_RG_XTAL_CTRL_HFXO_CURSEL_Pos     6
+#define VC_ANA_RG_XTAL_CTRL_HFXO_CURSEL_Msk     (0x3UL << VC_ANA_RG_XTAL_CTRL_HFXO_CURSEL_Pos)
 
-#define VC_ANA_RG_XTAL_CSEL_Pos                 5
-#define VC_ANA_RG_XTAL_CSEL_Msk                 (0x7UL << VC_ANA_RG_XTAL_CSEL_Pos)
+#define VC_ANA_RG_XTAL_CTRL_HFXO_CSEL_Pos       8
+#define VC_ANA_RG_XTAL_CTRL_HFXO_CSEL_Msk       (0xFFUL << VC_ANA_RG_XTAL_CTRL_HFXO_CSEL_Pos)
 
-#define VC_ANA_RG_XTAL_CKMON_EN_Pos             8
-#define VC_ANA_RG_XTAL_CKMON_EN_Msk             (1UL << VC_ANA_RG_XTAL_CKMON_EN_Pos)
+#define VC_ANA_RG_XTAL_CTRL_HFXO_CKMON_EN_Pos   16
+#define VC_ANA_RG_XTAL_CTRL_HFXO_CKMON_EN_Msk   (1UL << VC_ANA_RG_XTAL_CTRL_HFXO_CKMON_EN_Pos)
+
+#define VC_ANA_RG_XTAL_CTRL_HFXO_AMPSEL_Pos     17
+#define VC_ANA_RG_XTAL_CTRL_HFXO_AMPSEL_Msk     (0x3UL << VC_ANA_RG_XTAL_CTRL_HFXO_AMPSEL_Pos)
+
+#define VC_ANA_RG_XTAL_CTRL_HFXO_NRB_EN_Pos     19
+#define VC_ANA_RG_XTAL_CTRL_HFXO_NRB_EN_Msk     (1UL << VC_ANA_RG_XTAL_CTRL_HFXO_NRB_EN_Pos)
+
+#define VC_ANA_RG_XTAL_CTRL_HFXO_LDO_EN_Pos     20
+#define VC_ANA_RG_XTAL_CTRL_HFXO_LDO_EN_Msk     (1UL << VC_ANA_RG_XTAL_CTRL_HFXO_LDO_EN_Pos)
+
+#define VC_ANA_RG_XTAL_CTRL_HFXO_DTUNE_EN_Pos   21
+#define VC_ANA_RG_XTAL_CTRL_HFXO_DTUNE_EN_Msk   (1UL << VC_ANA_RG_XTAL_CTRL_HFXO_DTUNE_EN_Pos)
+
+#define VC_ANA_RG_XTAL_CTRL_HFXO_DYSEL_Pos      22
+#define VC_ANA_RG_XTAL_CTRL_HFXO_DYSEL_Msk      (0x3UL << VC_ANA_RG_XTAL_CTRL_HFXO_DYSEL_Pos)
+
+#define VC_ANA_RG_XTAL_CTRL_XTALIO_DS_Pos       25
+#define VC_ANA_RG_XTAL_CTRL_XTALIO_DS_Msk       (0x7UL << VC_ANA_RG_XTAL_CTRL_XTALIO_DS_Pos)
 
 /* RG_GPPLL_CTRL0 register */
-#define VC_ANA_RG_GPPLL_ZC_Pos                  0
-#define VC_ANA_RG_GPPLL_ZC_Msk                  (0x3UL << VC_ANA_RG_GPPLL_ZC_Pos)
+#define VC_ANA_RG_GPPLL_CTRL0_ZC_Pos            0
+#define VC_ANA_RG_GPPLL_CTRL0_ZC_Msk            (0x1FUL << VC_ANA_RG_GPPLL_CTRL0_ZC_Pos)
 
-#define VC_ANA_RG_GPPLL_VCMON_EN_Pos            2
-#define VC_ANA_RG_GPPLL_VCMON_EN_Msk            (1UL << VC_ANA_RG_GPPLL_VCMON_EN_Pos)
+#define VC_ANA_RG_GPPLL_CTRL0_VS_SEL_Pos        5
+#define VC_ANA_RG_GPPLL_CTRL0_VS_SEL_Msk        (0xFUL << VC_ANA_RG_GPPLL_CTRL0_VS_SEL_Pos)
 
-#define VC_ANA_RG_GPPLL_PR_Pos                  3
-#define VC_ANA_RG_GPPLL_PR_Msk                  (0x3UL << VC_ANA_RG_GPPLL_PR_Pos)
+#define VC_ANA_RG_GPPLL_CTRL0_VS_REFSEL_Pos     9
+#define VC_ANA_RG_GPPLL_CTRL0_VS_REFSEL_Msk     (1UL << VC_ANA_RG_GPPLL_CTRL0_VS_REFSEL_Pos)
 
-#define VC_ANA_RG_GPPLL_POSDIV_Pos              5
-#define VC_ANA_RG_GPPLL_POSDIV_Msk              (0x3UL << VC_ANA_RG_GPPLL_POSDIV_Pos)
+#define VC_ANA_RG_GPPLL_CTRL0_VCMON_EN_Pos      10
+#define VC_ANA_RG_GPPLL_CTRL0_VCMON_EN_Msk      (1UL << VC_ANA_RG_GPPLL_CTRL0_VCMON_EN_Pos)
 
-#define VC_ANA_RG_GPPLL_PC_Pos                  7
-#define VC_ANA_RG_GPPLL_PC_Msk                  (0x7UL << VC_ANA_RG_GPPLL_PC_Pos)
+#define VC_ANA_RG_GPPLL_CTRL0_SS_SEL_Pos        11
+#define VC_ANA_RG_GPPLL_CTRL0_SS_SEL_Msk        (1UL << VC_ANA_RG_GPPLL_CTRL0_SS_SEL_Pos)
 
-#define VC_ANA_RG_GPPLL_OP_RSTB_Pos             10
-#define VC_ANA_RG_GPPLL_OP_RSTB_Msk             (1UL << VC_ANA_RG_GPPLL_OP_RSTB_Pos)
+#define VC_ANA_RG_GPPLL_CTRL0_V08SEL_Pos        12
+#define VC_ANA_RG_GPPLL_CTRL0_V08SEL_Msk        (0xFUL << VC_ANA_RG_GPPLL_CTRL0_V08SEL_Pos)
 
-#define VC_ANA_RG_GPPLL_IR_Pos                  11
-#define VC_ANA_RG_GPPLL_IR_Msk                  (0x3UL << VC_ANA_RG_GPPLL_IR_Pos)
+#define VC_ANA_RG_GPPLL_CTRL0_SR_Pos            16
+#define VC_ANA_RG_GPPLL_CTRL0_SR_Msk            (0x3UL << VC_ANA_RG_GPPLL_CTRL0_SR_Pos)
 
-#define VC_ANA_RG_GPPLL_IC_Pos                  13
-#define VC_ANA_RG_GPPLL_IC_Msk                  (0x3UL << VC_ANA_RG_GPPLL_IC_Pos)
+#define VC_ANA_RG_GPPLL_CTRL0_RSTDLY_Pos        18
+#define VC_ANA_RG_GPPLL_CTRL0_RSTDLY_Msk        (0x3UL << VC_ANA_RG_GPPLL_CTRL0_RSTDLY_Pos)
 
-#define VC_ANA_RG_GPPLL_EN_Pos                  15
-#define VC_ANA_RG_GPPLL_EN_Msk                  (1UL << VC_ANA_RG_GPPLL_EN_Pos)
+#define VC_ANA_RG_GPPLL_CTRL0_SC_Pos            20
+#define VC_ANA_RG_GPPLL_CTRL0_SC_Msk            (1UL << VC_ANA_RG_GPPLL_CTRL0_SC_Pos)
+
+#define VC_ANA_RG_GPPLL_CTRL0_PULSEDLY_Pos      21
+#define VC_ANA_RG_GPPLL_CTRL0_PULSEDLY_Msk      (0x7UL << VC_ANA_RG_GPPLL_CTRL0_PULSEDLY_Pos)
+
+#define VC_ANA_RG_GPPLL_CTRL0_PR_Pos            24
+#define VC_ANA_RG_GPPLL_CTRL0_PR_Msk            (0x1FUL << VC_ANA_RG_GPPLL_CTRL0_PR_Pos)
+
+#define VC_ANA_RG_GPPLL_CTRL0_POSDIV_EN_Pos     29
+#define VC_ANA_RG_GPPLL_CTRL0_POSDIV_EN_Msk     (1UL << VC_ANA_RG_GPPLL_CTRL0_POSDIV_EN_Pos)
+
+#define VC_ANA_RG_GPPLL_CTRL0_LDOV12_RST_Pos    30
+#define VC_ANA_RG_GPPLL_CTRL0_LDOV12_RST_Msk    (1UL << VC_ANA_RG_GPPLL_CTRL0_LDOV12_RST_Pos)
+
+#define VC_ANA_RG_GPPLL_CTRL0_LDOBIAS_RSTB_Pos  31
+#define VC_ANA_RG_GPPLL_CTRL0_LDOBIAS_RSTB_Msk  (1UL << VC_ANA_RG_GPPLL_CTRL0_LDOBIAS_RSTB_Pos)
 
 /* RG_GPPLL_CTRL1 register */
-#define VC_ANA_RG_GPPLL_DDSM_IN_Pos             0
-#define VC_ANA_RG_GPPLL_DDSM_IN_Msk             (0x3FFFFFFUL << VC_ANA_RG_GPPLL_DDSM_IN_Pos)
+#define VC_ANA_RG_GPPLL_CTRL1_PC_Pos            0
+#define VC_ANA_RG_GPPLL_CTRL1_PC_Msk            (0x1FUL << VC_ANA_RG_GPPLL_CTRL1_PC_Pos)
 
-#define VC_ANA_RG_GPPLL_DDSM_EN_Pos             26
-#define VC_ANA_RG_GPPLL_DDSM_EN_Msk             (1UL << VC_ANA_RG_GPPLL_DDSM_EN_Pos)
+#define VC_ANA_RG_GPPLL_CTRL1_IR_Pos            5
+#define VC_ANA_RG_GPPLL_CTRL1_IR_Msk            (0x7UL << VC_ANA_RG_GPPLL_CTRL1_IR_Pos)
 
-#define VC_ANA_RG_GPPLL_CP_CUR_Pos              27
-#define VC_ANA_RG_GPPLL_CP_CUR_Msk              (1UL << VC_ANA_RG_GPPLL_CP_CUR_Pos)
+#define VC_ANA_RG_GPPLL_CTRL1_EN_Pos            8
+#define VC_ANA_RG_GPPLL_CTRL1_EN_Msk            (1UL << VC_ANA_RG_GPPLL_CTRL1_EN_Pos)
 
-#define VC_ANA_RG_GPPLL_CKMON_EN_Pos            28
-#define VC_ANA_RG_GPPLL_CKMON_EN_Msk            (1UL << VC_ANA_RG_GPPLL_CKMON_EN_Pos)
+#define VC_ANA_RG_GPPLL_CTRL1_IC_Pos            9
+#define VC_ANA_RG_GPPLL_CTRL1_IC_Msk            (0x3UL << VC_ANA_RG_GPPLL_CTRL1_IC_Pos)
 
-/* RG_FNPLL_CTRL register */
-#define VC_ANA_RG_FNPLL_ZC_Pos                  0
-#define VC_ANA_RG_FNPLL_ZC_Msk                  (0x3UL << VC_ANA_RG_FNPLL_ZC_Pos)
+#define VC_ANA_RG_GPPLL_CTRL1_DDSM_ACC5B_EN_Pos 11
+#define VC_ANA_RG_GPPLL_CTRL1_DDSM_ACC5B_EN_Msk (1UL << VC_ANA_RG_GPPLL_CTRL1_DDSM_ACC5B_EN_Pos)
 
-#define VC_ANA_RG_FNPLL_WBSARCLK_EN_Pos         2
-#define VC_ANA_RG_FNPLL_WBSARCLK_EN_Msk         (1UL << VC_ANA_RG_FNPLL_WBSARCLK_EN_Pos)
+#define VC_ANA_RG_GPPLL_CTRL1_PI_RSTB_Pos       12
+#define VC_ANA_RG_GPPLL_CTRL1_PI_RSTB_Msk       (1UL << VC_ANA_RG_GPPLL_CTRL1_PI_RSTB_Pos)
 
-#define VC_ANA_RG_FNPLL_VCMON_EN_Pos            3
-#define VC_ANA_RG_FNPLL_VCMON_EN_Msk            (1UL << VC_ANA_RG_FNPLL_VCMON_EN_Pos)
+#define VC_ANA_RG_GPPLL_CTRL1_CP_RSTB_Pos       13
+#define VC_ANA_RG_GPPLL_CTRL1_CP_RSTB_Msk       (1UL << VC_ANA_RG_GPPLL_CTRL1_CP_RSTB_Pos)
 
-#define VC_ANA_RG_FNPLL_PR_Pos                  4
-#define VC_ANA_RG_FNPLL_PR_Msk                  (0x3UL << VC_ANA_RG_FNPLL_PR_Pos)
+#define VC_ANA_RG_GPPLL_CTRL1_CKMON_EN_Pos      14
+#define VC_ANA_RG_GPPLL_CTRL1_CKMON_EN_Msk      (1UL << VC_ANA_RG_GPPLL_CTRL1_CKMON_EN_Pos)
 
-#define VC_ANA_RG_FNPLL_PC_Pos                  6
-#define VC_ANA_RG_FNPLL_PC_Msk                  (0x7UL << VC_ANA_RG_FNPLL_PC_Pos)
+#define VC_ANA_RG_GPPLL_CTRL1_33T25_RST_Pos     16
+#define VC_ANA_RG_GPPLL_CTRL1_33T25_RST_Msk     (1UL << VC_ANA_RG_GPPLL_CTRL1_33T25_RST_Pos)
 
-#define VC_ANA_RG_FNPLL_OP_RSTB_Pos             9
-#define VC_ANA_RG_FNPLL_OP_RSTB_Msk             (1UL << VC_ANA_RG_FNPLL_OP_RSTB_Pos)
+#define VC_ANA_RG_GPPLL_CTRL1_POSDIVSEL_Pos     17
+#define VC_ANA_RG_GPPLL_CTRL1_POSDIVSEL_Msk     (0x3UL << VC_ANA_RG_GPPLL_CTRL1_POSDIVSEL_Pos)
 
-#define VC_ANA_RG_FNPLL_IR_Pos                  10
-#define VC_ANA_RG_FNPLL_IR_Msk                  (0x3UL << VC_ANA_RG_FNPLL_IR_Pos)
+/* RG_BBPLL_CTRL0 register */
+#define VC_ANA_RG_BBPLL_CTRL0_ZC_Pos            0
+#define VC_ANA_RG_BBPLL_CTRL0_ZC_Msk            (0x1FUL << VC_ANA_RG_BBPLL_CTRL0_ZC_Pos)
 
-#define VC_ANA_RG_FNPLL_INJ_EN_Pos              12
-#define VC_ANA_RG_FNPLL_INJ_EN_Msk              (1UL << VC_ANA_RG_FNPLL_INJ_EN_Pos)
+#define VC_ANA_RG_BBPLL_CTRL0_VS_SEL_Pos        5
+#define VC_ANA_RG_BBPLL_CTRL0_VS_SEL_Msk        (0xFUL << VC_ANA_RG_BBPLL_CTRL0_VS_SEL_Pos)
 
-#define VC_ANA_RG_FNPLL_IC_Pos                  13
-#define VC_ANA_RG_FNPLL_IC_Msk                  (0x3UL << VC_ANA_RG_FNPLL_IC_Pos)
+#define VC_ANA_RG_BBPLL_CTRL0_VS_REFSEL_Pos     9
+#define VC_ANA_RG_BBPLL_CTRL0_VS_REFSEL_Msk     (1UL << VC_ANA_RG_BBPLL_CTRL0_VS_REFSEL_Pos)
 
-#define VC_ANA_RG_FNPLL_EN_Pos                  15
-#define VC_ANA_RG_FNPLL_EN_Msk                  (1UL << VC_ANA_RG_FNPLL_EN_Pos)
+#define VC_ANA_RG_BBPLL_CTRL0_VCMON_EN_Pos      10
+#define VC_ANA_RG_BBPLL_CTRL0_VCMON_EN_Msk      (1UL << VC_ANA_RG_BBPLL_CTRL0_VCMON_EN_Pos)
 
-#define VC_ANA_RG_FNPLL_DACCLK_EN_Pos           16
-#define VC_ANA_RG_FNPLL_DACCLK_EN_Msk           (1UL << VC_ANA_RG_FNPLL_DACCLK_EN_Pos)
+#define VC_ANA_RG_BBPLL_CTRL0_SS_SEL_Pos        11
+#define VC_ANA_RG_BBPLL_CTRL0_SS_SEL_Msk        (1UL << VC_ANA_RG_BBPLL_CTRL0_SS_SEL_Pos)
 
-#define VC_ANA_RG_FNPLL_CP_CUR_Pos              17
-#define VC_ANA_RG_FNPLL_CP_CUR_Msk              (1UL << VC_ANA_RG_FNPLL_CP_CUR_Pos)
+#define VC_ANA_RG_BBPLL_CTRL0_V08SEL_Pos        12
+#define VC_ANA_RG_BBPLL_CTRL0_V08SEL_Msk        (0xFUL << VC_ANA_RG_BBPLL_CTRL0_V08SEL_Pos)
 
-#define VC_ANA_RG_FNPLL_CKMON_SEL_Pos           18
-#define VC_ANA_RG_FNPLL_CKMON_SEL_Msk           (1UL << VC_ANA_RG_FNPLL_CKMON_SEL_Pos)
+#define VC_ANA_RG_BBPLL_CTRL0_SR_Pos            16
+#define VC_ANA_RG_BBPLL_CTRL0_SR_Msk            (0x3UL << VC_ANA_RG_BBPLL_CTRL0_SR_Pos)
 
-#define VC_ANA_RG_FNPLL_CKMON_EN_Pos            19
-#define VC_ANA_RG_FNPLL_CKMON_EN_Msk            (1UL << VC_ANA_RG_FNPLL_CKMON_EN_Pos)
+#define VC_ANA_RG_BBPLL_CTRL0_RSTDLY_Pos        18
+#define VC_ANA_RG_BBPLL_CTRL0_RSTDLY_Msk        (0x3UL << VC_ANA_RG_BBPLL_CTRL0_RSTDLY_Pos)
 
-#define VC_ANA_RG_FNPLL_ADCCLK_EN_Pos           20
-#define VC_ANA_RG_FNPLL_ADCCLK_EN_Msk           (1UL << VC_ANA_RG_FNPLL_ADCCLK_EN_Pos)
+#define VC_ANA_RG_BBPLL_CTRL0_SC_Pos            20
+#define VC_ANA_RG_BBPLL_CTRL0_SC_Msk            (1UL << VC_ANA_RG_BBPLL_CTRL0_SC_Pos)
 
-/* RG_RSV register */
-#define VC_ANA_RG_FNPLL_DDSM_ACC5B_EN_Pos       0
-#define VC_ANA_RG_FNPLL_DDSM_ACC5B_EN_Msk       (1UL << VC_ANA_RG_FNPLL_DDSM_ACC5B_EN_Pos)
+#define VC_ANA_RG_BBPLL_CTRL0_PULSEDLY_Pos      21
+#define VC_ANA_RG_BBPLL_CTRL0_PULSEDLY_Msk      (0x7UL << VC_ANA_RG_BBPLL_CTRL0_PULSEDLY_Pos)
 
-#define VC_ANA_RG_CLKGEN_RSVCTRL_Pos            1
-#define VC_ANA_RG_CLKGEN_RSVCTRL_Msk            (0x7FFFFFFFUL << VC_ANA_RG_CLKGEN_RSVCTRL_Pos)
+#define VC_ANA_RG_BBPLL_CTRL0_PR_Pos            24
+#define VC_ANA_RG_BBPLL_CTRL0_PR_Msk            (0x1FUL << VC_ANA_RG_BBPLL_CTRL0_PR_Pos)
 
-/* RG_BGREF_CTRL register */
-#define VC_ANA_RG_BGV2IREF_INT_EN_Pos           0
-#define VC_ANA_RG_BGV2IREF_INT_EN_Msk           (1UL << VC_ANA_RG_BGV2IREF_INT_EN_Pos)
+#define VC_ANA_RG_BBPLL_CTRL0_POSDIV_EN_Pos     29
+#define VC_ANA_RG_BBPLL_CTRL0_POSDIV_EN_Msk     (1UL << VC_ANA_RG_BBPLL_CTRL0_POSDIV_EN_Pos)
 
-#define VC_ANA_RG_BGV2IREF_EXT_EN_Pos           1
-#define VC_ANA_RG_BGV2IREF_EXT_EN_Msk           (1UL << VC_ANA_RG_BGV2IREF_EXT_EN_Pos)
+#define VC_ANA_RG_BBPLL_CTRL0_LDOV12_RST_Pos    30
+#define VC_ANA_RG_BBPLL_CTRL0_LDOV12_RST_Msk    (1UL << VC_ANA_RG_BBPLL_CTRL0_LDOV12_RST_Pos)
+
+#define VC_ANA_RG_BBPLL_CTRL0_LDOBIAS_RSTB_Pos  31
+#define VC_ANA_RG_BBPLL_CTRL0_LDOBIAS_RSTB_Msk  (1UL << VC_ANA_RG_BBPLL_CTRL0_LDOBIAS_RSTB_Pos)
+
+/* RG_BBPLL_CTRL1 register */
+#define VC_ANA_RG_BBPLL_CTRL1_PC_Pos            0
+#define VC_ANA_RG_BBPLL_CTRL1_PC_Msk            (0x1FUL << VC_ANA_RG_BBPLL_CTRL1_PC_Pos)
+
+#define VC_ANA_RG_BBPLL_CTRL1_IR_Pos            5
+#define VC_ANA_RG_BBPLL_CTRL1_IR_Msk            (0x7UL << VC_ANA_RG_BBPLL_CTRL1_IR_Pos)
+
+#define VC_ANA_RG_BBPLL_CTRL1_EN_Pos            8
+#define VC_ANA_RG_BBPLL_CTRL1_EN_Msk            (1UL << VC_ANA_RG_BBPLL_CTRL1_EN_Pos)
+
+#define VC_ANA_RG_BBPLL_CTRL1_IC_Pos            9
+#define VC_ANA_RG_BBPLL_CTRL1_IC_Msk            (0x3UL << VC_ANA_RG_BBPLL_CTRL1_IC_Pos)
+
+#define VC_ANA_RG_BBPLL_CTRL1_DDSM_ACC5B_EN_Pos 11
+#define VC_ANA_RG_BBPLL_CTRL1_DDSM_ACC5B_EN_Msk (1UL << VC_ANA_RG_BBPLL_CTRL1_DDSM_ACC5B_EN_Pos)
+
+#define VC_ANA_RG_BBPLL_CTRL1_PI_RSTB_Pos       12
+#define VC_ANA_RG_BBPLL_CTRL1_PI_RSTB_Msk       (1UL << VC_ANA_RG_BBPLL_CTRL1_PI_RSTB_Pos)
+
+#define VC_ANA_RG_BBPLL_CTRL1_CP_RSTB_Pos       13
+#define VC_ANA_RG_BBPLL_CTRL1_CP_RSTB_Msk       (1UL << VC_ANA_RG_BBPLL_CTRL1_CP_RSTB_Pos)
+
+#define VC_ANA_RG_BBPLL_CTRL1_CKMON_EN_Pos      14
+#define VC_ANA_RG_BBPLL_CTRL1_CKMON_EN_Msk      (1UL << VC_ANA_RG_BBPLL_CTRL1_CKMON_EN_Pos)
+
+#define VC_ANA_RG_BBPLL_CTRL1_WBADC_EN_Pos      15
+#define VC_ANA_RG_BBPLL_CTRL1_WBADC_EN_Msk      (1UL << VC_ANA_RG_BBPLL_CTRL1_WBADC_EN_Pos)
+
+#define VC_ANA_RG_BBPLL_CTRL1_33T25_RST_Pos     16
+#define VC_ANA_RG_BBPLL_CTRL1_33T25_RST_Msk     (1UL << VC_ANA_RG_BBPLL_CTRL1_33T25_RST_Pos)
+
+#define VC_ANA_RG_BBPLL_CTRL1_DSPCK_EN_Pos      17
+#define VC_ANA_RG_BBPLL_CTRL1_DSPCK_EN_Msk      (1UL << VC_ANA_RG_BBPLL_CTRL1_DSPCK_EN_Pos)
+
+#define VC_ANA_RG_BBPLL_CTRL1_DACCK_EN_Pos      18
+#define VC_ANA_RG_BBPLL_CTRL1_DACCK_EN_Msk      (1UL << VC_ANA_RG_BBPLL_CTRL1_DACCK_EN_Pos)
+
+#define VC_ANA_RG_BBPLL_CTRL1_ADCCK_EN_Pos      19
+#define VC_ANA_RG_BBPLL_CTRL1_ADCCK_EN_Msk      (1UL << VC_ANA_RG_BBPLL_CTRL1_ADCCK_EN_Pos)
+
+/* ANA_TRNGCTRL register */
+#define VC_ANA_TRNGCTRL_TRNGEN_Pos              0
+#define VC_ANA_TRNGCTRL_TRNGEN_Msk              (1UL << VC_ANA_TRNGCTRL_TRNGEN_Pos)
+
+#define VC_ANA_TRNGCTRL_PRNG_Pos                1
+#define VC_ANA_TRNGCTRL_PRNG_Msk                (1UL << VC_ANA_TRNGCTRL_PRNG_Pos)
+
+#define VC_ANA_TRNGCTRL_RG_CLK_MODE_Pos         2
+#define VC_ANA_TRNGCTRL_RG_CLK_MODE_Msk         (1UL << VC_ANA_TRNGCTRL_RG_CLK_MODE_Pos)
+
+#define VC_ANA_TRNGCTRL_RG_PRNG_MODE_Pos        3
+#define VC_ANA_TRNGCTRL_RG_PRNG_MODE_Msk        (1UL << VC_ANA_TRNGCTRL_RG_PRNG_MODE_Pos)
+
+#define VC_ANA_TRNGCTRL_AON_Pos                 4
+#define VC_ANA_TRNGCTRL_AON_Msk                 (1UL << VC_ANA_TRNGCTRL_AON_Pos)
+
+#define VC_ANA_TRNGCTRL_RG_TRNG_CKSEL_Pos       5
+#define VC_ANA_TRNGCTRL_RG_TRNG_CKSEL_Msk       (1UL << VC_ANA_TRNGCTRL_RG_TRNG_CKSEL_Pos)
+
+#define VC_ANA_TRNGCTRL_BITSEL_Pos              6
+#define VC_ANA_TRNGCTRL_BITSEL_Msk              (0x3UL << VC_ANA_TRNGCTRL_BITSEL_Pos)
+
+#define VC_ANA_TRNGCTRL_CLKDIV_Pos              8
+#define VC_ANA_TRNGCTRL_CLKDIV_Msk              (0xFFUL << VC_ANA_TRNGCTRL_CLKDIV_Pos)
+
+#define VC_ANA_TRNGCTRL_DELAY_Pos               16
+#define VC_ANA_TRNGCTRL_DELAY_Msk               (0xFFUL << VC_ANA_TRNGCTRL_DELAY_Pos)
+
+#define VC_ANA_TRNGCTRL_SHIFT_BIT_SEL_Pos       24
+#define VC_ANA_TRNGCTRL_SHIFT_BIT_SEL_Msk       (0x7UL << VC_ANA_TRNGCTRL_SHIFT_BIT_SEL_Pos)
+
+#define VC_ANA_TRNGCTRL_CLKDIV_BASE_Pos         29
+#define VC_ANA_TRNGCTRL_CLKDIV_BASE_Msk         (0x3UL << VC_ANA_TRNGCTRL_CLKDIV_BASE_Pos)
+
+#define VC_ANA_TRNGCTRL_BSY_Pos                 30
+#define VC_ANA_TRNGCTRL_BSY_Msk                 (1UL << VC_ANA_TRNGCTRL_BSY_Pos)
+
+/* ANA_RSV1 register */
+#define VC_ANA_RSV1_ANATOP_RSVL_Pos             0
+#define VC_ANA_RSV1_ANATOP_RSVL_Msk             (0xFFUL << VC_ANA_RSV1_ANATOP_RSVL_Pos)
+
+#define VC_ANA_RSV1_ANATOP_RSVH_Pos             8
+#define VC_ANA_RSV1_ANATOP_RSVH_Msk             (0xFFUL << VC_ANA_RSV1_ANATOP_RSVH_Pos)
+
+/* ANA_RSV2 register */
+#define VC_ANA_RSV2_ABBTOP_RSVL_Pos             0
+#define VC_ANA_RSV2_ABBTOP_RSVL_Msk             (0xFFUL << VC_ANA_RSV2_ABBTOP_RSVL_Pos)
+
+#define VC_ANA_RSV2_ABBTOP_RSVH_Pos             8
+#define VC_ANA_RSV2_ABBTOP_RSVH_Msk             (0xFFUL << VC_ANA_RSV2_ABBTOP_RSVH_Pos)
+
+/* RG_ATEST_CTRL register */
+#define VC_ANA_RG_ATEST_EN_Pos                  0
+#define VC_ANA_RG_ATEST_EN_Msk                  (1UL << VC_ANA_RG_ATEST_EN_Pos)
+
+#define VC_ANA_RG_ATEST_VTST_EN_Pos             1
+#define VC_ANA_RG_ATEST_VTST_EN_Msk             (1UL << VC_ANA_RG_ATEST_VTST_EN_Pos)
+
+#define VC_ANA_RG_ATEST_CKTST_R50_EN_Pos        2
+#define VC_ANA_RG_ATEST_CKTST_R50_EN_Msk        (1UL << VC_ANA_RG_ATEST_CKTST_R50_EN_Pos)
+
+#define VC_ANA_RG_ATEST_CKTST_EN_Pos            3
+#define VC_ANA_RG_ATEST_CKTST_EN_Msk            (1UL << VC_ANA_RG_ATEST_CKTST_EN_Pos)
+
+#define VC_ANA_RG_ATEST_CKTST_CUR_Pos           4
+#define VC_ANA_RG_ATEST_CKTST_CUR_Msk           (0x3UL << VC_ANA_RG_ATEST_CKTST_CUR_Pos)
+
+#define VC_ANA_RG_ATEST_CKTST_CKMUX_Pos         6
+#define VC_ANA_RG_ATEST_CKTST_CKMUX_Msk         (0x7UL << VC_ANA_RG_ATEST_CKTST_CKMUX_Pos)
+
+#define VC_ANA_RG_ATEST_VTST_VMUX_Pos           9
+#define VC_ANA_RG_ATEST_VTST_VMUX_Msk           (0x7UL << VC_ANA_RG_ATEST_VTST_VMUX_Pos)
+
+#define VC_ANA_RG_ATEST_RSTB_Pos                12
+#define VC_ANA_RG_ATEST_RSTB_Msk                (1UL << VC_ANA_RG_ATEST_RSTB_Pos)
 
 /* ANA_CTRL register */
 #define VC_ANA_CTRL_ADC_SMP_EGE_Pos             0
@@ -546,6 +714,15 @@ typedef struct
 #define VC_ANA_INTSTS_INTSTS4_19_Pos            4
 #define VC_ANA_INTSTS_INTSTS4_19_Msk            (0xFFFFUL << VC_ANA_INTSTS_INTSTS4_19_Pos)
 
+#define VC_ANA_INTSTS_DYING_GASP_DET_Pos        20
+#define VC_ANA_INTSTS_DYING_GASP_DET_Msk        (1UL << VC_ANA_INTSTS_DYING_GASP_DET_Pos)
+
+#define VC_ANA_INTSTS_TRNG_ERROR_Pos            21
+#define VC_ANA_INTSTS_TRNG_ERROR_Msk            (1UL << VC_ANA_INTSTS_TRNG_ERROR_Pos)
+
+#define VC_ANA_INTSTS_LVD_SLOW_Pos              22
+#define VC_ANA_INTSTS_LVD_SLOW_Msk              (1UL << VC_ANA_INTSTS_LVD_SLOW_Pos)
+
 /* ANA_INTEN register */
 #define VC_ANA_INTEN_INTEN0_Pos                 0
 #define VC_ANA_INTEN_INTEN0_Msk                 (1UL << VC_ANA_INTEN_INTEN0_Pos)
@@ -562,75 +739,105 @@ typedef struct
 #define VC_ANA_INTEN_INTEN4_19_Pos              4
 #define VC_ANA_INTEN_INTEN4_19_Msk              (0xFFFFUL << VC_ANA_INTEN_INTEN4_19_Pos)
 
+#define VC_ANA_INTEN_INTEN20_Pos                20
+#define VC_ANA_INTEN_INTEN20_Msk                (1UL << VC_ANA_INTEN_INTEN20_Pos)
+
+#define VC_ANA_INTEN_INTEN21_Pos                21
+#define VC_ANA_INTEN_INTEN21_Msk                (1UL << VC_ANA_INTEN_INTEN21_Pos)
+
+#define VC_ANA_INTEN_INTEN22_Pos                22
+#define VC_ANA_INTEN_INTEN22_Msk                (1UL << VC_ANA_INTEN_INTEN22_Pos)
+
 /* RG_SOC_FNPLL_CTRL register */
-#define VC_ANA_DDSM_EN_Pos                      0
-#define VC_ANA_DDSM_EN_Msk                      (1UL << VC_ANA_DDSM_EN_Pos)
+#define VC_ANA_RG_SOC_FNPLL_DDSM_EN_Pos            0
+#define VC_ANA_RG_SOC_FNPLL_DDSM_EN_Msk            (1UL << VC_ANA_RG_SOC_FNPLL_DDSM_EN_Pos)
 
-#define VC_ANA_DDSM_LFSR_EN_Pos                 1
-#define VC_ANA_DDSM_LFSR_EN_Msk                 (1UL << VC_ANA_DDSM_LFSR_EN_Pos)
+#define VC_ANA_RG_SOC_FNPLL_DDSM_LFSR_EN_Pos       1
+#define VC_ANA_RG_SOC_FNPLL_DDSM_LFSR_EN_Msk       (1UL << VC_ANA_RG_SOC_FNPLL_DDSM_LFSR_EN_Pos)
 
-#define VC_ANA_DDSM_TEST_Pos                    4
-#define VC_ANA_DDSM_TEST_Msk                    (1UL << VC_ANA_DDSM_TEST_Pos)
+#define VC_ANA_RG_SOC_FNPLL_DDSM_TEST_Pos          4
+#define VC_ANA_RG_SOC_FNPLL_DDSM_TEST_Msk          (1UL << VC_ANA_RG_SOC_FNPLL_DDSM_TEST_Pos)
 
-#define VC_ANA_DDSM_ACC5B_EN_Pos                5
-#define VC_ANA_DDSM_ACC5B_EN_Msk                (1UL << VC_ANA_DDSM_ACC5B_EN_Pos)
+#define VC_ANA_RG_SOC_FNPLL_DDSM_ACC5B_EN_Pos      5
+#define VC_ANA_RG_SOC_FNPLL_DDSM_ACC5B_EN_Msk      (1UL << VC_ANA_RG_SOC_FNPLL_DDSM_ACC5B_EN_Pos)
 
 /* RG_SOC_FNPLL_DDSMIN register */
-#define VC_ANA_SOC_FNPLL_DDSMIN_Pos             0
-#define VC_ANA_SOC_FNPLL_DDSMIN_Msk             (0x7FFFFFFUL << VC_ANA_SOC_FNPLL_DDSMIN_Pos)
+#define VC_ANA_RG_SOC_FNPLL_DDSMIN_Pos             0
+#define VC_ANA_RG_SOC_FNPLL_DDSMIN_Msk             (0x7FFFFFFUL << VC_ANA_RG_SOC_FNPLL_DDSMIN_Pos)
 
 /* RG_SOC_FNPLL_OFFSETIN register */
-#define VC_ANA_SOC_FNPLL_OFFSETIN_Pos           0
-#define VC_ANA_SOC_FNPLL_OFFSETIN_Msk           (0x7FUL << VC_ANA_SOC_FNPLL_OFFSETIN_Pos)
+#define VC_ANA_RG_SOC_FNPLL_OFFSETIN_Pos           0
+#define VC_ANA_RG_SOC_FNPLL_OFFSETIN_Msk           (0x7FUL << VC_ANA_RG_SOC_FNPLL_OFFSETIN_Pos)
 
 /* RG_SOC_FNPLL_TESTIN register */
-#define VC_ANA_SOC_FNPLL_TESTIN_Pos             0
-#define VC_ANA_SOC_FNPLL_TESTIN_Msk             (0x7FFFFFFUL << VC_ANA_SOC_FNPLL_TESTIN_Pos)
+#define VC_ANA_RG_SOC_FNPLL_TESTIN_Pos             0
+#define VC_ANA_RG_SOC_FNPLL_TESTIN_Msk             (0x7FFFFFFUL << VC_ANA_RG_SOC_FNPLL_TESTIN_Pos)
 
 /* RG_SOC_FNPLL_PROBE register */
-#define VC_ANA_SOC_FNPLL_PROBE_Pos              0
-#define VC_ANA_SOC_FNPLL_PROBE_Msk              (0xFFFFFFUL << VC_ANA_SOC_FNPLL_PROBE_Pos)
+#define VC_ANA_RG_SOC_FNPLL_PROBE_Pos              0
+#define VC_ANA_RG_SOC_FNPLL_PROBE_Msk              (0xFFFFFFUL << VC_ANA_RG_SOC_FNPLL_PROBE_Pos)
 
 /* RG_SOC_FNPLL_METER_CTRL register */
-#define VC_ANA_SOC_FNPLL_METER_CTRL_FM_EN_Pos   0
-#define VC_ANA_SOC_FNPLL_METER_CTRL_FM_EN_Msk   (1UL << VC_ANA_SOC_FNPLL_METER_CTRL_FM_EN_Pos)
+#define VC_ANA_RG_SOC_FNPLL_METER_CTRL_FM_EN_Pos   0
+#define VC_ANA_RG_SOC_FNPLL_METER_CTRL_FM_EN_Msk   (1UL << VC_ANA_RG_SOC_FNPLL_METER_CTRL_FM_EN_Pos)
 
-#define VC_ANA_SOC_FNPLL_METER_CTRL_WIN_Pos     1
-#define VC_ANA_SOC_FNPLL_METER_CTRL_WIN_Msk     (0x3UL << VC_ANA_SOC_FNPLL_METER_CTRL_WIN_Pos)
+#define VC_ANA_RG_SOC_FNPLL_METER_CTRL_WIN_Pos     1
+#define VC_ANA_RG_SOC_FNPLL_METER_CTRL_WIN_Msk     (0x3UL << VC_ANA_RG_SOC_FNPLL_METER_CTRL_WIN_Pos)
 
-#define VC_ANA_SOC_FNPLL_METER_CTRL_FM_BINARYMODE_Pos   3
-#define VC_ANA_SOC_FNPLL_METER_CTRL_FM_BINARYMODE_Msk   (1UL << VC_ANA_SOC_FNPLL_METER_CTRL_FM_BINARYMODE_Pos)
+#define VC_ANA_RG_SOC_FNPLL_METER_CTRL_FM_BINARYMODE_Pos   3
+#define VC_ANA_RG_SOC_FNPLL_METER_CTRL_FM_BINARYMODE_Msk   (1UL << VC_ANA_RG_SOC_FNPLL_METER_CTRL_FM_BINARYMODE_Pos)
 
-#define VC_ANA_SOC_FNPLL_METER_CTRL_FM_MANUALSEL_Pos    4
-#define VC_ANA_SOC_FNPLL_METER_CTRL_FM_MANUALSEL_Msk    (1UL << VC_ANA_SOC_FNPLL_METER_CTRL_FM_MANUALSEL_Pos)
+#define VC_ANA_RG_SOC_FNPLL_METER_CTRL_FM_MANUALSEL_Pos    4
+#define VC_ANA_RG_SOC_FNPLL_METER_CTRL_FM_MANUALSEL_Msk    (1UL << VC_ANA_RG_SOC_FNPLL_METER_CTRL_FM_MANUALSEL_Pos)
 
-#define VC_ANA_SOC_FNPLL_METER_CTRL_MANU_IBAND_Pos      5
-#define VC_ANA_SOC_FNPLL_METER_CTRL_MANU_IBAND_Msk      (0xFUL << VC_ANA_SOC_FNPLL_METER_CTRL_MANU_IBAND_Pos)
+#define VC_ANA_RG_SOC_FNPLL_METER_CTRL_MANU_IBAND_Pos      5
+#define VC_ANA_RG_SOC_FNPLL_METER_CTRL_MANU_IBAND_Msk      (0xFUL << VC_ANA_RG_SOC_FNPLL_METER_CTRL_MANU_IBAND_Pos)
 
-#define VC_ANA_SOC_FNPLL_METER_CTRL_PLL_WAIT_TIME_Pos   11
-#define VC_ANA_SOC_FNPLL_METER_CTRL_PLL_WAIT_TIME_Msk   (0x7FUL << VC_ANA_SOC_FNPLL_METER_CTRL_PLL_WAIT_TIME_Pos)
+#define VC_ANA_RG_SOC_FNPLL_METER_CTRL_PLL_WAIT_TIME_Pos   11
+#define VC_ANA_RG_SOC_FNPLL_METER_CTRL_PLL_WAIT_TIME_Msk   (0x7FUL << VC_ANA_RG_SOC_FNPLL_METER_CTRL_PLL_WAIT_TIME_Pos)
 
-#define VC_ANA_SOC_FNPLL_METER_CTRL_FNPLL_IBAND_RST_Pos 18
-#define VC_ANA_SOC_FNPLL_METER_CTRL_FNPLL_IBAND_RST_Msk (1UL << VC_ANA_SOC_FNPLL_METER_CTRL_FNPLL_IBAND_RST_Pos)
+#define VC_ANA_RG_SOC_FNPLL_METER_CTRL_FNPLL_IBAND_RST_Pos 18
+#define VC_ANA_RG_SOC_FNPLL_METER_CTRL_FNPLL_IBAND_RST_Msk (1UL << VC_ANA_RG_SOC_FNPLL_METER_CTRL_FNPLL_IBAND_RST_Pos)
 
-#define VC_ANA_SOC_FNPLL_METER_CTRL_FM_DONE_Pos         19
-#define VC_ANA_SOC_FNPLL_METER_CTRL_FM_DONE_Msk         (1UL << VC_ANA_SOC_FNPLL_METER_CTRL_FM_DONE_Pos)
+#define VC_ANA_RG_SOC_FNPLL_METER_CTRL_FM_DONE_Pos         19
+#define VC_ANA_RG_SOC_FNPLL_METER_CTRL_FM_DONE_Msk         (1UL << VC_ANA_RG_SOC_FNPLL_METER_CTRL_FM_DONE_Pos)
 
 /* RG_AUXSAR_CTRL register */
-#define VC_ANA_RG_AUXSAR_VREF_BIAS_Pos          0
-#define VC_ANA_RG_AUXSAR_VREF_BIAS_Msk          (0x3UL << VC_ANA_RG_AUXSAR_VREF_BIAS_Pos)
+#define VC_ANA_RG_AUXSAR_CTRL_AUXADC_RST_Pos     0
+#define VC_ANA_RG_AUXSAR_CTRL_AUXADC_RST_Msk     (1UL << VC_ANA_RG_AUXSAR_CTRL_AUXADC_RST_Pos)
 
-#define VC_ANA_RG_AUXSAR_VMIN_SEL_Pos           2
-#define VC_ANA_RG_AUXSAR_VMIN_SEL_Msk           (1UL << VC_ANA_RG_AUXSAR_VMIN_SEL_Pos)
+#define VC_ANA_RG_AUXSAR_CTRL_AUXADC_VINTEN_Pos  1
+#define VC_ANA_RG_AUXSAR_CTRL_AUXADC_VINTEN_Msk  (1UL << VC_ANA_RG_AUXSAR_CTRL_AUXADC_VINTEN_Pos)
 
-#define VC_ANA_RG_AUXSAR_VMID_BIAS_Pos          3
-#define VC_ANA_RG_AUXSAR_VMID_BIAS_Msk          (0x3UL << VC_ANA_RG_AUXSAR_VMID_BIAS_Pos)
+#define VC_ANA_RG_AUXSAR_CTRL_AUXADC_ASMODE_Pos  2
+#define VC_ANA_RG_AUXSAR_CTRL_AUXADC_ASMODE_Msk  (1UL << VC_ANA_RG_AUXSAR_CTRL_AUXADC_ASMODE_Pos)
 
-#define VC_ANA_RG_AUXSAR_DIFF_EN_Pos            17
-#define VC_ANA_RG_AUXSAR_DIFF_EN_Msk            (1UL << VC_ANA_RG_AUXSAR_DIFF_EN_Pos)
+#define VC_ANA_RG_AUXSAR_CTRL_AUXADC_ASDEL_Pos   3
+#define VC_ANA_RG_AUXSAR_CTRL_AUXADC_ASDEL_Msk   (1UL << VC_ANA_RG_AUXSAR_CTRL_AUXADC_ASDEL_Pos)
 
-#define VC_ANA_RG_AUXSAR_BUF_BIAS_Pos           18
-#define VC_ANA_RG_AUXSAR_BUF_BIAS_Msk           (0x3UL << VC_ANA_RG_AUXSAR_BUF_BIAS_Pos)
+#define VC_ANA_RG_AUXSAR_CTRL_AUXADC_CKPHOUT_Pos 4
+#define VC_ANA_RG_AUXSAR_CTRL_AUXADC_CKPHOUT_Msk (1UL << VC_ANA_RG_AUXSAR_CTRL_AUXADC_CKPHOUT_Pos)
+
+#define VC_ANA_RG_AUXSAR_CTRL_AUXADC_VREF_Pos    5
+#define VC_ANA_RG_AUXSAR_CTRL_AUXADC_VREF_Msk    (0x3UL << VC_ANA_RG_AUXSAR_CTRL_AUXADC_VREF_Pos)
+
+#define VC_ANA_RG_AUXSAR_CTRL_AUXADC_VCAL_Pos    7
+#define VC_ANA_RG_AUXSAR_CTRL_AUXADC_VCAL_Msk    (0x3UL << VC_ANA_RG_AUXSAR_CTRL_AUXADC_VCAL_Pos)
+
+#define VC_ANA_RG_AUXSAR_CTRL_TRIG_HIGH_Pos      9
+#define VC_ANA_RG_AUXSAR_CTRL_TRIG_HIGH_Msk      (0x3FUL << VC_ANA_RG_AUXSAR_CTRL_TRIG_HIGH_Pos)
+
+#define VC_ANA_RG_AUXSAR_CTRL_TRIG_LOW_Pos       16
+#define VC_ANA_RG_AUXSAR_CTRL_TRIG_LOW_Msk       (0x1FFUL << VC_ANA_RG_AUXSAR_CTRL_TRIG_LOW_Pos)
+
+#define VC_ANA_RG_AUXSAR_CTRL_AUXADC_VREF_FINE_Pos 25
+#define VC_ANA_RG_AUXSAR_CTRL_AUXADC_VREF_FINE_Msk (0xFUL << VC_ANA_RG_AUXSAR_CTRL_AUXADC_VREF_FINE_Pos)
+
+#define VC_ANA_RG_AUXSAR_CTRL_AUXADC_SINGLE_Pos  29
+#define VC_ANA_RG_AUXSAR_CTRL_AUXADC_SINGLE_Msk  (1UL << VC_ANA_RG_AUXSAR_CTRL_AUXADC_SINGLE_Pos)
+
+#define VC_ANA_RG_AUXSAR_CTRL_AUXADC_CKDIV_Pos   30
+#define VC_ANA_RG_AUXSAR_CTRL_AUXADC_CKDIV_Msk   (0x3UL << VC_ANA_RG_AUXSAR_CTRL_AUXADC_CKDIV_Pos)
 
 /* ANA_ADCCTRL register */
 #define VC_ANA_ADCCTRL_ADC_EN_Pos               0
@@ -648,14 +855,20 @@ typedef struct
 #define VC_ANA_ADCCTRL_ADC_TRG_SEL_Pos          4
 #define VC_ANA_ADCCTRL_ADC_TRG_SEL_Msk          (0x7UL << VC_ANA_ADCCTRL_ADC_TRG_SEL_Pos)
 
-#define VC_ANA_ADCCTRL_ADC_ALIGN_Pos            7
-#define VC_ANA_ADCCTRL_ADC_ALIGN_Msk            (1UL << VC_ANA_ADCCTRL_ADC_ALIGN_Pos)
+#define VC_ANA_ADCCTRL_ADC_ALIEN_Pos            7
+#define VC_ANA_ADCCTRL_ADC_ALIEN_Msk            (1UL << VC_ANA_ADCCTRL_ADC_ALIEN_Pos)
 
-#define VC_ANA_ADCCTRL_ADC_RDY_TIME_Pos         8
-#define VC_ANA_ADCCTRL_ADC_RDY_TIME_Msk         (0xFFUL << VC_ANA_ADCCTRL_ADC_RDY_TIME_Pos)
+#define VC_ANA_ADCCTRL_ADC_DELAY_Pos            8
+#define VC_ANA_ADCCTRL_ADC_DELAY_Msk            (0xFFUL << VC_ANA_ADCCTRL_ADC_DELAY_Pos)
 
-#define VC_ANA_ADCCTRL_ADC_SMP_TIME_Pos         20
-#define VC_ANA_ADCCTRL_ADC_SMP_TIME_Msk         (0xFFUL << VC_ANA_ADCCTRL_ADC_SMP_TIME_Pos)
+#define VC_ANA_ADCCTRL_ADC_CLKSEL_Pos           16
+#define VC_ANA_ADCCTRL_ADC_CLKSEL_Msk           (1UL << VC_ANA_ADCCTRL_ADC_CLKSEL_Pos)
+
+#define VC_ANA_ADCCTRL_ADC_FEN_Pos              17
+#define VC_ANA_ADCCTRL_ADC_FEN_Msk              (1UL << VC_ANA_ADCCTRL_ADC_FEN_Pos)
+
+#define VC_ANA_ADCCTRL_ADC_CLKDIV_Pos           20
+#define VC_ANA_ADCCTRL_ADC_CLKDIV_Msk           (0xFFUL << VC_ANA_ADCCTRL_ADC_CLKDIV_Pos)
 
 /* ANA_ADCCHEN register */
 #define VC_ANA_ADCCHEN_ADC_CHEN0_15_Pos         0
@@ -672,6 +885,90 @@ typedef struct
 /* DYING GASP THRESHOLD register */
 #define VC_ANA_DYING_THRES_Pos                  0
 #define VC_ANA_DYING_THRES_Msk                  (0x3FFUL << VC_ANA_DYING_THRES_Pos)
+
+/* RG_DTUNE_CTRL register */
+#define VC_ANA_RG_DTUNE_CTRL_RSEL_Pos           0
+#define VC_ANA_RG_DTUNE_CTRL_RSEL_Msk           (0x1FUL << VC_ANA_RG_DTUNE_CTRL_RSEL_Pos)
+
+#define VC_ANA_RG_DTUNE_CTRL_MAN_Pos            5
+#define VC_ANA_RG_DTUNE_CTRL_MAN_Msk            (1UL << VC_ANA_RG_DTUNE_CTRL_MAN_Pos)
+
+/* RG_LVD_CTRL register */
+#define VC_ANA_RG_LVD_CTRL_PWD_Pos              0
+#define VC_ANA_RG_LVD_CTRL_PWD_Msk              (1UL << VC_ANA_RG_LVD_CTRL_PWD_Pos)
+
+#define VC_ANA_RG_LVD_CTRL_VTHSEL_Pos           2
+#define VC_ANA_RG_LVD_CTRL_VTHSEL_Msk           (0x3UL << VC_ANA_RG_LVD_CTRL_VTHSEL_Pos)
+
+#define VC_ANA_RG_LVD_CTRL_PDNS_Pos             4
+#define VC_ANA_RG_LVD_CTRL_PDNS_Msk             (1UL << VC_ANA_RG_LVD_CTRL_PDNS_Pos)
+
+#define VC_ANA_RG_LVD_CTRL_LVD_DEBSEL_Pos       6
+#define VC_ANA_RG_LVD_CTRL_LVD_DEBSEL_Msk       (0x3UL << VC_ANA_RG_LVD_CTRL_LVD_DEBSEL_Pos)
+
+#define VC_ANA_RG_LVD_CTRL_LVD_SMPSEL_Pos       8
+#define VC_ANA_RG_LVD_CTRL_LVD_SMPSEL_Msk       (0x3UL << VC_ANA_RG_LVD_CTRL_LVD_SMPSEL_Pos)
+
+/* RG_ABBBG_CTRL register */
+#define VC_ANA_RG_ABBBG_CTRL_TRIMVOL_Pos        0
+#define VC_ANA_RG_ABBBG_CTRL_TRIMVOL_Msk        (0x7UL << VC_ANA_RG_ABBBG_CTRL_TRIMVOL_Pos)
+
+#define VC_ANA_RG_ABBBG_CTRL_EN_Pos             3
+#define VC_ANA_RG_ABBBG_CTRL_EN_Msk             (1UL << VC_ANA_RG_ABBBG_CTRL_EN_Pos)
+
+/* RG_SOC_GPPLL_CTRL register */
+#define VC_ANA_RG_SOC_GPPLL_CTRL_DDSM_EN_Pos         0
+#define VC_ANA_RG_SOC_GPPLL_CTRL_DDSM_EN_Msk         (1UL << VC_ANA_RG_SOC_GPPLL_CTRL_DDSM_EN_Pos)
+
+#define VC_ANA_RG_SOC_GPPLL_CTRL_DDSM_LFSR_EN_Pos    1
+#define VC_ANA_RG_SOC_GPPLL_CTRL_DDSM_LFSR_EN_Msk    (1UL << VC_ANA_RG_SOC_GPPLL_CTRL_DDSM_LFSR_EN_Pos)
+
+#define VC_ANA_RG_SOC_GPPLL_CTRL_DDSM_TEST_Pos       4
+#define VC_ANA_RG_SOC_GPPLL_CTRL_DDSM_TEST_Msk       (1UL << VC_ANA_RG_SOC_GPPLL_CTRL_DDSM_TEST_Pos)
+
+#define VC_ANA_RG_SOC_GPPLL_CTRL_DDSM_ACC5B_EN_Pos   5
+#define VC_ANA_RG_SOC_GPPLL_CTRL_DDSM_ACC5B_EN_Msk   (1UL << VC_ANA_RG_SOC_GPPLL_CTRL_DDSM_ACC5B_EN_Pos)
+
+/* RG_SOC_GPPLL_DDSMIN register */
+#define VC_ANA_RG_SOC_GPPLL_DDSMIN_Pos          0
+#define VC_ANA_RG_SOC_GPPLL_DDSMIN_Msk          (0x3FFFFFFUL << VC_ANA_RG_SOC_GPPLL_DDSMIN_Pos)
+
+/* RG_SOC_GPPLL_OFFSETIN register */
+#define VC_ANA_RG_SOC_GPPLL_OFFSETIN_Pos        0
+#define VC_ANA_RG_SOC_GPPLL_OFFSETIN_Msk        (0x7FUL << VC_ANA_RG_SOC_GPPLL_OFFSETIN_Pos)
+
+/* RG_SOC_GPPLL_TESTIN register */
+#define VC_ANA_RG_SOC_GPPLL_TESTIN_Pos          0
+#define VC_ANA_RG_SOC_GPPLL_TESTIN_Msk          (0x3FFFFFFUL << VC_ANA_RG_SOC_GPPLL_TESTIN_Pos)
+
+/* RG_SOC_GPPLL_PROBE register */
+#define VC_ANA_RG_SOC_GPPLL_PROBE_Pos           0
+#define VC_ANA_RG_SOC_GPPLL_PROBE_Msk           (0xFFFFFFUL << VC_ANA_RG_SOC_GPPLL_PROBE_Pos)
+
+/* RG_SOC_GPPLL_METER_CTRL register */
+#define VC_ANA_RG_SOC_GPPLL_METER_CTRL_FM_EN_Pos           0
+#define VC_ANA_RG_SOC_GPPLL_METER_CTRL_FM_EN_Msk           (1UL << VC_ANA_RG_SOC_GPPLL_METER_CTRL_FM_EN_Pos)
+
+#define VC_ANA_RG_SOC_GPPLL_METER_CTRL_WIN_Pos             1
+#define VC_ANA_RG_SOC_GPPLL_METER_CTRL_WIN_Msk             (0x3UL << VC_ANA_RG_SOC_GPPLL_METER_CTRL_WIN_Pos)
+
+#define VC_ANA_RG_SOC_GPPLL_METER_CTRL_FM_BINARYMODE_Pos   3
+#define VC_ANA_RG_SOC_GPPLL_METER_CTRL_FM_BINARYMODE_Msk   (1UL << VC_ANA_RG_SOC_GPPLL_METER_CTRL_FM_BINARYMODE_Pos)
+
+#define VC_ANA_RG_SOC_GPPLL_METER_CTRL_FM_MANUALSEL_Pos    4
+#define VC_ANA_RG_SOC_GPPLL_METER_CTRL_FM_MANUALSEL_Msk    (1UL << VC_ANA_RG_SOC_GPPLL_METER_CTRL_FM_MANUALSEL_Pos)
+
+#define VC_ANA_RG_SOC_GPPLL_METER_CTRL_MANU_IBAND_Pos      5
+#define VC_ANA_RG_SOC_GPPLL_METER_CTRL_MANU_IBAND_Msk      (0xFUL << VC_ANA_RG_SOC_GPPLL_METER_CTRL_MANU_IBAND_Pos)
+
+#define VC_ANA_RG_SOC_GPPLL_METER_CTRL_PLL_WAIT_TIME_Pos   11
+#define VC_ANA_RG_SOC_GPPLL_METER_CTRL_PLL_WAIT_TIME_Msk   (0x7FUL << VC_ANA_RG_SOC_GPPLL_METER_CTRL_PLL_WAIT_TIME_Pos)
+
+#define VC_ANA_RG_SOC_GPPLL_METER_CTRL_FNPLL_IBAND_RST_Pos 18
+#define VC_ANA_RG_SOC_GPPLL_METER_CTRL_FNPLL_IBAND_RST_Msk (1UL << VC_ANA_RG_SOC_GPPLL_METER_CTRL_FNPLL_IBAND_RST_Pos)
+
+#define VC_ANA_RG_SOC_GPPLL_METER_CTRL_FM_DONE_Pos         19
+#define VC_ANA_RG_SOC_GPPLL_METER_CTRL_FM_DONE_Msk         (1UL << VC_ANA_RG_SOC_GPPLL_METER_CTRL_FM_DONE_Pos)
 
 /* ========================================================================= */
 /* ============                       RTC                       ============ */

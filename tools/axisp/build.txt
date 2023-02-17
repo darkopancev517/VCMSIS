@@ -1,0 +1,22 @@
+0. Build and install dependencies
+   a. libftdi1
+   b. libmpsse
+
+1. Issue following commands to build the code (./out/axflasher)
+
+   # make clean all
+
+2. Command line examples
+
+   # axisp ./magpie.bin                 ; flash image magpie.bin to iram0 and then reboot
+   # axisp -n ./magpie.bin              ; flash image magpie.bin to iram0, do not reboot after completing it
+     axisp -b 1                         ; remap to iram0 and then reboot
+     axisp -b 2                         ; remap to eflash and then reboot
+     axisp -m 1 ./magpie.bin            ; flash image magpie.bin to iram0, remap to iram0 and then reboot
+     axisp -m 2 ./magpie.bin            ; flash image magpie.bin to eflash, remap to eflash and then reboot
+   # axisp -t 0xac63fc97                ; perform iram0 bist using word pattern 0xac63fc97
+   # axisp -w 0x20010000 0x1122aabb     ; write 0x1122aabb to address 0x20010000
+     axisp -r 0x20010000                ; read data from address 0x20010000
+
+
+

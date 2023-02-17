@@ -23,7 +23,7 @@ extern "C" {
 #define SUPPORT_SKE_AES_256
 #define SUPPORT_SKE_SM4
 
-#define SUPPORT_SKE_IRQ
+//#define SUPPORT_SKE_IRQ
 
 #define SUPPORT_SKE_MODE_ECB
 #define SUPPORT_SKE_MODE_CBC

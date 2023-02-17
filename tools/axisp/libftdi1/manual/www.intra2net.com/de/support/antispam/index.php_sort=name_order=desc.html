@@ -1,0 +1,598 @@
+
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<title>Blacklist Performance &raquo; W&ouml;chentliche Statistiken</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" type="text/css" media="screen" href="../../screen.css">
+<link rel="stylesheet" type="text/css" media="print" href="../../print.css">
+<meta name="keywords" content="email,antispam,blacklist,performance,monitor,statistiken,spam,trefferquote,fehlerquote,dnsbl,spamassassin">
+</head>
+<body>
+
+<!-- header start -->
+
+<div id="header">
+
+<div id="logo">
+	<a href="../../index.html">
+		<div id="logo_screen"><img src="../../pictures/intra2net.gif" alt="Intra2net AG"></div>
+		<div id="logo_print"><img src="../../pictures/intra2net_print.gif" alt="Intra2net AG"></div>
+	</a>
+</div>
+
+<div id="search">
+	<form name="formsearch" method="get" action="http://www.intra2net.com/search/search.cgi">
+		<input type="text" name="q" maxlength="64" id="searchinput" value="">
+		<input type="image" name="submit" src="../../pictures/search.gif" alt="Suche">
+	</form>
+</div>
+
+
+<nav id="navigation">
+
+<a href="index.php_sort=name_order=desc.html#navigation"><div class="mobilemenu"><img src="../../pictures/mobile_icon.gif" alt="Navigation"></div></a>
+<a href="index.php_sort=name_order=desc.html#"><div class="mobilemenu"><img src="../../pictures/mobile_icon.gif" alt="Navigation"></div></a>
+
+<ul class="navbar">
+
+<li id="Produkte"><a href="../../../en/products/index.html">Produkte</a>
+	<div class="dropdown">
+		<div class="navgrid">
+			<div class="navgrid-unit navcol1_of_3">
+				<h4>SOFTWARE</h4>
+					<ul class="navmenu">
+						<li><a href="../../produkte/index.php">&Uuml;bersicht</a></li>
+						<li><a href="../../produkte/intranator.php">Business Server</a></li>
+						<li><a href="../../produkte/security_gateway.php">Security Gateway</a></li>
+						<li><a href="../../produkte/network_security.php">Network Security</a></li>
+						<li><a href="../../produkte/lizenzen/index.php">Lizenzbestimmungen</a></li>
+					</ul>
+			</div>
+			<div class="navgrid-unit navcol1_of_3">
+				<h4>HARDWARE</h4>
+					<ul class="navmenu">
+						<li><a href="../../produkte/hardware.php">&Uuml;bersicht</a></li>
+						<li><a href="../../produkte/appliance_eco.php">Appliance Eco</a></li>
+						<li><a href="../../produkte/appliance_pro.php">Appliance Pro</a></li>
+						<li><a href="../../produkte/appliance_ultimate.php">Appliance Ultimate</a></li>
+					</ul>
+			</div>
+			<div class="navgrid-unit navcol1_of_3">
+				<h4>REFERENZEN</h4>
+					<ul class="navmenu">
+						<li><a href="../../produkte/anwenderberichte.php">Anwenderberichte</a></li>
+						<li><a href="../../produkte/kundenstimmen.php">Kundenstimmen</a></li>
+						<li><a href="../../produkte/pressestimmen.php">Pressestimmen</a></li>
+					</ul>
+			</div>
+		</div> <!-- close .grid div -->
+	</div> <!-- close .dropdown div -->
+</li>
+
+<li id="Download"><a href="../../download.1">Download</a>
+	<div class="dropdown">
+		<ul>
+			<li><a href="../../download/index.php">Software</a></li>
+			<li><a href="../../download/datenblaetter.php">Datenbl&auml;tter</a></li>
+			<li><a href="../../download/handbuecher.php">Handb&uuml;cher</a></li>
+		</ul>
+	</div>
+</li>
+
+<li id="Support" class="selected"><a href="../../../en/support/index.html">Support</a>
+	<div class="dropdown">
+		<ul>
+			<li><a href="../anfrage.php">Support-Anfrage</a></li>
+			<li><a href="../handbuecher.php">Handb&uuml;cher</a></li>
+			<li><a href="http://forum.intra2net.com/">Forum</a></li>
+			<li><a href="../unterstuetzte_hardware.php">Unterst&uuml;tzte Hardware</a></li>
+			<li><a href="index.html">Blacklist Performance</a></li>
+			<li><a href="../schulung.php">Schulung</a></li>
+			<li><a href="../fernwartung.php">Fernwartung</a></li>
+		</ul>
+	</div>
+</li>
+
+<li id="Kaufen"><a href="../../kaufen/index.html">Kaufen</a>
+	<div class="dropdown">
+		<ul>
+			<li><a href="../../kaufen/index.php">Partner finden</a></li>
+			<li><a href="../../partner-werden">Partner werden</a></li>
+			<li><a href="http://partner.intra2net.com/">Partnerweb</a></li>
+		</ul>
+	</div>
+</li>
+
+<li id="Unternehmen"><a href="../../unternehmen/index.html">Unternehmen</a>
+	<div class="dropdown">
+		<ul>
+			<li><a href="../../unternehmen/index.php">&Uuml;ber Intra2net</a></li>
+			<li><a href="../../unternehmen/presse/index.php">Presse</a></li>
+			<li><a href="../../unternehmen/karriere.php">Karriere</a></li>
+			<li><a href="../../unternehmen/kontakt.php">Kontakt</a></li>
+		</ul>
+	</div>
+</li>
+
+</ul> <!-- close #navbar ul -->
+
+</nav>
+
+</div> <!-- close #header div -->
+
+
+<div id="page">
+
+<div class="subcontainer">
+	<ul class="sublist">
+<li><a href="index.php.html" class="selected">Blacklist Performance</a></li>
+<li><a href="aktuelle_meldungen.php.html">Aktuelle Meldungen</a></li>
+<li><a href="datenverarbeitung.php.html">Datenverarbeitung</a></li>
+	</ul>
+</div>
+
+
+<div id="content">
+
+<!-- header end -->
+
+<div style="float: right;"><a href="../../../en/support/antispam/index.html"><img src="../../../en/pictures/en.gif" border="0"></a></div>
+
+<h1>Blacklist Performance</h1>
+
+<p>Willkommen zum Blacklist Performance Monitor, hier finden Sie w&ouml;chentlich aktualisierte Statistiken zu &uuml;ber 40 Blacklisten.</p>
+
+<p>Mit Hilfe von Blacklisten (RBL, DNSBL, URIBL) k&ouml;nnen Mailserver-Betreiber Spam-Emails von bestimmten IP-Adressen ablehnen oder kennzeichnen. Ein besonderer Vorteil liegt in der einfachen und effizienten Nutzung in Software wie <a href="http://spamassassin.apache.org">SpamAssassin</a>. S&auml;mtliche &ouml;ffentlichen Blacklisten haben ihre eigenen Methoden und Kriterien um Spam-Versender zu listen, die jeweiligen Ergebnisse k&ouml;nnen daher stark abweichen.</p>
+
+
+<h2>Aktuelle Meldungen</h2>
+
+<table cellspacing="0" cellpadding="0" border="0">
+<tr valign="top">
+<td width="105">27.01.2015</td>
+<td>
+<p style="margin-top: -2px;">
+FREE V4BL wurde entfernt, da der Service nicht mehr verfügbar ist.<br>
+<a href="aktuelle_meldungen.php.html">&raquo; Weitere Meldungen</a></td>
+</tr>
+</table>
+<br>
+
+<h2>Blacklist Performance vom 30.03.2015 bis 05.04.2015</h2>
+<p>W&ouml;chentliche Statistiken zu Treffer- und Fehlerquoten einzelner Blacklisten:</p>
+
+<table cellspacing="1" cellpadding="4" width="100%" border="0">
+<tr>
+<td width="45%"><b><a href="index.php_sort=name_order=asc.html">Name <img border="0" src="../../pictures/arrow_asc.gif" style="display: inline;"></a></b></td>
+<td width="15%"><b><a href="index.php_sort=type_order=asc.html">Typ</a></b></td>
+<td width="20%"><b><a href="index.php_sort=accuracy_order=desc.html">Treffer</a></b></td>
+<td width="20%"><b><a href="index.php_sort=inaccuracy_order=asc.html">Fehler</a></b></td>
+<tr valign="top" bgcolor="#f6f6f6">
+<td><a href="blacklist.php_dnsbl=RCVD_IN_WPBL.html">WPBL</a></td>
+<td>DNSBL</td>
+<td>63.19%</td>
+<td>0%</td>
+</tr>
+<tr valign="top">
+<td><a href="blacklist.php_dnsbl=URIBL_BLACK.html">URIBL BLACKLIST</a></td>
+<td>URIBL</td>
+<td>65.53%</td>
+<td>0.04%</td>
+</tr>
+<tr valign="top" bgcolor="#f6f6f6">
+<td><a href="blacklist.php_dnsbl=RCVD_IN_UNSUBSCORE.html">UNSUBSCRIBE BLACKLIST</a></td>
+<td>DNSBL</td>
+<td>59.08%</td>
+<td>2%</td>
+</tr>
+<tr valign="top">
+<td><a href="blacklist.php_dnsbl=RCVD_IN_UCEPROTECT3.html">UCEPROTECT 3</a></td>
+<td>DNSBL</td>
+<td>7.38%</td>
+<td>0%</td>
+</tr>
+<tr valign="top" bgcolor="#f6f6f6">
+<td><a href="blacklist.php_dnsbl=RCVD_IN_UCEPROTECT2.html">UCEPROTECT 2</a></td>
+<td>DNSBL</td>
+<td>19.58%</td>
+<td>0.06%</td>
+</tr>
+<tr valign="top">
+<td><a href="blacklist.php_dnsbl=RCVD_IN_UCEPROTECT1.html">UCEPROTECT 1</a></td>
+<td>DNSBL</td>
+<td>70.22%</td>
+<td>0.32%</td>
+</tr>
+<tr valign="top" bgcolor="#f6f6f6">
+<td><a href="blacklist.php_dnsbl=URIBL_SC_SWINOG.html">SWINOG URIBL</a></td>
+<td>URIBL</td>
+<td>33.8%</td>
+<td>7.27%</td>
+</tr>
+<tr valign="top">
+<td><a href="blacklist.php_dnsbl=RCVD_IN_SWINOG_SPAM.html">SWINOG DNSRBL</a></td>
+<td>DNSBL</td>
+<td>5.08%</td>
+<td>0%</td>
+</tr>
+<tr valign="top" bgcolor="#f6f6f6">
+<td><a href="blacklist.php_dnsbl=URIBL_SC_SURBL.html">SURBL SPAMCOP</a></td>
+<td>URIBL</td>
+<td>5.39%</td>
+<td>0%</td>
+</tr>
+<tr valign="top">
+<td><a href="blacklist.php_dnsbl=URIBL_WS_SURBL.html">SURBL SPAMASSASSIN BL</a></td>
+<td>URIBL</td>
+<td>22.58%</td>
+<td>0%</td>
+</tr>
+<tr valign="top" bgcolor="#f6f6f6">
+<td><a href="blacklist.php_dnsbl=URIBL_MW_SURBL.html">SURBL MALWARE</a></td>
+<td>URIBL</td>
+<td>0.35%</td>
+<td>0%</td>
+</tr>
+<tr valign="top">
+<td><a href="blacklist.php_dnsbl=URIBL_JP_SURBL.html">SURBL JWSPAMSPY</a></td>
+<td>URIBL</td>
+<td>38.75%</td>
+<td>0%</td>
+</tr>
+<tr valign="top" bgcolor="#f6f6f6">
+<td><a href="blacklist.php_dnsbl=URIBL_SURBL_COMBINED.html">SURBL COMBINED</a></td>
+<td>URIBL</td>
+<td>40.43%</td>
+<td>0%</td>
+</tr>
+<tr valign="top">
+<td><a href="blacklist.php_dnsbl=URIBL_AB_SURBL.html">SURBL ABUSEBUTLER</a></td>
+<td>URIBL</td>
+<td>3.05%</td>
+<td>0%</td>
+</tr>
+<tr valign="top" bgcolor="#f6f6f6">
+<td><a href="blacklist.php_dnsbl=RCVD_IN_SPAMRATS_NOPTR.html">SPAMRATS NOPTR</a></td>
+<td>DNSBL</td>
+<td>27.84%</td>
+<td>0%</td>
+</tr>
+<tr valign="top">
+<td><a href="blacklist.php_dnsbl=RCVD_IN_SPAMRATS_DYNA.html">SPAMRATS DYNA</a></td>
+<td>DNSBL</td>
+<td>23.24%</td>
+<td>0.01%</td>
+</tr>
+<tr valign="top" bgcolor="#f6f6f6">
+<td><a href="blacklist.php_dnsbl=RCVD_IN_SPAMHAUS_ZEN.html">SPAMHAUS ZEN</a></td>
+<td>DNSBL</td>
+<td>83.52%</td>
+<td>0%</td>
+</tr>
+<tr valign="top">
+<td><a href="blacklist.php_dnsbl=RCVD_IN_XBL.html">SPAMHAUS XBL</a></td>
+<td>DNSBL</td>
+<td>80.82%</td>
+<td>0%</td>
+</tr>
+<tr valign="top" bgcolor="#f6f6f6">
+<td><a href="blacklist.php_dnsbl=URIBL_SBL.html">SPAMHAUS SBL</a></td>
+<td>URIBL</td>
+<td>13.17%</td>
+<td>0.07%</td>
+</tr>
+<tr valign="top">
+<td><a href="blacklist.php_dnsbl=RCVD_IN_PBL.html">SPAMHAUS PBL</a></td>
+<td>DNSBL</td>
+<td>34.33%</td>
+<td>0%</td>
+</tr>
+<tr valign="top" bgcolor="#f6f6f6">
+<td><a href="blacklist.php_dnsbl=URIBL_SPAMHAUS_DBL.html">SPAMHAUS DBL</a></td>
+<td>URIBL</td>
+<td>62%</td>
+<td>0.03%</td>
+</tr>
+<tr valign="top">
+<td><a href="blacklist.php_dnsbl=RCVD_IN_BL_SPAMCOP_NET.html">SPAMCOP</a></td>
+<td>DNSBL</td>
+<td>70.26%</td>
+<td>0.03%</td>
+</tr>
+<tr valign="top" bgcolor="#f6f6f6">
+<td><a href="blacklist.php_dnsbl=URIBL_SEM_RED.html">SPAM EATING MONKEY - URI RED</a></td>
+<td>URIBL</td>
+<td>29.87%</td>
+<td>0.04%</td>
+</tr>
+<tr valign="top">
+<td><a href="blacklist.php_dnsbl=URIBL_SEM_FRESH_15.html">SPAM EATING MONKEY - URI FRESH 15</a></td>
+<td>URIBL</td>
+<td>4.11%</td>
+<td>0.03%</td>
+</tr>
+<tr valign="top" bgcolor="#f6f6f6">
+<td><a href="blacklist.php_dnsbl=URIBL_SEM_FRESH_10.html">SPAM EATING MONKEY - URI FRESH 10</a></td>
+<td>URIBL</td>
+<td>3.89%</td>
+<td>0%</td>
+</tr>
+<tr valign="top">
+<td><a href="blacklist.php_dnsbl=URIBL_SEM_FRESH.html">SPAM EATING MONKEY - URI FRESH</a></td>
+<td>URIBL</td>
+<td>2.65%</td>
+<td>0%</td>
+</tr>
+<tr valign="top" bgcolor="#f6f6f6">
+<td><a href="blacklist.php_dnsbl=URIBL_SEM.html">SPAM EATING MONKEY - URI BLACK</a></td>
+<td>URIBL</td>
+<td>29.87%</td>
+<td>0.04%</td>
+</tr>
+<tr valign="top">
+<td><a href="blacklist.php_dnsbl=RCVD_IN_SEM_BLACK.html">SPAM EATING MONKEY - BLACK</a></td>
+<td>DNSBL</td>
+<td>41.23%</td>
+<td>0%</td>
+</tr>
+<tr valign="top" bgcolor="#f6f6f6">
+<td><a href="blacklist.php_dnsbl=RCVD_IN_SORBS_WEB.html">SORBS WEB</a></td>
+<td>DNSBL</td>
+<td>30.36%</td>
+<td>0%</td>
+</tr>
+<tr valign="top">
+<td><a href="blacklist.php_dnsbl=RCVD_IN_SORBS_NR_SPAM.html">SORBS NEW AND RECENT SPAM</a></td>
+<td>DNSBL</td>
+<td>48.25%</td>
+<td>0.06%</td>
+</tr>
+<tr valign="top" bgcolor="#f6f6f6">
+<td><a href="blacklist.php_dnsbl=RCVD_IN_SORBS_DUL.html">SORBS DUL</a></td>
+<td>DNSBL</td>
+<td>6.41%</td>
+<td>0%</td>
+</tr>
+<tr valign="top">
+<td><a href="blacklist.php_dnsbl=RCVD_IN_SORBS.html">SORBS COMBINED</a></td>
+<td>DNSBL</td>
+<td>57.58%</td>
+<td>0.06%</td>
+</tr>
+<tr valign="top" bgcolor="#f6f6f6">
+<td><a href="blacklist.php_dnsbl=RCVD_IN_PSBL.html">PSBL SURRIEL</a></td>
+<td>DNSBL</td>
+<td>64.47%</td>
+<td>0%</td>
+</tr>
+<tr valign="top">
+<td><a href="blacklist.php_dnsbl=RCVD_IN_NIX_SPAM.html">NIX SPAM</a></td>
+<td>DNSBL</td>
+<td>45.47%</td>
+<td>0%</td>
+</tr>
+<tr valign="top" bgcolor="#f6f6f6">
+<td><a href="blacklist.php_dnsbl=RCVD_IN_MAILSPIKE_WL.html">MAILSPIKE WL</a></td>
+<td>DNSWL</td>
+<td>85.2%</td>
+<td>1.94%</td>
+</tr>
+<tr valign="top">
+<td><a href="blacklist.php_dnsbl=RCVD_IN_MAILSPIKE_BL.html">MAILSPIKE BL</a></td>
+<td>DNSBL</td>
+<td>49.27%</td>
+<td>0%</td>
+</tr>
+<tr valign="top" bgcolor="#f6f6f6">
+<td><a href="blacklist.php_dnsbl=RCVD_IN_JMF_WHITE.html">JMF-WHITE</a></td>
+<td>DNSWL</td>
+<td>84.65%</td>
+<td>0.31%</td>
+</tr>
+<tr valign="top">
+<td><a href="blacklist.php_dnsbl=RCVD_IN_JMF_BL.html">JMF-BLACK</a></td>
+<td>DNSBL</td>
+<td>65.44%</td>
+<td>0%</td>
+</tr>
+<tr valign="top" bgcolor="#f6f6f6">
+<td><a href="blacklist.php_dnsbl=RCVD_IN_JIPPG.html">JIPPG</a></td>
+<td>DNSBL</td>
+<td>23.51%</td>
+<td>0%</td>
+</tr>
+<tr valign="top">
+<td><a href="blacklist.php_dnsbl=HASH_IX_SEM.html">IX HASH SEM</a></td>
+<td>CHECK</td>
+<td>12.55%</td>
+<td>0%</td>
+</tr>
+<tr valign="top" bgcolor="#f6f6f6">
+<td><a href="blacklist.php_dnsbl=HASH_IX.html">IX HASH MANITU</a></td>
+<td>CHECK</td>
+<td>32.13%</td>
+<td>0%</td>
+</tr>
+<tr valign="top">
+<td><a href="blacklist.php_dnsbl=HASH_IX_HOSTEU.html">IX HASH HOSTEUROPE</a></td>
+<td>CHECK</td>
+<td>0.31%</td>
+<td>0%</td>
+</tr>
+<tr valign="top" bgcolor="#f6f6f6">
+<td><a href="blacklist.php_dnsbl=HASH_IX_GENERIC.html">IX HASH GENERIC</a></td>
+<td>CHECK</td>
+<td>4.46%</td>
+<td>0.25%</td>
+</tr>
+<tr valign="top">
+<td><a href="blacklist.php_dnsbl=HASH_IX_COMBINED.html">IX HASH COMBINED</a></td>
+<td>CHECK</td>
+<td>34.95%</td>
+<td>0.25%</td>
+</tr>
+<tr valign="top" bgcolor="#f6f6f6">
+<td><a href="blacklist.php_dnsbl=RCVD_IN_INPS.html">INPS.DE DNSBL</a></td>
+<td>DNSBL</td>
+<td>43.35%</td>
+<td>0%</td>
+</tr>
+<tr valign="top">
+<td><a href="blacklist.php_dnsbl=RCVD_IN_IMP_SPAMLIST.html">IMP SPAMLIST</a></td>
+<td>DNSBL</td>
+<td>7.11%</td>
+<td>0%</td>
+</tr>
+<tr valign="top" bgcolor="#f6f6f6">
+<td><a href="blacklist.php_dnsbl=RCVD_IN_GBUDB.html">GBUDB.COM TRUNCATE</a></td>
+<td>DNSBL</td>
+<td>24.75%</td>
+<td>0%</td>
+</tr>
+<tr valign="top">
+<td><a href="blacklist.php_dnsbl=RCVD_IN_DNSWL_NON.html">DNSWL NONE</a></td>
+<td>DNSWL</td>
+<td>0.87%</td>
+<td>0.71%</td>
+</tr>
+<tr valign="top" bgcolor="#f6f6f6">
+<td><a href="blacklist.php_dnsbl=RCVD_IN_DNSWL_MED.html">DNSWL MEDIUM</a></td>
+<td>DNSWL</td>
+<td>4.5%</td>
+<td>0%</td>
+</tr>
+<tr valign="top">
+<td><a href="blacklist.php_dnsbl=RCVD_IN_DNSWL_LOW.html">DNSWL LOW</a></td>
+<td>DNSWL</td>
+<td>1.32%</td>
+<td>0%</td>
+</tr>
+<tr valign="top" bgcolor="#f6f6f6">
+<td><a href="blacklist.php_dnsbl=RCVD_IN_DNSWL_HI.html">DNSWL HIGH</a></td>
+<td>DNSWL</td>
+<td>80.27%</td>
+<td>0.22%</td>
+</tr>
+<tr valign="top">
+<td><a href="blacklist.php_dnsbl=DCC_CHECK.html">DCC</a></td>
+<td>CHECK</td>
+<td>59.04%</td>
+<td>5.86%</td>
+</tr>
+<tr valign="top" bgcolor="#f6f6f6">
+<td><a href="blacklist.php_dnsbl=RCVD_IN_CBL.html">COMPOSITE BLOCKING LIST</a></td>
+<td>DNSBL</td>
+<td>80.87%</td>
+<td>0%</td>
+</tr>
+<tr valign="top">
+<td><a href="blacklist.php_dnsbl=RCVD_IN_CBLCN.html">CBLCN PLUS</a></td>
+<td>DNSBL</td>
+<td>7.07%</td>
+<td>0.19%</td>
+</tr>
+</table>
+
+<br>
+<p>Mehr Informationen zur <a href="datenverarbeitung.php.html">Datenverarbeitung und Statistik</a>.</p>
+
+<!-- footer start -->
+
+</div> <!-- close content <div> -->
+</div> <!-- close page <div> -->
+
+<div id="sitemap">
+
+<div id="sitemapcol1">
+	<a href="../../produkte/index.php" class="sitemapheader">Produkte</a>
+	<ul class="sitemap">
+	<li><a href="../../produkte/intranator.php">Intra2net Business Server</a></li>
+	<li><a href="../../produkte/security_gateway.php">Intra2net Security Gateway</a></li>
+	<li><a href="../../produkte/network_security.php">Intra2net Network Security</a></li>
+	<li><a href="../../produkte/appliance_eco.php">Intra2net Appliance Eco</a></li>
+	<li><a href="../../produkte/appliance_pro.php">Intra2net Appliance Pro</a></li>
+	<li><a href="../../produkte/appliance_ultimate.php">Intra2net Appliance Ultimate</a></li>
+	</ul>
+</div>
+
+<div id="sitemapcol2">
+	<a href="../../download/index.php" class="sitemapheader">Download</a>
+	<ul class="sitemap">
+	<li><a href="../../download/index.php">Software</a></li>
+	<li><a href="../../download/datenblaetter.php">Datenbl&auml;tter</a></li>
+	<li><a href="../../download/handbuecher.php">Handb&uuml;cher</a></li>
+	</ul>
+</div>
+
+<div id="sitemapcol3">
+	<a href="../index.php" class="sitemapheader">Support</a>
+	<ul class="sitemap">
+	<li><a href="../anfrage.php">Support-Anfrage</a></li>
+	<li><a href="../handbuecher.php">Handb&uuml;cher</a></li>
+	<li><a href="http://forum.intra2net.com/">Forum</a></li>
+	<li><a href="../unterstuetzte_hardware.php">Unterst&uuml;tzte Hardware</a></li>
+	<li><a href="index.html">Blacklist Performance</a></li>
+	<li><a href="../schulung.php">Schulung</a></li>
+	<li><a href="../fernwartung.php">Fernwartung</a></li>
+	</ul>
+</div>
+
+<div id="sitemapcol4">
+	<a href="../../kaufen/index.php" class="sitemapheader">Kaufen</a>
+	<ul class="sitemap">
+	<li><a href="../../kaufen/index.php">Partner finden</a></li>
+	<li><a href="../../partner-werden">Partner werden</a></li>
+	<li><a href="https://partner.intra2net.com/">Partnerweb</a></li>
+	</ul>
+</div>
+
+<div id="sitemapcol5">
+	<a href="../../unternehmen/index.php" class="sitemapheader">Unternehmen</a>
+	<ul class="sitemap">
+	<li><a href="../../unternehmen/index.php">&Uuml;ber Intra2net</a></li>
+	<li><a href="../../unternehmen/presse/index.php">Presse</a></li>
+	<li><a href="../../unternehmen/karriere.php">Karriere</a></li>
+	<li><a href="../../unternehmen/kontakt.php">Kontakt</a></li>
+	</ul>
+</div>
+
+</div> <!-- close sitemap <div> -->
+
+
+<div id="footnote">
+	<div id="footnotecompany">
+
+		&copy; Intra2net AG 2015
+	</div>
+
+	<div id="footnotelinks">
+		<a href="../../impressum.php">Impressum</a>
+		<a href="../../../en/developer/index.html">Entwickler</a>
+		<a href="../../datenschutz.php">Datenschutz</a>
+		<a href="../../unternehmen/kontakt.php">Kontakt</a>
+	</div>
+</div>
+
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-151599-1']);
+  _gaq.push(['_gat._anonymizeIp'])
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+<!-- PHP error counter: 0 -->
+
+<!-- footer end -->
+
+</body>
+</html>

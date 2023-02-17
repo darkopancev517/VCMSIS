@@ -29,12 +29,16 @@
 extern "C" {
 #endif
 
-#ifdef DEVICE_MCU_VC7351
+#if defined(DEVICE_MCU_VC7351)
 #define VC_USTICKER_SECOND (937500UL) /* 120MHz SystemCoreClock */
 #endif
 
-#ifdef DEVICE_MCU_VC6330
+#if defined(DEVICE_MCU_VC6330)
 #define VC_USTICKER_SECOND (781250UL) /* 25MHz SystemCoreClock */
+#endif
+
+#if defined(DEVICE_MCU_VC6320)
+#define VC_USTICKER_SECOND (1171875UL) /* 150MHz SystemCoreClock */
 #endif
 
 #define VC_USTICKER_WIDTH  (16UL)
